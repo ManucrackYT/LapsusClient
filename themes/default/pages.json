@@ -1,0 +1,93 @@
+{
+    "index": "index.ejs",
+    "notfound": "404.ejs",
+    "redirect": {
+        "callback": "/dashboard?news=true&loggedin=true",
+        "logout": "/",
+        "createserver": "/servers?err=CREATED",
+        "deleteserver": "/servers",
+        "updateservers": "/servers",
+        "failedcreateserver": "/servers/new",
+        "failedmodifyserver": "/edit",
+        "setplan": "/admin",
+        "failedsetplan": "/admin",
+        "createserverdisabled": "/servers/new?err=disabled",
+        "modifyserverdisabled": "/servers/modify?err=disabled",
+        "deleteserverdisabled": "/delete?err=disabled",
+        "regenpassword": "/settings",
+        "setresources": "/admin",
+        "failedsetresources": "/admin",
+        "giftresources": "/gift",
+        "failedgiftresources": "/gift",
+        "renewserver": "/dashboard",	
+        "setcoins": "/admin",	
+        "failedsetcoins": "/admin",	
+        "purchaseram": "/store",	
+        "failedpurchaseram": "/store",	
+        "purchasedisk": "/store",	
+        "failedpurchasedisk": "/store",	
+        "purchasecpu": "/store",	
+        "failedpurchasecpu": "/store",	
+        "purchaseservers": "/store",	
+        "failedpurchaseservers": "/store",
+        "arcioerror": "/harvest",
+        "missingorinvalidcouponcode": "/redeem",
+        "successfullyredeemedcoupon": "/redeem",
+        "couponcreationfailed": "/admin",
+        "couponcreationsuccess": "/admin",
+        "couponrevokefailed": "/admin",
+        "couponrevokesuccess": "/admin",
+        "removeaccountfailed": "/admin",
+        "removeaccountsuccess": "/admin"
+    },
+    "pages": {
+        "dashboard": "dashboard.ejs",
+        "coins": "coins.ejs",
+        "servers/new": "create.ejs",
+        "beta/servers/new": "dev/create.ejs",
+        "edit": "edit.ejs",
+        "profile": "profile.ejs",
+        "redeem": "redeem.ejs",
+        "settings": "security.ejs",
+        "gift-coins": "gift-coins.ejs",
+        "gift-resources": "gift-resources.ejs",
+        "transfer": "transfer.ejs",
+        "buy": "buy.ejs",
+        "harvest": "afk.ejs",
+        "store": "store.ejs",
+        "servers": "servers.ejs",
+        "lv": "lv.ejs"
+    },
+    "mustbeloggedin": [
+        "/dashboard",
+        "/servers/new",
+        "/edit",
+        "/settings",
+        "/j4r",
+        "/servers",
+        "/store",
+        "/coins",
+        "/harvest"
+    ],
+    "mustbeadmin": [
+        "/admin",
+        "/admin/plans",
+        "/admin/resources",
+        "/admin/coupons",
+        "/admin/coins"
+    ],
+    "variables": {
+        "faviconlink": "https://cdn.discordapp.com/attachments/1024881699307388988/1166477231363739749/logo_background.png?ex=654aa194&is=65382c94&hm=4bf73d8e805e5e51f678a4d6d4a9076ffdffee59cfd1c4cde75c0ba62a00c68b&",
+        "home": {
+            "admin": "admin",
+            "buttontext": {
+                "loggedin": {
+                    "link": "/dashboard"
+                },
+                "loggedout": {
+                    "link": "/login"
+                }
+            }
+        }
+    }
+}
