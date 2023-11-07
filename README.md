@@ -5,9 +5,9 @@
 
 [<p align="center"><img src="https://img.shields.io/github/downloads/ManucrackYT/LapsusLauncher/total.svg?style=for-the-badge" alt="downloads">](https://github.com/ManucrackYT/LapsusLauncher/releases) <img src="https://forthebadge.com/images/badges/winter-is-coming.svg"  height="28px" alt="winter-is-coming"></p>
 
-<p align="center">Lapsus Launcher is the next end generation Minecraft Launcher with an advanced design to bring all the latest Minecraft versions for you.</p>
+<p align="center">Lapsus Client, the most modern and customizable Pterodactyl Client Area for your hosting.</p>
 
-![Screenshot 1](https://cdn.discordapp.com/attachments/1158764544076812429/1159127602431271024/image1.png?ex=652fe4b3&is=651d6fb3&hm=f5f8ebe22ae45b12e1826c3b13b954e20123693d495c5bee9b19199c6259e34f&)
+![Screenshot 1](https://media.discordapp.net/attachments/1160683528497926315/1166771279882375309/SPOILER_image.png?ex=6554edee&is=654278ee&hm=75f5a77fa8d87c7059ffb01d0a67d632b657afe2ce4fabaa9d841f390fcee778&=&width=1316&height=616)
 ![Screenshot 2](https://cdn.discordapp.com/attachments/1158764544076812429/1159127601323978895/image2.png?ex=652fe4b3&is=651d6fb3&hm=de6afe78047dc4ec0cdd3be07fb2a1c1207f565c3287a000c9fd96bc00a6f3a9&)
 
 ## Features
