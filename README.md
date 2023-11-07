@@ -52,12 +52,14 @@ If you download from the [Releases](https://github.com/ManucrackYT/LapsusClient/
 | Node.js 16 | ⚠️ | (It's not recommended to continue using this version)
 | Node.js ≥15 | ❌ |
 
-| Platform | Supported? |
+| Working Node.js Versions | Supported? |
 | -------- | ---- |
-| Windows x64 | `Lapsus-Launcher-setup-VERSION.exe` |
-| macOS x64 | `Lapsus-Launcher-setup-VERSION-x64.dmg` |
-| macOS arm64 | `Lapsus-Launcher-setup-VERSION-arm64.dmg` |
-| Linux x64 | `Lapsus-Launcher-setup-VERSION.AppImage` |
+| Node.js 20 | `Lapsus-Launcher-setup-VERSION.exe` |
+| Node.js 19 | `Lapsus-Launcher-setup-VERSION-x64.dmg` |
+| Node.js 18 | `Lapsus-Launcher-setup-VERSION-arm64.dmg` |
+| Node.js 17 | `Lapsus-Launcher-setup-VERSION.AppImage` |
+| Node.js 16 | `Lapsus-Launcher-setup-VERSION.AppImage` |
+| Node.js ≥15 | `Lapsus-Launcher-setup-VERSION.AppImage` |
 
 
 
