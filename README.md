@@ -55,11 +55,11 @@ If you download from the [Releases](https://github.com/ManucrackYT/LapsusClient/
 | Working Node.js Versions | Supported? |
 | -------- | ---- |
 | Node.js 20 | ✅ |
-| Node.js 19 | `Lapsus-Launcher-setup-VERSION-x64.dmg` |
-| Node.js 18 | `Lapsus-Launcher-setup-VERSION-arm64.dmg` |
-| Node.js 17 | `Lapsus-Launcher-setup-VERSION.AppImage` |
-| Node.js 16 | `Lapsus-Launcher-setup-VERSION.AppImage` |
-| Node.js ≥15 | `Lapsus-Launcher-setup-VERSION.AppImage` |
+| Node.js 19 | ✅ |
+| Node.js 18 | ✅ |
+| Node.js 17 | ✅ |
+| Node.js 16 | ⚠️ |
+| Node.js ≥15 | ❌ |
 
 
 
