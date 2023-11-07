@@ -43,14 +43,6 @@ You can download from [GitHub Releases](https://github.com/ManucrackYT/LapsusCli
 
 If you download from the [Releases](https://github.com/ManucrackYT/LapsusClient/releases) tab, select the installer for your system.
 
-| Working Node.js Versions |
-| -------- | ---- |
-| Node.js 20 | ✅ |
-| Node.js 19 | ✅ |
-| Node.js 18 | ✅ |
-| Node.js 17 | ✅ |
-| Node.js 16 | ⚠️ | (It's not recommended to continue using this version)
-| Node.js ≥15 | ❌ |
 
 | Working Node.js Versions | Supported? |
 | -------- | ---- |
@@ -61,7 +53,7 @@ If you download from the [Releases](https://github.com/ManucrackYT/LapsusClient/
 | Node.js 16 | ⚠️ |
 | Node.js ≥15 | ❌ |
 
-
+⚠️ Not recommended to continue using this version
 
 
 The best way to contact the developers is on Discord.
