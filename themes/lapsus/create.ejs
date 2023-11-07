@@ -34,7 +34,7 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
             <div class="lg:flex lg:items-center lg:justify-between mb-8">
               <div class="min-w-0 flex-1">
                 <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Deploy</h2>
-                <p class="text-md font-medium text-gray-600">Deploy a new server on Actium.</p>
+                <p class="text-md font-medium text-gray-600">Deploy a new server on <%= settings.name %>.</p>
               </div>
             </div>
             <% if (req.query.err) { %>
