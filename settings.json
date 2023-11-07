@@ -5,8 +5,31 @@
     "url": "https://cdn.discordapp.com/attachments/1024881699307388988/1166477231363739749/logo_background.png?ex=654aa194&is=65382c94&hm=4bf73d8e805e5e51f678a4d6d4a9076ffdffee59cfd1c4cde75c0ba62a00c68b&"
   },
   "letter": "L",
-  "defaulttheme": "default",
+  "defaulttheme": "lapsus",
   "timezone": "Europe/London",
+
+  "node1": {
+  "node_location": "Spain",
+  "node_name": "Node 1",
+  "node_icon_url": "https://flagcdn.com/h20/es.png"
+  },
+
+  "news": {
+    "new1_type": "Recommendation",
+    "new1_title": "Try Lapsus Launcher",
+    "new1_message": "Our new project focused on Minecraft gaming, a next generation launcher to play Minecraft at another performance.",
+    "new1_img": "https://cdn.discordapp.com/attachments/954138562234822692/1168195737893474476/Lapsus_Launcher_Banner.png?ex=6550e20f&is=653e6d0f&hm=5bf4b57459b8515b75b41beb56eefb7c29b99393b91f5b26f6c2844e8498de6d&",
+    "new1_button_text": "Try it now!",
+    "new1_button_link": "https://github.com/ManucrackYT/LapsusLauncher",
+
+    "new2_type": "Info",
+    "new2_title": "Lapsus Client has been officialy released!",
+    "new2_message": "Thanks for using Lapsus Client, report any bugs or problems at our Github.",
+    "new2_img": "https://cdn.discordapp.com/attachments/954138562234822692/1168202744188895312/Lapsus_thanks_for_using_our_software_Banner.png?ex=6550e896&is=653e7396&hm=1991e923dd93cde917bce5b69dfc65a04626fd8ba727ed9dbc8731a097cad6ed&",
+    "new2_button_text": "GitHub",
+    "new2_button_link": "https://github.com/ManucrackYT/LapsusClient"
+  },
+
   "resources": {
     "note": "Options: MB, GB. This is used to show user's resources.",
     "type": "MB"
@@ -16,18 +39,18 @@
     "secret": "changeme"
   },
   "pterodactyl": {
-    "domain": "https://panel.planethost.xyz",
-    "key": "ptla_ZWKXHfGwkmPcp7RSDdqLkTpK6oIsvarZAjIz3hts2RX"
+    "domain": "https://panel.yourdomain.com",
+    "key": "ptla_"
   },
   "linkvertise": {
-    "userid": "381569",
+    "userid": "679241",
     "coins": 0
   },
   "storelimits": {
     "ram": "5120",
-    "disk": "10240",
+    "disk": "8240",
     "cpu": "300",
-    "servers": "5"
+    "servers": "3"
   },
   "stripe": {
     "enabled": false,
@@ -60,12 +83,12 @@
         ]
       },
       "bot": {
-        "token": "MTA5ODMzMjA0Njk4NTgwMTcyOQ.GWLlda.lFo2k0Uaojb1WNeQE4udpJPeCc55ikkSJMWCJY",
+        "token": "BOT_TOKEN_HERE",
         "joinguild": {
           "_comment": "The Discord bot must be in these servers and have invite permissions. Automatic guild joining will not work unless role packages are configured correctly. You can always just set it to a random role & package so that only this works.",
           "enabled": true,
           "guildid": [
-            "1094592003125293116"
+            "000000000000000000"
           ]
         }
       },
@@ -86,8 +109,8 @@
       },
       "oauth2": {
         "_comment": "Go to https://discord.dev/ and create an application to set these up.",
-        "id": "896452507927212053",
-        "secret": "R2eg7G1AA78RJnaKTyhrKFO26mltcPvV",
+        "id": "00000000000000000",
+        "secret": "secrethere",
         "link": "http://localhost:8080",
         "callbackpath": "/callback",
         "prompt": true,
@@ -121,15 +144,14 @@
         },
         "rolePackages": {
           "note": "This allows you to set a different plan to people who have a specific role however this requires the Discord bot to be configured and functioning. This is mainly used for Boost rewards",
-          "roleServer": "1094592003125293116",
+          "roleServer": "00000000000000",
           "roles": {
-            "1094599286043447348": "mango"
+            "000000000000000000": "role"
           }
         }
       },
       "locations": {
-        "1": { "name": "Germany 01", "package": null },
-        "2": { "name": "Germany 02", "package": null }
+        "1": { "name": "Germany 01", "package": null }
       },
       "eggs": {
        "paper": {
@@ -270,30 +292,6 @@
               "backups": 4
             }
           }
-        },
-        "debian": {
-          "display": "Linux - Debian",
-          "minimum": {
-            "ram": 512,
-            "disk": 512,
-            "cpu": 75
-          },
-          "maximum": {
-            "ram": null,
-            "disk": null,
-            "cpu": null
-          },
-          "info": {
-            "egg": 21,
-            "docker_image": "ghcr.io/pterodactyl/yolks:debian",
-            "startup": "bash install.sh",
-            "environment": {
-            },
-            "feature_limits": {
-              "databases": 4,
-              "backups": 4
-            }
-          }
         }
       },
       "coins": {
@@ -321,7 +319,6 @@
       }
     },
     "arcio": {
-      "_comment": "This is no longer supported and will be removed in the future. The AFK page has worked without arc.io since v11.4.0.",
       "enabled": true,
       "widgetid": "widgetidhere",
       "afk page": {
@@ -349,7 +346,6 @@
     "cost": 0
   },
   "renewals": {
-    "note": "The cost is the amount of coins required to renew, and the delay is the amount of days before they need to renew. New servers after the 1st one will also cost the renewal amount. This has been fixed to suspend servers instead of deleting them as of v12.7.0.",
     "status": false,
     "cost": 0,
     "delay": 14
