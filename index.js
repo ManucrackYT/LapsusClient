@@ -84,7 +84,7 @@ const Keyv = require("keyv");
 const db = new Keyv(settings.database);
 
 db.on('error', err => {
-  console.log(chalk.red("[DATABASE] An error has occured when attempting to access the database."))
+  console.log(chalk.red("[ERROR] An error has occured when attempting to access the database."))
 });
 
 module.exports.db = db;
@@ -119,7 +119,7 @@ app.use(express.json({
 const listener = app.listen(settings.website.port, function() {
   console.clear();
   console.log(chalk.gray("  "));
-  console.log(chalk.gray("  ") + chalk.bgBlue("  APPLICATION IS ONLINE  "));
+  console.log(chalk.gray("  ") + chalk.bgBlack("  LAPSUS CLIENT IS ONLINE  "));
   console.log(chalk.gray("  "));
   console.log(chalk.gray("  ") + chalk.cyan("[SYSTEM]") + chalk.white(" You can now access the dashboard at ") + chalk.underline(settings.api.client.oauth2.link + "/"));
 });
@@ -174,7 +174,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
       delete req.session.password;
       if (!req.session.userinfo || !req.session.pterodactyl) {
         if (err) {
-          console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
+          console.log(chalk.red(`[ERROR] An error has occured on path ${req._parsedUrl.pathname}:`));
           console.log(err);
           return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
         };
@@ -191,7 +191,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
       );
       if (await cacheaccount.statusText == "Not Found") {
         if (err) {
-          console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
+          console.log(chalk.red(`[ERROR] An error has occured on path ${req._parsedUrl.pathname}:`));
           console.log(err);
           return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
         };
@@ -202,7 +202,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
       req.session.pterodactyl = cacheaccountinfo.attributes;
       if (cacheaccountinfo.attributes.root_admin !== true) {
         if (err) {
-          console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
+          console.log(chalk.red(`[ERROR] An error has occured on path ${req._parsedUrl.pathname}:`));
           console.log(err);
           return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
         };
@@ -217,7 +217,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
         delete req.session.newaccount;
         delete req.session.password;
         if (err) {
-          console.log(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`);
+          console.log(`[ERROR] An error has occured on path ${req._parsedUrl.pathname}:`);
           console.log(err);
           return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
         };
@@ -236,7 +236,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
     delete req.session.newaccount;
     delete req.session.password;
     if (err) {
-      console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
+      console.log(chalk.red(`[ERROR] An error has occured on path ${req._parsedUrl.pathname}:`));
       console.log(err);
       return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
     };

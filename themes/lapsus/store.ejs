@@ -94,7 +94,7 @@
                             <div class="mt-1 flex rounded-md">
                               <form action="/buyram">
                                 <select name="amount" class="form-control transition ease-in-out delay-100 block w-full flex-1 text-gray-800 rounded-md bg-gray-200
-                                border-gray-200 focus:border-rose-400 focus:ring-rose-400 sm:text-sm" class="select-selected">
+                                border-gray-200 focus:border-gray-400 focus:ring-gray-400 sm:text-sm" class="select-selected">
                                   <option value=1><%= settings.api.client.coins.store.ram.per/1024 %>  GiB - <%= settings.api.client.coins.store.ram.cost %> coin<%= settings.api.client.coins.store.ram.cost == 1 ? "" : "s" %></option>
                                   <option value=2><%= settings.api.client.coins.store.ram.per/1024 * 2 %>  GiB - <%= settings.api.client.coins.store.ram.cost * 2 %> coins</option>
                                   <option value=3><%= settings.api.client.coins.store.ram.per/1024 * 3 %> GiB - <%= settings.api.client.coins.store.ram.cost * 3 %> coins</option>
@@ -107,7 +107,7 @@
                                   <option value=10><%= settings.api.client.coins.store.ram.per/1024 * 10 %> GiB - <%= settings.api.client.coins.store.ram.cost * 10 %> coins</option>
                                 </select>
                                 <br>
-                    <button onclick="buyRAM()"type="submit" class="transition ease-in-out delay-100 group relative flex w-32 justify-center rounded-md border border-gray-200 bg-rose-400 py-2 px-4 text-sm font-medium text-white hover:bg-rose-500 focus:outline-none ">
+                    <button onclick="buyRAM()"type="submit" class="transition ease-in-out delay-100 group relative flex w-32 justify-center rounded-md border border-gray-200 bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none ">
                       Purchase
                     </button>
                     </form>
@@ -121,7 +121,7 @@
                             <div class="mt-1 flex rounded-md">
                               <form action="/buycpu">
                                                 <select name="amount" class="form-control transition ease-in-out delay-100 block w-full flex-1 text-gray-800 rounded-md bg-gray-200
-                                border-gray-200 focus:border-rose-400 focus:ring-rose-400 sm:text-sm" class="select-selected">
+                                border-gray-200 focus:border-gray-400 focus:ring-gray-400 sm:text-sm" class="select-selected">
                                                     <option value=1><%= settings.api.client.coins.store.cpu.per/100 %> CPU Cores - <%= settings.api.client.coins.store.cpu.cost %> coin<%= settings.api.client.coins.store.cpu.cost == 1 ? "" : "s" %></option>
                                                     <option value=2><%= settings.api.client.coins.store.cpu.per/100 * 2 %> CPU Cores - <%= settings.api.client.coins.store.cpu.cost * 2 %> coins</option>
                                                     <option value=3><%= settings.api.client.coins.store.cpu.per/100 * 3 %> CPU Cores - <%= settings.api.client.coins.store.cpu.cost * 3 %> coins</option>
@@ -134,7 +134,7 @@
                                                     <option value=10><%= settings.api.client.coins.store.cpu.per/100 * 10 %> CPU Cores - <%= settings.api.client.coins.store.cpu.cost * 10 %> coins</option>
                                                 </select>
                                                 <br>
-                    <button onclick="buyCPU()" type="submit" class="transition ease-in-out delay-100 group relative flex w-32 justify-center rounded-md border border-transparent bg-rose-400 py-2 px-4 text-sm font-medium text-white hover:bg-rose-500 focus:outline-none ">
+                    <button onclick="buyCPU()" type="submit" class="transition ease-in-out delay-100 group relative flex w-32 justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none ">
                       Purchase
                     </button>         </form>
                             </div>
@@ -147,7 +147,7 @@
                             <div class="mt-1 flex rounded-md">
                               <form action="/buydisk">
                                                 <select name="amount" class="form-control transition ease-in-out delay-100 block w-full flex-1 text-gray-800 rounded-md bg-gray-200
-                                border-gray-200 focus:border-rose-400 focus:ring-rose-400 sm:text-sm" class="select-selected">
+                                border-gray-200 focus:border-gray-400 focus:ring-gray-400 sm:text-sm" class="select-selected">
                                                     <option value=1><%= settings.api.client.coins.store.disk.per/1024 %> GiB - <%= settings.api.client.coins.store.disk.cost %> coin<%= settings.api.client.coins.store.disk.cost == 1 ? "" : "s" %></option>
                                                     <option value=2><%= settings.api.client.coins.store.disk.per/1024 * 2 %> GiB - <%= settings.api.client.coins.store.disk.cost * 2 %> coins</option>
                                                     <option value=3><%= settings.api.client.coins.store.disk.per/1024 * 3 %> GiB - <%= settings.api.client.coins.store.disk.cost * 3 %> coins</option>
@@ -160,7 +160,7 @@
                                                     <option value=10><%= settings.api.client.coins.store.disk.per/1024 * 10 %> GiB - <%= settings.api.client.coins.store.disk.cost * 10 %> coins</option>
                                                 </select>
                                                 <br>                                                          
-                    <button onclick="buyDisk()" type="submit" class="transition ease-in-out delay-100 group relative flex w-32 justify-center rounded-md border border-transparent bg-rose-400 py-2 px-4 text-sm font-medium text-white hover:bg-rose-500 focus:outline-none ">
+                    <button onclick="buyDisk()" type="submit" class="transition ease-in-out delay-100 group relative flex w-32 justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none ">
                       Purchase
                     </button> </form>                                              
                             </div>   

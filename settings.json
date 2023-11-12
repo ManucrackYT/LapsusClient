@@ -2,16 +2,15 @@
   "version": "1.0",
   "name": "Lapsus Client",
   "logo": {
-    "url": "https://cdn.discordapp.com/attachments/1024881699307388988/1166477231363739749/logo_background.png?ex=654aa194&is=65382c94&hm=4bf73d8e805e5e51f678a4d6d4a9076ffdffee59cfd1c4cde75c0ba62a00c68b&"
+    "url": "/assets/img/logo_background.png"
   },
-  "letter": "L",
   "defaulttheme": "lapsus",
   "timezone": "Europe/London",
 
   "node1": {
-  "node_location": "Spain",
+  "node_location": "Germany",
   "node_name": "Node 1",
-  "node_icon_url": "https://flagcdn.com/h20/es.png"
+  "node_icon_url": "https://flagcdn.com/h20/de.png"
   },
 
   "news": {
@@ -109,7 +108,7 @@
       },
       "oauth2": {
         "_comment": "Go to https://discord.dev/ and create an application to set these up.",
-        "id": "00000000000000000",
+        "id": "0000000000000000",
         "secret": "secrethere",
         "link": "http://localhost:8080",
         "callbackpath": "/callback",
@@ -227,7 +226,7 @@
             "environment": {
               "BEDROCK_VERSION": "latest",
               "LD_LIBRARY_PATH": ".",
-              "SERVERNAME": "CitricNode.com Bedrock Server",
+              "SERVERNAME": "A Bedrock Server",
               "GAMEMODE": "survival",
               "DIFFICULTY": "easy",
               "CHEATS": "true"
@@ -381,5 +380,25 @@
     "status": false,
     "APIKey": "Proxycheck APIKey",
     "whitelistedIPs": ["IP address"]
+  },
+
+  "beta":{
+    "notification": "This is a beta feature and can contain some bugs.",
+
+
+    
+    "note": "This isn't working yet",
+    
+    "location1.enabled": true,
+    "location1.name": "Germany",
+    "location1.city": "Falkenstein",
+
+    "location2.enabled": true,
+    "location2.name": "Netherlands",
+    "location2.city": "Eygelshoven",
+
+    "location3.enabled": false,
+    "location3.name": "Finland",
+    "location3.city": "Helsinki"
   }
 }

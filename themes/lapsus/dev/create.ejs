@@ -34,7 +34,7 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
             <div class="lg:flex lg:items-center lg:justify-between mb-8">
               <div class="min-w-0 flex-1">
                 <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Deploy</h2>
-                <p class="text-md font-medium text-gray-600">Deploy a brand new server on CitricNode.</p>
+                <p class="text-md font-medium text-gray-600">Deploy a brand new server on <%= settings.name %>.</p>
               </div>
             </div>
               <div class="rounded-md bg-white shadow-md p-4 mb-8">
@@ -47,7 +47,7 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
                     </div>
                   <div class="ml-3 flex-1 md:flex md:justify-between">
                     <p class="text-sm text-gray-800">
-                    Mumbai, India is currently at capacity. We're working on deploying more nodes in that locations.
+                      <%= settings.beta.notification %>
                     </p>
                   </div>
                   </div>
@@ -116,7 +116,7 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
             <div class="card">
               <div class="card-body">
                   <label for="location">Name:</label><br>
-                  <input type="text" class="transition focus:border-rose-400 focus:ring-rose-400 justify-center border border-gray-300 form-control rounded-md" id="name" placeholder="Name">
+                  <input type="text" class="transition focus:border-gray-400 focus:ring-gray-400 justify-center border border-gray-300 form-control rounded-md" id="name" placeholder="Name">
                   <br><br>
                   <label for="location">Location:</label>
                   <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
@@ -242,25 +242,25 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
                         </div>
                     </dl>
                   <br>
-                  <label for="location">Game:</label>
+                  <label for="location">Software:</label>
                   <select class="form-control transition ease-in-out delay-100 block w-full flex-1 text-darker rounded-md bg-white
-                  border-gray-300 focus:border-rose-400 focus:ring-rose-400 sm:text-sm" id="egg">
+                  border-gray-300 focus:border-gray-400 focus:ring-gray-400 sm:text-sm" id="egg">
                     <% for (let [name, value] of Object.entries(settings.api.client.eggs)) { %>
                       <option value="<%= name %>"><%= value.display %></option>
                     <% } %>
                   </select>
                   <br>
                   <label for="ram">RAM (GiB):</label>
-                  <input type="text" class="focus:border-rose-400 focus:ring-rose-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" id="ram" placeholder="<%= (packages ? packages.ram : 0)/1024 + extraresources.ram/1024 - ram/1024 %>" value="<%= (packages ? packages.ram : 0)/1024 + extraresources.ram/1024 - ram/1024 %>">
+                  <input type="text" class="focus:border-gray-400 focus:ring-gray-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" id="ram" placeholder="<%= (packages ? packages.ram : 0)/1024 + extraresources.ram/1024 - ram/1024 %>" value="<%= (packages ? packages.ram : 0)/1024 + extraresources.ram/1024 - ram/1024 %>">
                   <br>
                   <label for="disk">Disk (GiB):</label>
-                  <input type="text" class="focus:border-rose-400 focus:ring-rose-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" id="disk" placeholder="<%= (packages ? packages.disk : 0)/1024 + extraresources.disk/1024 - disk/1024 %>" value="<%= (packages ? packages.disk : 0)/1024 + extraresources.disk/1024 - disk/1024 %>">
+                  <input type="text" class="focus:border-gray-400 focus:ring-gray-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" id="disk" placeholder="<%= (packages ? packages.disk : 0)/1024 + extraresources.disk/1024 - disk/1024 %>" value="<%= (packages ? packages.disk : 0)/1024 + extraresources.disk/1024 - disk/1024 %>">
                   <br>
                   <label for="cpu">CPU (Cores):</label>
-                  <input type="text" class="focus:border-rose-400 focus:ring-rose-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" id="cpu" placeholder="<%= (packages ? packages.cpu : 0)/100 + extraresources.cpu/100 - cpu/100 %>" value="<%= (packages ? packages.cpu : 0)/100 + extraresources.cpu/100 - cpu/100 %>">
+                  <input type="text" class="focus:border-gray-400 focus:ring-gray-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" id="cpu" placeholder="<%= (packages ? packages.cpu : 0)/100 + extraresources.cpu/100 - cpu/100 %>" value="<%= (packages ? packages.cpu : 0)/100 + extraresources.cpu/100 - cpu/100 %>">
                   <br>
                   
-                  <button onclick="submitForm()" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-rose-400 py-2 px-4 text-sm font-medium text-white hover:bg-rose-500 focus:outline-none ml-2">Create</button>
+                  <button onclick="submitForm()" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none ml-2">Create</button>
               <br></div>
               <script>
                   async function submitForm() {

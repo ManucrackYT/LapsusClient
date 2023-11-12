@@ -171,13 +171,13 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
             <div class="card">
               <div class="card-body">
                   <label for="ram">Discord ID:</label>
-                  <input type="text" class="focus:border-rose-400 focus:ring-rose-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" id="dc" placeholder="00000000000000000">
+                  <input type="text" class="focus:border-gray-400 focus:ring-gray-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" id="dc" placeholder="00000000000000000">
                   <br>
                   <label for="disk">Amount:</label>
-                  <input type="text" class="focus:border-rose-400  focus:ring-rose-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" id="amount" placeholder="<%= coins %>">
+                  <input type="text" class="focus:border-gray-400  focus:ring-gray-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" id="amount" placeholder="<%= coins %>">
                   <br>
                   
-                  <button onclick="submitForm()" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-rose-400 py-2 px-4 text-sm font-medium text-white hover:bg-rose-500 focus:outline-none">Transfer</button>
+                  <button onclick="submitForm()" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none">Transfer</button>
               <br></div>
               <script>
                   async function submitForm() {
