@@ -69,3 +69,4 @@ The best way to contact the developers is on Discord.
 
 [nodejs]: https://nodejs.org/en/ 'Node.js'
 [vscode]: https://code.visualstudio.com/ 'Visual Studio Code'
+[discord]: https://discord.gg/jczXDEcyZk 'Discord'
