@@ -41,7 +41,7 @@ You can download from [GitHub Releases](https://github.com/ManucrackYT/LapsusCli
 
 **Supported Node.js Versions**
 
-If you download from the [Releases](https://github.com/ManucrackYT/LapsusClient/releases) tab, select the installer for your system.
+Download from the [Releases](https://github.com/ManucrackYT/LapsusClient/releases) tab, upload the files to your server and setup settings.json.
 
 
 | Working Node.js Versions | Supported? |
