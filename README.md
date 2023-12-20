@@ -3,7 +3,7 @@
 <h1 align="center">Lapsus Client</h1>
 
 
-[<p align="center"><img src="https://img.shields.io/badge/Version-1.5-2ea44f?style=for-the-badge" alt="downloads">](https://github.com/ManucrackYT/LapsusClient/releases) <img src="https://forthebadge.com/images/badges/winter-is-coming.svg"  height="28px" alt="winter-is-coming"></p>
+[<p align="center"><img src="https://img.shields.io/badge/Version-1.6-2ea44f?style=for-the-badge" alt="versions">](https://github.com/ManucrackYT/LapsusClient/releases) <img src="https://forthebadge.com/images/badges/winter-is-coming.svg"  height="28px" alt="winter-is-coming"></p>
 
 <p align="center">Lapsus Client, the most modern and customizable Pterodactyl Client Area for your hosting.</p>
 
