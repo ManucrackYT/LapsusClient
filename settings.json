@@ -1,17 +1,11 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "name": "Lapsus Client",
   "logo": {
     "url": "/assets/img/logo_background.png"
   },
   "defaulttheme": "lapsus",
   "timezone": "Europe/London",
-
-  "node1": {
-  "node_location": "Germany",
-  "node_name": "Node 1",
-  "node_icon_url": "https://flagcdn.com/h20/de.png"
-  },
 
   "news": {
     "new1_type": "Recommendation",
@@ -108,8 +102,8 @@
       },
       "oauth2": {
         "_comment": "Go to https://discord.dev/ and create an application to set these up.",
-        "id": "0000000000000000",
-        "secret": "secrethere",
+        "id": "",
+        "secret": "",
         "link": "http://localhost:8080",
         "callbackpath": "/callback",
         "prompt": true,
@@ -150,7 +144,7 @@
         }
       },
       "locations": {
-        "1": { "name": "Germany 01", "package": null }
+        "1": { "name": "Germany 🇩🇪", "package": null }
       },
       "eggs": {
        "paper": {
@@ -166,7 +160,7 @@
             "cpu": null
           },
           "info": {
-            "egg": 3,
+            "egg": 4,
             "docker_image": "ghcr.io/pterodactyl/yolks:java_17",
             "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
             "environment": {
@@ -389,16 +383,19 @@
     
     "note": "This isn't working yet",
     
-    "location1.enabled": true,
-    "location1.name": "Germany",
-    "location1.city": "Falkenstein",
+    "location1_enabled": false,
+    "location1_name": "Germany",
+    "location1_city": "Falkenstein",
+    "location1_flag": "https://flagcdn.com/h20/de.png",
 
-    "location2.enabled": true,
-    "location2.name": "Netherlands",
-    "location2.city": "Eygelshoven",
+    "location2_enabled": true,
+    "location2_name": "Netherlands",
+    "location2_city": "Eygelshoven",
+    "location2_flag": "https://flagcdn.com/h20/nl.png",
 
-    "location3.enabled": false,
-    "location3.name": "Finland",
-    "location3.city": "Helsinki"
+    "location3_enabled": false,
+    "location3_name": "Finland",
+    "location3_city": "Helsinki",
+    "location3_flag": "https://flagcdn.com/h20/fi.png"
   }
 }

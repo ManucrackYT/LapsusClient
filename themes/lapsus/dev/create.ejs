@@ -33,7 +33,7 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
             <!-- Replace with your content -->
             <div class="lg:flex lg:items-center lg:justify-between mb-8">
               <div class="min-w-0 flex-1">
-                <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Deploy</h2>
+                <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Deploy (Beta)</h2>
                 <p class="text-md font-medium text-gray-600">Deploy a brand new server on <%= settings.name %>.</p>
               </div>
             </div>
@@ -132,9 +132,9 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
                         <!-- Resources -->
                         <div onclick="setLocation(2)" class="px-4 py-5 bg-gray-50 rounded-lg overflow-hidden sm:p-6 cursor-pointer">
                             <dt class="text-sm font-medium text-gray-500 truncate">
-                            Germany
+                              <%= settings.beta.location1_name %>
                             <span class="inline">
-                              <img style="height: 18px; margin-left: 3px; display: inline; width: 18px; border-radius: 4px;" src="https://flagcdn.com/h20/de.png">
+                              <img style="height: 18px; margin-left: 3px; display: inline; width: 18px; border-radius: 4px;" src="<%= settings.beta.location1_flag %>">
                             </span></dt>
                             <dd class="mt-1 text-1xl font-semibold text-gray-900">
                                 Falkenstein
@@ -142,9 +142,9 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
                         </div>
                         <div onclick="setLocation(6)" class="px-4 py-5 bg-gray-50 rounded-lg overflow-hidden sm:p-6 cursor-pointer">
                             <dt class="text-sm font-medium text-gray-500 truncate">
-                            Netherlands
+                              <%= settings.beta.location2_name %>
                             <span class="inline">
-                              <img style="height: 18px; margin-left: 3px; display: inline; width: 18px; border-radius: 4px;" src="https://flagcdn.com/h40/nl.png">
+                              <img style="height: 18px; margin-left: 3px; display: inline; width: 18px; border-radius: 4px;" src="<%= settings.beta.location2_flag %>">
                             </span></dt>
                             <dd class="mt-1 text-1xl font-semibold text-gray-900">
                                 Eygelshoven
@@ -152,9 +152,9 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
                         </div>
                         <div onclick="setLocation(3)" class="px-4 py-5 bg-gray-50 rounded-lg overflow-hidden sm:p-6 cursor-pointer">
                             <dt class="text-sm font-medium text-gray-500 truncate">
-                            Finland
+                              <%= settings.beta.location3_name %>
                             <span class="inline">
-                              <img style="height: 18px; margin-left: 3px; display: inline; width: 18px; border-radius: 4px;" src="https://cdn-icons-png.flaticon.com/512/552/552054.png">
+                              <img style="height: 18px; margin-left: 3px; display: inline; width: 18px; border-radius: 4px;" src="<%= settings.beta.location3_flag %>">
                             </span></dt>
                             <dd class="mt-1 text-1xl font-semibold text-gray-900">
                                 Helsinki

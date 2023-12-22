@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "ManucrackYT",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@keyv/mongo": "^1.2.1",
     "@keyv/mysql": "^1.1.5",
     "@keyv/postgres": "^1.0.17",

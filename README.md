@@ -3,7 +3,7 @@
 <h1 align="center">Lapsus Client</h1>
 
 
-[<p align="center"><img src="https://img.shields.io/badge/Version-1.5-2ea44f?style=for-the-badge" alt="versions">](https://github.com/ManucrackYT/LapsusClient/releases) <img src="https://forthebadge.com/images/badges/winter-is-coming.svg"  height="28px" alt="winter-is-coming"></p>
+[<p align="center"><img src="https://img.shields.io/github/downloads/ManucrackYT/LapsusClient/total.svg?style=for-the-badge" alt="downloads">](https://github.com/ManucrackYT/LapsusClient/releases) <img src="https://forthebadge.com/images/badges/winter-is-coming.svg"  height="28px" alt="winter-is-coming"></p>
 
 <p align="center">Lapsus Client, the most modern and customizable Pterodactyl Client Area for your hosting.</p>
 
@@ -41,7 +41,7 @@ You can download from [GitHub Releases](https://github.com/ManucrackYT/LapsusCli
 
 **Supported Node.js Versions**
 
-Download from the [Releases](https://github.com/ManucrackYT/LapsusClient/releases) tab, upload the files to your server and setup settings.json.
+If you download from the [Releases](https://github.com/ManucrackYT/LapsusClient/releases) tab, select the installer for your system.
 
 
 | Working Node.js Versions | Supported? |
@@ -69,4 +69,3 @@ The best way to contact the developers is on Discord.
 
 [nodejs]: https://nodejs.org/en/ 'Node.js'
 [vscode]: https://code.visualstudio.com/ 'Visual Studio Code'
-[discord]: https://discord.gg/jczXDEcyZk 'Discord'

@@ -1,0 +1,143 @@
+<head>
+    <title><%= settings.name %></title>
+    <link rel="icon" type="image/png" href="<%= settings.logo.url %>">
+    <link rel="stylesheet" href="../assets/tailwind.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+
+    <!-- Inter font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: 0.5s;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 40px;
+        width: 30%;
+        border-radius: 16px;
+        margin-top: 12%;
+        transition: 0.5s
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+        transition: 0.5s
+    }
+</style>
+
+<body class="bg-gray-100" style="font-family: 'Inter', sans-serif;">
+    <% if (req.query.loggedin) { %>
+    <div class="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <p class="text-sm ml-24 leading-6 text-gray-900">
+            You're on the admin area!</strong>
+          </p>
+        </div>
+      </div>
+    <% } %>
+<div>
+<!-- The Modal -->
+<% if (req.query.news) { %>
+<div id="myModal" class="modal">
+        </div>
+    </div>
+</div>
+<% } %>
+    <%- include('components/navigation') %>
+    <div class="md:pl-48 flex flex-col flex-1">
+      <main class="flex-1">
+        <div class="py-6">
+          <div class="max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8">
+            <!-- Replace with your content -->
+            <!-- This example requires Tailwind CSS v2.0+ -->
+            <div class="lg:flex lg:items-center lg:justify-between mb-8">
+              <div class="min-w-0 flex-1">
+                <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Admin Area</h2>
+                <p class="text-md font-medium text-gray-600">Change resources and check if Lapsus Client is up to date.</p>
+              </div>
+            
+    
+  </div>
+  
+
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <form class="forms-sample">
+            <div class="form-group">
+            <p id="latestversion"><span>Fetching...</span></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+                          <script>
+                              fetch("https://raw.githubusercontent.com/ManucrackYT/LapsusClient/main/.github/workflows/index.html")
+                                  .then(res => Promise.resolve(res.json()).then(ver => {
+                                      let currentver = "<%= settings.version.replace(/"/g, `\\\\"`) %>";
+                                      if (ver.version == currentver) {
+                                          document.getElementById("latestversion").innerHTML = `<span>You are running Lapsus Client version <code style="color: #007fcc" >v${currentver}</code>. Lapsus Client is up-to-date!</span>`;
+                                      } else if (ver.prerelease == currentver) {
+                                          document.getElementById("latestversion").innerHTML = `<span>You are running Lapsus Client version <code style="color: #007fcc">v${currentver}</code>. Lapsus Client is up-to-date!</span>`;
+                                      } else {
+                                          document.getElementById("latestversion").innerHTML = `<span>Lapsus Client is <b>not up-to-date!</b> The latest version is <code style="color: #007fcc" >v${ver.version}</code> and you are currently running version <code style="color: #007fcc" >v<%= settings.version %></code>.</span>`;
+                                      };
+                                  }));
+                          </script>
+                <center><a href="https://github.com/ManucrackYT/LapsusClient/releases" target="_blank" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none">Update (If needed)</a></center>
+
+      </div>
+    </div>
+  </div>
+</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+            <!-- /End replace -->
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>

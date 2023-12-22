@@ -106,7 +106,7 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
                   <label for="location">Location:</label>
                   <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
                       <script>
-                      let inputLocation = ""
+                      let inputLoc = ""
                       function setLocation(num) {
                       	inputLocation = num;
                         console.log(num)
@@ -115,16 +115,12 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
                       }
                       </script>
                         <!-- Resources -->
-                        <div onclick="setLocation(1)" class="px-4 py-5 bg-gray-50 rounded-lg overflow-hidden sm:p-6 cursor-pointer">
-                            <dt class="text-sm font-medium text-gray-500 truncate">
-                              <%= settings.node1.node_location %>
-                            <span class="inline">
-                              <img style="height: 18px; margin-left: 3px; display: inline; width: 18px; border-radius: 4px;" src="<%= settings.node1.node_icon_url %>">
-                            </span></dt>
-                            <dd class="mt-1 text-1xl font-semibold text-gray-900">
-                              <%= settings.node1.node_name %>
-                            </dd>
-                        </div>
+                        <select class="form-control transition ease-in-out delay-100 block w-full flex-1 text-darker rounded-md bg-white
+                        border-gray-300 focus:border-gray-400 focus:ring-gray-400 sm:text-sm" id="InputLoc">
+                          <% for (let [name, value] of Object.entries(settings.api.client.locations)) { %>
+                            <option value="<%= name %>"><%= value.name %></option>
+                          <% } %>
+                        </select>
                         </div>
                   <br>
                   <label for="location">Software:</label>
@@ -154,7 +150,7 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
                       let ram = encodeURIComponent(document.getElementById("ram").value);
                       let disk = encodeURIComponent(document.getElementById("disk").value);
                       let cpu = encodeURIComponent(document.getElementById("cpu").value);
-                      let location = inputLocation;
+                      let location = encodeURIComponent(document.getElementById("InputLoc").value);
                       document.location.href = `/create?name=${name}&egg=${egg}&ram=${ram*1024}&disk=${disk*1024}&cpu=${cpu*100}&location=${location}`;
                   };
               </script>

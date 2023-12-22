@@ -36,7 +36,7 @@ font-weight: semibold;
           <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>  
           <a href="<%= settings.pterodactyl.domain %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" class="transition text-gray-300 hover:bg-dark-700/50 backdrop-blur hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
             <!-- Heroicon name: outline/home -->
-            <div class="flex-shrink-0 h-6 w-6 rounded-lg text-center mr-3 rounded-lg border border-gray-600 group-hover:border-rose-500 group-hover:text-rose-500 transition">
+            <div class="flex-shrink-0 h-6 w-6 rounded-lg text-center mr-3 rounded-lg border border-gray-600 group-hover:border-winter-500 group-hover:text-winter-500 transition">
                 <span class="text-md"><%= pterodactyl.relationships.servers.data[i].attributes.name.charAt(0).toUpperCase() %></span>
             </div>
             <%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %>
@@ -95,8 +95,8 @@ font-weight: semibold;
             Profile
           </a> 
           <a href="../settings" class="transition text-gray-300 hover:bg-dark-700/50 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-              <!-- Heroicon name: outline/users -->  
-              <svg  class="text-gray-400 group-hover:text-winter-500 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <!-- Heroicon name: outline/users -->
+              <svg class="text-gray-400 group-hover:text-winter-500 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                 </svg>                                       
               Security
@@ -137,9 +137,33 @@ font-weight: semibold;
                 </svg>                                                    
               Store
             </a>
+            <% if (pterodactyl.root_admin == true) { %>
+            <div class="pt-6"></div> <!-- Spacer -->
+          <div class="mt-6 relative mb-2">
+              <div class="relative flex">
+                <span class="px-2 bg-transparent text-gray-200 font-semibold text-sm"> Administration </span>
+              </div>
+          </div>
+          
+           <a href="../themes" class="transition text-gray-300 hover:bg-dark-700/50 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"> 
+            <!-- Heroicon name: outline/users -->
+            <svg class="text-gray-400 group-hover:text-winter-500 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 16C11 15.0681 11 14.6022 11.1522 14.2346C11.3552 13.7446 11.7446 13.3552 12.2346 13.1522C12.6022 13 13.0681 13 14 13H16.8C17.9201 13 18.4802 13 18.908 12.782C19.2843 12.5903 19.5903 12.2843 19.782 11.908C20 11.4802 20 10.9201 20 9.8V9.2C20 8.07989 20 7.51984 19.782 7.09202C19.5903 6.71569 19.2843 6.40973 18.908 6.21799C18.4802 6 17.9201 6 16.8 6H16M16 6C16 6.93188 16 7.39782 15.8478 7.76537C15.6448 8.25542 15.2554 8.64477 14.7654 8.84776C14.3978 9 13.9319 9 13 9H7C6.06812 9 5.60218 9 5.23463 8.84776C4.74458 8.64477 4.35523 8.25542 4.15224 7.76537C4 7.39782 4 6.93188 4 6C4 5.06812 4 4.60218 4.15224 4.23463C4.35523 3.74458 4.74458 3.35523 5.23463 3.15224C5.60218 3 6.06812 3 7 3H13C13.9319 3 14.3978 3 14.7654 3.15224C15.2554 3.35523 15.6448 3.74458 15.8478 4.23463C16 4.60218 16 5.06812 16 6ZM10.6 21H11.4C11.9601 21 12.2401 21 12.454 20.891C12.6422 20.7951 12.7951 20.6422 12.891 20.454C13 20.2401 13 19.9601 13 19.4V17.6C13 17.0399 13 16.7599 12.891 16.546C12.7951 16.3578 12.6422 16.2049 12.454 16.109C12.2401 16 11.9601 16 11.4 16H10.6C10.0399 16 9.75992 16 9.54601 16.109C9.35785 16.2049 9.20487 16.3578 9.10899 16.546C9 16.7599 9 17.0399 9 17.6V19.4C9 19.9601 9 20.2401 9.10899 20.454C9.20487 20.6422 9.35785 20.7951 9.54601 20.891C9.75992 21 10.0399 21 10.6 21Z" />
+            </svg>                           
+            Themes
+          </a> 
+
+          <a href="../admin" class="transition text-gray-300 hover:bg-dark-700/50 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"> 
+            <!-- Heroicon name: outline/users -->
+            <svg class="text-gray-400 group-hover:text-winter-500 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="gray" viewBox="0 0 576 512" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M176 88v40H336V88c0-4.4-3.6-8-8-8H184c-4.4 0-8 3.6-8 8zm-48 40V88c0-30.9 25.1-56 56-56H328c30.9 0 56 25.1 56 56v40h28.1c12.7 0 24.9 5.1 33.9 14.1l51.9 51.9c9 9 14.1 21.2 14.1 33.9V304H384V288c0-17.7-14.3-32-32-32s-32 14.3-32 32v16H192V288c0-17.7-14.3-32-32-32s-32 14.3-32 32v16H0V227.9c0-12.7 5.1-24.9 14.1-33.9l51.9-51.9c9-9 21.2-14.1 33.9-14.1H128zM0 416V336H128v16c0 17.7 14.3 32 32 32s32-14.3 32-32V336H320v16c0 17.7 14.3 32 32 32s32-14.3 32-32V336H512v80c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64z" />
+            </svg>                           
+            Admin
+          </a> 
+          <% } %>
         </nav>
       </div>
-      <div class="flex-shrink-0 flex bg-[#0c0e1a] p-4">
+      <div class="flex-shrink-0 flex p-4">
         <a href="#" class="flex-shrink-0 w-full group block">
           <div class="flex items-center">
             <div>
@@ -157,8 +181,8 @@ font-weight: semibold;
           </div>
         </a>
       </div>
-      <div class="flex-shrink-0 flex bg-[#131629] p-4 transition">
-        <a id="lemons" class="flex-shrink-0 w-full group block">
+      <div class="flex-shrink-0 flex p-4 transition">
+        <a id="coins" class="flex-shrink-0 w-full group block">
           <div class="flex items-center">
             <div class="ml-2">
               <p class="text-xs font-medium text-white"><%= coins.toLocaleString(undefined, {maximumFractionDigits:0}) %> coin<%= coins == 1 ? "" : "s" %> in your account </p>

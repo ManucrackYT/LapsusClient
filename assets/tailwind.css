@@ -1313,6 +1313,10 @@ select {
   background-image: url('https://img.freepik.com/premium-photo/modern-brick-wall-3d-rendering_118019-218.jpg');
 }
 
+.bg-\[url\(\'https\:\/\/cdn\.discordapp\.com\/attachments\/954138562234822692\/1167467905336746054\/wallpaper_4\.jpg\'\)\] {
+  background-image: url('https://cdn.discordapp.com/attachments/1024881699307388988/1175114967842832485/Pylex_Background.png');
+}
+
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;

@@ -1,0 +1,123 @@
+<head>
+    <title>Download themes for <%= settings.name %></title>
+    <link rel="icon" type="image/png" href="<%= settings.logo.url %>">
+    <link rel="stylesheet" href="../assets/tailwind.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+
+    <!-- Inter font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: 0.5s;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 40px;
+        width: 30%;
+        border-radius: 16px;
+        margin-top: 12%;
+        transition: 0.5s
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+        transition: 0.5s
+    }
+</style>
+
+<body class="bg-gray-100" style="font-family: 'Inter', sans-serif;">
+    <% if (req.query.loggedin) { %>
+    <div class="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
+        <div class="flex flex-1 justify-end">
+          <a href="../dashboard" type="button" class="-m-3 p-3 focus-visible:outline-offset-[-4px]">
+            <span class="sr-only">Dismiss</span>
+            <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    <% } %>
+<div>
+<!-- The Modal -->
+<% if (req.query.news) { %>
+<div id="myModal" class="modal">
+
+
+</div>
+<% } %>
+    <%- include('components/navigation') %>
+    <div class="md:pl-48 flex flex-col flex-1">
+      <main class="flex-1">
+        <div class="py-6">
+          <div class="max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8">
+            <!-- Replace with your content -->
+            <!-- This example requires Tailwind CSS v2.0+ -->
+            <div class="lg:flex lg:items-center lg:justify-between mb-8">
+              <div class="min-w-0 flex-1">
+                <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Download themes</h2>
+                <p class="text-md font-medium text-gray-600">Download the most recent themes for Lapsus Client here.</p>
+              </div>
+            
+
+    
+  </div>
+  <div class="p-16 lg:flex lg:items-center lg:justify-between rounded-lg shadow-lg bg-[url('https://cdn.discordapp.com/attachments/954138562234822692/1167467905336746054/wallpaper_4.jpg')]">
+    <div class="min-w-0 flex-1">
+      <h2 class="text-2xl font-bold leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Pylex</h2>
+      <p class="text-md font-medium text-gray-200">Download the Pylex theme.</p>
+    </div>
+    <div class="mt-5 flex lg:ml-4 lg:mt-0">
+        <span class="sm:ml-3">
+          <a href="http://de01.planethost.xyz:3005/pylex.rar" type="button" class="transition inline-flex items-center rounded-md bg-black-600/50 px-6 py-6 text-sm font-semibold text-white hover:shadow-inner hover:shadow-gray-700 hover:bg-gradient-to-bl hover:from-gray-600 hover:to-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">
+            <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>                                
+            </a>
+        </span>
+      </div>
+  </div>
+ 
+
+  
+            <!-- /End replace -->
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
