@@ -33,7 +33,8 @@
   },
   "pterodactyl": {
     "domain": "https://panel.yourdomain.com",
-    "key": "ptla_"
+    "key": "ptla_",
+    "account_key": ""
   },
   "linkvertise": {
     "userid": "679241",
