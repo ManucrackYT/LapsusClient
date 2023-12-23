@@ -12,7 +12,7 @@
     "@keyv/redis": "^2.2.1",
     "@keyv/sqlite": "^3.5.2",
     "@tailwindcss/forms": "^0.5.3",
-    "axios": "^0.25.0",
+    "axios": "^1.6.0",
     "chalk": "^4.1.0",
     "credit-card-validate": "^0.9.3",
     "cron": "^1.8.2",
