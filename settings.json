@@ -1,5 +1,5 @@
 {
-  "version": "2.0",
+  "version": "2.5",
   "name": "Lapsus Client",
   "logo": {
     "url": "/assets/img/logo_background.png"
@@ -55,8 +55,11 @@
   "database": "sqlite://database.sqlite",
   "api": {
     "client": {
+      "webhook": {
+        "auditlogs": false
+      },
       "api": {
-        "enabled": true,
+        "enabled": false,
         "code": "lapsus"
       },
       "j4r": {
@@ -134,6 +137,13 @@
             "disk": 5120,
             "cpu": 100,
             "servers": 1
+          },
+
+          "premium": {
+            "ram": 2048,
+            "disk": 10240,
+            "cpu": 200,
+            "servers": 3
           }
         },
         "rolePackages": {
@@ -145,7 +155,7 @@
         }
       },
       "locations": {
-        "1": { "name": "Germany 🇩🇪", "package": null }
+        "1": { "name": "Germany 🇩🇪", "city": "Node 01", "package": null }
       },
       "eggs": {
        "paper": {
@@ -251,6 +261,7 @@
             "environment": {
               "USER_UPLOAD": "0",
               "AUTO_UPDATE": "0",
+              "MAIN_FILE": "index.js",
               "BOT_JS_FILE": "index.js"
             },
             "feature_limits": {

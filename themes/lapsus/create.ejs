@@ -105,15 +105,6 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
                   <br><br>
                   <label for="location">Location:</label>
                   <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-                      <script>
-                      let inputLoc = ""
-                      function setLocation(num) {
-                      	inputLocation = num;
-                        console.log(num)
- alertify.set('notifier','position', 'bottom-center');
- alertify.success('Location selected!');
-                      }
-                      </script>
                         <!-- Resources -->
                         <select class="form-control transition ease-in-out delay-100 block w-full flex-1 text-darker rounded-md bg-white
                         border-gray-300 focus:border-gray-400 focus:ring-gray-400 sm:text-sm" id="InputLoc">
@@ -121,7 +112,7 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
                             <option value="<%= name %>"><%= value.name %></option>
                           <% } %>
                         </select>
-                        </div>
+                      </div>
                   <br>
                   <label for="location">Software:</label>
                   <select class="form-control transition ease-in-out delay-100 block w-full flex-1 text-darker rounded-md bg-white

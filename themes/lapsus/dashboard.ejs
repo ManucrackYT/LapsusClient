@@ -140,7 +140,7 @@
         cpu = cpu + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0);
     }
   %>
-    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+    <dl class="mt-5 grid grid-cols-4 gap-5 sm:grid-cols-4">
       <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
         <dt class="text-sm font-medium text-gray-500 truncate">CPU Cores</dt>
         <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.cpu/100 + extraresources.cpu/100 - cpu/100 %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
@@ -154,6 +154,11 @@
       <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
         <dt class="text-sm font-medium text-gray-500 truncate">Storage (GiB)</dt>
         <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.disk/1024 + extraresources.disk/1024 - disk/1024 %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
+      </div>
+
+      <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+        <dt class="text-sm font-medium text-gray-500 truncate">Servers</dt>
+        <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.servers %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
       </div>
     </dl>
   </div>

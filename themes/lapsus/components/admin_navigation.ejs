@@ -1,0 +1,152 @@
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<style>
+.alertify-notifier .ajs-message.ajs-success {
+    color: black;
+    padding: 24px;
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.2);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+text-align: center;
+font-weight: semibold;
+}
+</style>
+<!-- Static sidebar for desktop -->
+<div class="hidden md:flex md:w-52 md:flex-col md:fixed md:inset-y-0">
+    <!-- Sidebar component, swap this element with another sidebar if you like -->
+    <div class="flex-1 flex flex-col min-h-0 bg-[url('https://cdn.discordapp.com/attachments/1023580894688194620/1098603123754422322/Copy_of_Copy_of_Untitled_Facebook_Cover_4.png')]">
+      <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
+        <div class="flex items-center flex-shrink-0 px-4">
+          <img class="h-8 w-auto" src="<%= settings.logo.url %>" alt="Logo">
+         <div class="ml-8"><span class="text-white ml-3 font-medium tracking-widest"><%= settings.name %></span></div>          
+        </div>
+        <div>
+        </div>
+        <nav class="mt-5 flex-1 px-2 space-y-1">
+          <% if (pterodactyl.relationships.servers.data.length > 0) { %>
+          <div class="mt-6 relative mb-2">
+            <div class="relative flex">
+              <span class="px-2 bg-transparent text-gray-200 font-semibold text-sm"> Panel Servers </span>
+            </div>
+          </div>
+          <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>  
+          <a href="<%= settings.pterodactyl.domain %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" class="transition text-gray-300 hover:bg-dark-700/50 backdrop-blur hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+            <!-- Heroicon name: outline/home -->
+            <div class="flex-shrink-0 h-6 w-6 rounded-lg text-center mr-3 rounded-lg border border-gray-600 group-hover:border-winter-500 group-hover:text-winter-500 transition">
+                <span class="text-md"><%= pterodactyl.relationships.servers.data[i].attributes.name.charAt(0).toUpperCase() %></span>
+            </div>
+            <%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %>
+          </a>
+          <% } %>
+          <div class="pt-6"></div> <!-- Spacer -->
+          <% } %>
+          
+          <a href="../dashboard" class="transition text-gray-300 hover:bg-dark-700/50 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+            <!-- Heroicon name: outline/users -->
+            <svg class="text-gray-400 group-hover:text-winter-500 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="gray" viewBox="0 0 448 512" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+            </svg>              
+            Back to Dashboard
+          </a>
+
+          <div class="mt-6 relative mb-2">
+              <div class="relative flex">
+                <span class="px-2 bg-transparent text-gray-200 font-semibold text-sm"> Management </span>
+              </div>
+          </div>
+
+
+          <a href="../admin" class="transition text-gray-300 hover:bg-dark-700/50 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+            <!-- Heroicon name: outline/users -->
+            <svg class="text-gray-400 group-hover:text-winter-500 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="gray" viewBox="0 0 448 512" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M142.9 142.9c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5c0 0 0 0 0 0H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5c7.7-21.8 20.2-42.3 37.8-59.8zM16 312v7.6 .7V440c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l41.6-41.6c87.6 86.5 228.7 86.2 315.8-1c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.2 62.2-162.7 62.5-225.3 1L185 329c6.9-6.9 8.9-17.2 5.2-26.2s-12.5-14.8-22.2-14.8H48.4h-.7H40c-13.3 0-24 10.7-24 24z" />
+            </svg>              
+            Updater
+          </a>
+
+          <a href="../themes" class="transition text-gray-300 hover:bg-dark-700/50 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"> 
+            <!-- Heroicon name: outline/users -->
+            <svg class="text-gray-400 group-hover:text-winter-500 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 16C11 15.0681 11 14.6022 11.1522 14.2346C11.3552 13.7446 11.7446 13.3552 12.2346 13.1522C12.6022 13 13.0681 13 14 13H16.8C17.9201 13 18.4802 13 18.908 12.782C19.2843 12.5903 19.5903 12.2843 19.782 11.908C20 11.4802 20 10.9201 20 9.8V9.2C20 8.07989 20 7.51984 19.782 7.09202C19.5903 6.71569 19.2843 6.40973 18.908 6.21799C18.4802 6 17.9201 6 16.8 6H16M16 6C16 6.93188 16 7.39782 15.8478 7.76537C15.6448 8.25542 15.2554 8.64477 14.7654 8.84776C14.3978 9 13.9319 9 13 9H7C6.06812 9 5.60218 9 5.23463 8.84776C4.74458 8.64477 4.35523 8.25542 4.15224 7.76537C4 7.39782 4 6.93188 4 6C4 5.06812 4 4.60218 4.15224 4.23463C4.35523 3.74458 4.74458 3.35523 5.23463 3.15224C5.60218 3 6.06812 3 7 3H13C13.9319 3 14.3978 3 14.7654 3.15224C15.2554 3.35523 15.6448 3.74458 15.8478 4.23463C16 4.60218 16 5.06812 16 6ZM10.6 21H11.4C11.9601 21 12.2401 21 12.454 20.891C12.6422 20.7951 12.7951 20.6422 12.891 20.454C13 20.2401 13 19.9601 13 19.4V17.6C13 17.0399 13 16.7599 12.891 16.546C12.7951 16.3578 12.6422 16.2049 12.454 16.109C12.2401 16 11.9601 16 11.4 16H10.6C10.0399 16 9.75992 16 9.54601 16.109C9.35785 16.2049 9.20487 16.3578 9.10899 16.546C9 16.7599 9 17.0399 9 17.6V19.4C9 19.9601 9 20.2401 9.10899 20.454C9.20487 20.6422 9.35785 20.7951 9.54601 20.891C9.75992 21 10.0399 21 10.6 21Z" />
+            </svg>                           
+            Themes
+          </a> 
+
+          <a href="../admin/coins" class="transition text-gray-300 hover:bg-dark-700/50 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+              <!-- Heroicon name: outline/folder -->
+              <svg class="text-gray-400 group-hover:text-winter-500 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="gray" viewBox="0 0 512 512" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M512 80c0 18-14.3 34.6-38.4 48c-29.1 16.1-72.5 27.5-122.3 30.9c-3.7-1.8-7.4-3.5-11.3-5C300.6 137.4 248.2 128 192 128c-8.3 0-16.4 .2-24.5 .6l-1.1-.6C142.3 114.6 128 98 128 80c0-44.2 86-80 192-80S512 35.8 512 80zM160.7 161.1c10.2-.7 20.7-1.1 31.3-1.1c62.2 0 117.4 12.3 152.5 31.4C369.3 204.9 384 221.7 384 240c0 4-.7 7.9-2.1 11.7c-4.6 13.2-17 25.3-35 35.5c0 0 0 0 0 0c-.1 .1-.3 .1-.4 .2l0 0 0 0c-.3 .2-.6 .3-.9 .5c-35 19.4-90.8 32-153.6 32c-59.6 0-112.9-11.3-148.2-29.1c-1.9-.9-3.7-1.9-5.5-2.9C14.3 274.6 0 258 0 240c0-34.8 53.4-64.5 128-75.4c10.5-1.5 21.4-2.7 32.7-3.5zM416 240c0-21.9-10.6-39.9-24.1-53.4c28.3-4.4 54.2-11.4 76.2-20.5c16.3-6.8 31.5-15.2 43.9-25.5V176c0 19.3-16.5 37.1-43.8 50.9c-14.6 7.4-32.4 13.7-52.4 18.5c.1-1.8 .2-3.5 .2-5.3zm-32 96c0 18-14.3 34.6-38.4 48c-1.8 1-3.6 1.9-5.5 2.9C304.9 404.7 251.6 416 192 416c-62.8 0-118.6-12.6-153.6-32C14.3 370.6 0 354 0 336V300.6c12.5 10.3 27.6 18.7 43.9 25.5C83.4 342.6 135.8 352 192 352s108.6-9.4 148.1-25.9c7.8-3.2 15.3-6.9 22.4-10.9c6.1-3.4 11.8-7.2 17.2-11.2c1.5-1.1 2.9-2.3 4.3-3.4V304v5.7V336zm32 0V304 278.1c19-4.2 36.5-9.5 52.1-16c16.3-6.8 31.5-15.2 43.9-25.5V272c0 10.5-5 21-14.9 30.9c-16.3 16.3-45 29.7-81.3 38.4c.1-1.7 .2-3.5 .2-5.3zM192 448c56.2 0 108.6-9.4 148.1-25.9c16.3-6.8 31.5-15.2 43.9-25.5V432c0 44.2-86 80-192 80S0 476.2 0 432V396.6c12.5 10.3 27.6 18.7 43.9 25.5C83.4 438.6 135.8 448 192 448z" />
+                </svg>                          
+              Coins
+          </a>
+
+          <a href="../admin/plans" class="transition text-gray-300 hover:bg-dark-700/50 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+            <!-- Heroicon name: outline/folder -->
+            <svg class="text-gray-400 group-hover:text-winter-500 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="gray" viewBox="0 0 512 512" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M50.7 58.5L0 160H208V32H93.7C75.5 32 58.9 42.3 50.7 58.5zM240 160H448L397.3 58.5C389.1 42.3 372.5 32 354.3 32H240V160zm208 32H0V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192z" />
+              </svg>                          
+            Plans
+        </a>
+
+        <a href="../admin/resources" class="transition text-gray-300 hover:bg-dark-700/50 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+          <!-- Heroicon name: outline/folder -->
+          <svg class="text-gray-400 group-hover:text-winter-500 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="gray" viewBox="0 0 512 512" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M64 32C28.7 32 0 60.7 0 96v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm280 72a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm48 24a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zM64 288c-35.3 0-64 28.7-64 64v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V352c0-35.3-28.7-64-64-64H64zm280 72a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm56 24a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z" />
+            </svg>                          
+          Resources
+      </a>
+
+        </nav>
+      </div>
+      <div class="flex-shrink-0 flex p-4">
+        <a href="#" class="flex-shrink-0 w-full group block">
+          <div class="flex items-center">
+            <div>
+              <img class="inline-block h-9 w-9 rounded-full shadow-xl" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>?size=256" alt="">
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-white">@<%= userinfo.username %></p>
+              <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">
+              <% if (typeof packagename.charAt(0) == 'number') { %>
+                <%= packagename %> plan
+              <% } else { %>
+                <%= packagename.charAt(0).toUpperCase() + packagename.slice(1) %> plan
+              <% } %></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="flex-shrink-0 flex p-4 transition">
+        <a id="coins" class="flex-shrink-0 w-full group block">
+          <div class="flex items-center">
+            <div class="ml-2">
+              <p class="text-xs font-medium text-white"><%= coins.toLocaleString(undefined, {maximumFractionDigits:0}) %> coin<%= coins == 1 ? "" : "s" %> in your account </p>
+            </div>
+          </div>
+        </a>
+        <script>
+// Select the element that you want to track clicks on
+const myElement = document.getElementById('coins');
+
+// Set a click counter to 0
+let clickCounter = 0;
+
+// Add a click event listener to the element
+myElement.addEventListener('click', function() {
+  // Increase the click counter by 1
+  clickCounter++;
+
+  // Check if the click counter is equal to 5
+  if (clickCounter === 5) {
+    // Redirect the user to the desired URL
+    window.location.href = '../coins';
+  }
+});
+        </script>
+      </div>
+    </div>
+  </div>
