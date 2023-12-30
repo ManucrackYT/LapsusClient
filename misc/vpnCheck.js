@@ -1,7 +1,7 @@
 const fetch = require('node-fetch')
 const ejs = require("ejs");
 const { renderFile } = require('ejs')
-let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
+let newsettings = JSON.parse(require("fs").readFileSync("../settings.json"));
 
 module.exports = (key, db, ip, res) => {
     return new Promise(async resolve => {
@@ -16,7 +16,7 @@ module.exports = (key, db, ip, res) => {
             if (ipcache === "yes") {
                 resolve(true)
                 renderFile(
-                    `./themes/${newsettings.defaulttheme}/alerts/vpn.ejs`,
+                    `../themes/${newsettings.defaulttheme}/alerts/vpn.ejs`,
                     {
                         settings: newsettings,
                         db,
@@ -24,7 +24,7 @@ module.exports = (key, db, ip, res) => {
                     },
                     null,
                     (err, str) => {
-                        if (err) return renderFile(`./themes/default/alerts/vpn.ejs`);
+                        if (err) return renderFile(`../themes/${newsettings.defaulttheme}/alerts/vpn.ejs`);
                     }
                 )
                 return 
