@@ -16,7 +16,7 @@ module.exports = (key, db, ip, res) => {
             if (ipcache === "yes") {
                 resolve(true)
                 renderFile(
-                    `./themes/${newsettings.defaulttheme}/alerts/vpn.ejs`,
+                    `../themes/${newsettings.defaulttheme}/alerts/vpn.ejs`,
                     {
                         settings: newsettings,
                         db,

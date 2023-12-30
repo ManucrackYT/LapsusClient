@@ -1,6 +1,7 @@
 {
   "version": "2.5",
   "name": "Lapsus Client",
+  "discordurl": "https://discord.gg/lapsusdevelopment",
   "logo": {
     "url": "/assets/img/logo_background.png"
   },
