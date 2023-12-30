@@ -24,7 +24,7 @@ module.exports = (key, db, ip, res) => {
                     },
                     null,
                     (err, str) => {
-                        if (err) return renderFile(`../themes/${newsettings.defaulttheme}/alerts/vpn.ejs`);
+                        if (err) return renderFile(`./themes/${newsettings.defaulttheme}/alerts/vpn.ejs`);
                     }
                 )
                 return 
