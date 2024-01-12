@@ -58,7 +58,7 @@ If you download from the [Releases](https://github.com/ManucrackYT/LapsusClient/
 
 The best way to contact the developers is on Discord.
 
-[![discord](https://discordapp.com/api/guilds/954138561509203978/embed.png?style=banner3)](https://discord.com/invite/Xa3sm5fZKg)
+[![discord](https://discordapp.com/api/guilds/778310063839903786/embed.png?style=banner3)](https://discord.gg/hNJndxkh72)
 
 ---
 
