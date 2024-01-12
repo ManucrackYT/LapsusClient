@@ -3,8 +3,6 @@
 <h1 align="center">Lapsus Client</h1>
 
 
-[<p align="center"><img src="https://img.shields.io/github/downloads/ManucrackYT/LapsusClient/total.svg?style=for-the-badge" alt="downloads">](https://github.com/ManucrackYT/LapsusClient/releases) <img src="https://forthebadge.com/images/badges/winter-is-coming.svg"  height="28px" alt="winter-is-coming"></p>
-
 <p align="center">Lapsus Client, the most modern and customizable Pterodactyl Client Area for your hosting.</p>
 
 ![Screenshot 1](https://media.discordapp.net/attachments/1160683528497926315/1166771279882375309/SPOILER_image.png?ex=6554edee&is=654278ee&hm=75f5a77fa8d87c7059ffb01d0a67d632b657afe2ce4fabaa9d841f390fcee778&=&width=1316&height=616)
