@@ -1,4 +1,4 @@
-<p align="center"><img src="https://cdn.discordapp.com/attachments/1024881699307388988/1166477231363739749/logo_background.png?ex=6553dc14&is=65416714&hm=81d0cba8f6bfa3bafd1adb447cdd4d5ee78a38343faca9a52aff8c41231f4f41&" width="150px" height="150px" alt="logo"></p>
+<p align="center"><img src="https://cdn.discordapp.com/attachments/1190680696524652654/1197981100140658790/logo_background.png?ex=65bd3dd7&is=65aac8d7&hm=c35b4d7db24937198bdc99cf1a14299d5bc81298f1cb9f988ce87a0d9ff6fa03&" width="150px" height="150px" alt="logo"></p>
 
 <h1 align="center">Lapsus Client</h1>
 
