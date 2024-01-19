@@ -5,7 +5,7 @@
 
 <p align="center">Lapsus Client, the most modern and customizable Pterodactyl Client Area for your hosting.</p>
 
-![Screenshot 1](https://media.discordapp.net/attachments/1160683528497926315/1166771279882375309/SPOILER_image.png?ex=6554edee&is=654278ee&hm=75f5a77fa8d87c7059ffb01d0a67d632b657afe2ce4fabaa9d841f390fcee778&=&width=1316&height=616)
+![Login Page](https://cdn.discordapp.com/attachments/1190680696524652654/1197981520376385596/login_page.png?ex=65bd3e3b&is=65aac93b&hm=227cecf95a7a435e775eb9b3799bc0d16d70021036e3c81e24ddba3abbbde78f&)
 
 ## Features
 
