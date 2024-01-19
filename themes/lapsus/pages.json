@@ -37,20 +37,21 @@
         "couponcreationsuccess": "/admin",
         "couponrevokefailed": "/admin",
         "couponrevokesuccess": "/admin",
-        "removeaccountfailed": "/admin",
-        "removeaccountsuccess": "/admin"
+        "removeaccountfailed": "/admin/misc",
+        "removeaccountsuccess": "/admin/misc"
     },
     "pages": {
         "dashboard": "dashboard.ejs",
-        "coins": "coins.ejs",
         "servers/new": "create.ejs",
         "beta/servers/new": "dev/create.ejs",
         "edit": "edit.ejs",
         "profile": "profile.ejs",
         "admin": "admin.ejs",
+        "admin/misc": "admin-misc.ejs",
         "admin/coins": "admin-coins.ejs",
         "admin/plans": "admin-plans.ejs",
         "admin/resources": "admin-resources.ejs",
+        "admin/coupons": "admin-coupons.ejs",
         "admin/settings": "admin-settings.ejs",
         "redeem": "redeem.ejs",
         "settings": "security.ejs",
@@ -72,7 +73,6 @@
         "/j4r",
         "/servers",
         "/store",
-        "/coins",
         "/earn"
     ],
     "mustbeadmin": [

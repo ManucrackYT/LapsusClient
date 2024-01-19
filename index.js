@@ -121,7 +121,15 @@ const listener = app.listen(settings.website.port, function() {
   console.log(chalk.gray("  "));
   console.log(chalk.gray("  ") + chalk.bgBlack("  LAPSUS CLIENT IS ONLINE  "));
   console.log(chalk.gray("  "));
+  console.log(chalk.gray("  ") + chalk.green("[VERSION]") + chalk.white(" You're using version ") + chalk.underline(settings.version));
+  console.log(chalk.gray("  "));
+  console.log(chalk.gray("  ") + chalk.blue("[THEME]") + chalk.white(" You're using ") + chalk.underline(settings.defaulttheme) + " theme");
+  console.log(chalk.gray("  "));
   console.log(chalk.gray("  ") + chalk.cyan("[SYSTEM]") + chalk.white(" You can now access the dashboard at ") + chalk.underline(settings.api.client.oauth2.link + "/"));
+  if (settings.defaulttheme === 'lapsus', 'heliactyl') {
+      } else {
+    console.log(chalk.gray("  "));
+    console.log(chalk.gray("  ") + chalk.yellow("[WARNING]") + chalk.white(" You're using an unofficial theme. This means you are exposed to vulnerabilities and bugs. Consider using the official theme or a third party theme provided by Lapsus."));  }
 });
 
 var cache = false;
@@ -148,6 +156,11 @@ app.use(function(req, res, next) {
   };
   next();
 });
+
+
+
+
+
 
 // Load the API files.
 
@@ -281,6 +294,8 @@ module.exports.ratelimits = async function(length) {
     }, length * 1000
   )
 }
+
+/* Copying the 𝕃𝕒𝕡𝕤𝕦𝕤 repository and claiming as yours or your project will have consequences. Think twice before doing it. */
 
 // Get a cookie.
 function getCookie(req, cname) {

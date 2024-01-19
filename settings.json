@@ -1,24 +1,26 @@
 {
-  "version": "2.5",
+  "version": "2.6",
   "name": "Lapsus Client",
   "logo": {
     "url": "/assets/img/logo_background.png"
   },
   "defaulttheme": "lapsus",
   "timezone": "Europe/London",
+  "main_web": "https://yourdomain.com",
+  "discord_server": "https://discord.gg/invite/",
 
   "news": {
     "new1_type": "Recommendation",
     "new1_title": "Try Lapsus Launcher",
     "new1_message": "Our new project focused on Minecraft gaming, a next generation launcher to play Minecraft at another performance.",
-    "new1_img": "https://cdn.discordapp.com/attachments/954138562234822692/1168195737893474476/Lapsus_Launcher_Banner.png?ex=6550e20f&is=653e6d0f&hm=5bf4b57459b8515b75b41beb56eefb7c29b99393b91f5b26f6c2844e8498de6d&",
+    "new1_img": "https://cdn.discordapp.com/attachments/1190680696524652654/1190785158555635712/Lapsus_Launcher_Banner.png?ex=65a31019&is=65909b19&hm=ebe8609fe4feacbcff8f1d894223668c2d089779876e7294ac22b2ae5540a70d&",
     "new1_button_text": "Try it now!",
     "new1_button_link": "https://github.com/ManucrackYT/LapsusLauncher",
 
     "new2_type": "Info",
     "new2_title": "Lapsus Client has been officialy released!",
     "new2_message": "Thanks for using Lapsus Client, report any bugs or problems at our Github.",
-    "new2_img": "https://cdn.discordapp.com/attachments/954138562234822692/1168202744188895312/Lapsus_thanks_for_using_our_software_Banner.png?ex=6550e896&is=653e7396&hm=1991e923dd93cde917bce5b69dfc65a04626fd8ba727ed9dbc8731a097cad6ed&",
+    "new2_img": "https://cdn.discordapp.com/attachments/1190680696524652654/1190785157150539816/Lapsus_thanks_for_using_our_software_Banner.png?ex=65a31019&is=65909b19&hm=20e24723e3352d65f83dfdd7f99a0d2a286ffbbb3b838d1befcc16d89198a831&",
     "new2_button_text": "GitHub",
     "new2_button_link": "https://github.com/ManucrackYT/LapsusClient"
   },
@@ -46,15 +48,14 @@
     "cpu": "300",
     "servers": "3"
   },
-  "stripe": {
-    "enabled": false,
-    "note": "The key is the stripe API key and the coins is the amount per 1€. If the stripe API key is invalid and stripe purchases are enabled, Lapsus Client will crash when attempting to do transactions.",
-    "key": "100000000000000",
-    "coins": 100
-  },
   "database": "sqlite://database.sqlite",
   "api": {
     "client": {
+      "misc": {
+        "purger": true,
+        "getip": true
+      },
+
       "webhook": {
         "auditlogs": false
       },
@@ -155,7 +156,7 @@
         }
       },
       "locations": {
-        "1": { "name": "Germany 🇩🇪", "city": "Node 01", "package": null }
+        "2": { "name": "Germany 🇩🇪", "city": "Node 01", "package": null }
       },
       "eggs": {
        "paper": {
