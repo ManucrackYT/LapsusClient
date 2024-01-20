@@ -49,7 +49,7 @@ If you download from the [Releases](https://github.com/ManucrackYT/LapsusClient/
 | Node.js 18 | ✅ |
 | Node.js 17 | ✅ |
 | Node.js 16 | ⚠️ |
-| Node.js ≥15 | ❌ |
+| Node.js ≤15 | ❌ |
 
 ⚠️ Not recommended to continue using this version
 
