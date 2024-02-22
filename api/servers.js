@@ -163,7 +163,7 @@ module.exports.load = async function (app, db) {
               backups: 0
             };
             specs.name = name;
-            specs.limits.swap = -1;
+            specs.limits.swap = 0;
             specs.limits.memory = ram;
             specs.limits.disk = disk;
             specs.limits.cpu = cpu;
