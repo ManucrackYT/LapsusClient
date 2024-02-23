@@ -99,18 +99,20 @@
                     <form class="forms-sample">
                       <div class="form-group">
                         <label for="IDPlan">Discord User ID</label>
-                        <input style="border-radius: 15px; padding: 8px;" type="number" class="transition focus:border-gray-400 focus:ring-gray-400 justify-center border border-gray-300 form-control rounded-md" placeholder="Enter user ID" id ="IDPlan">
+                        <input style="padding: 8px;" type="number" class="focus:border-gray-400 focus:ring-gray-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" placeholder="Enter user ID" id ="IDPlan">
                       </div>
+                      <br>
                       <div class="form-group">
-                        <label for="InputPackage">Package</label><BR>
-                        <select class="form-control transition ease-in-out delay-100 block w-full flex-1 text-gray-800 rounded-md bg-gray-200
-                        border-gray-200 focus:border-gray-400 focus:ring-gray-400 sm:text-sm" style="border-radius: 15px; padding: 8px;" id="package">
+                        <label for="InputPackage">Package</label>
+                        
+                        <select class="focus:border-gray-400 focus:ring-gray-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" style="width: auto; padding: 8px;" id="package">
                           <% for (let [name, value] of Object.entries(settings.api.client.packages.list)) { %>
                             <option value="<%= name %>"><%= name %> (RAM: <%= value.ram %>MB, Disk: <%= value.disk %>MB, CPU: <%= value.cpu %>%, Servers: <%= value.servers %>)</option>
                           <% } %>
                         </select>
                       </div>
                     </form>
+                    <br>
                     <a role="button" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none" href="javascript: submitPlan()">Submit</a><br><br>
                   </div>
                 </div>

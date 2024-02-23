@@ -58,6 +58,8 @@ html {
 */
 
 body {
+  overflow: hidden; 
+  /* Hide scrollbars */
   margin: 0;
   /* 1 */
   line-height: inherit;
@@ -1038,6 +1040,14 @@ select {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
 
 .flex-col {
   flex-direction: column;
@@ -1310,11 +1320,13 @@ select {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-\[url\(\'https\:\/\/cdn\.discordapp\.com\/attachments\/1023580894688194620\/1098603123754422322\/Copy_of_Copy_of_Untitled_Facebook_Cover_4\.png\'\)\] {
+.bg-navbar {
   background-image: url('https://i.pinimg.com/736x/48/14/b3/4814b3487a88131bf38bc66d68b6949b.jpg');
+  background-repeat: no-repeat; /* Do not repeat the image */ 
+  background-size: cover; /* Resize the background image to cover the entire container */ 
 }
 
-.bg-\[url\(\'https\:\/\/cdn\.discordapp\.com\/attachments\/954138562234822692\/1167467905336746054\/wallpaper_3\.jpg\'\)\] {
+.bg-deploy {
   background-image: url('https://img.freepik.com/premium-photo/modern-brick-wall-3d-rendering_118019-218.jpg');
 }
 

@@ -2,7 +2,6 @@
 
 <h1 align="center">Lapsus Client</h1>
 
-## Development for version 3.x has started, we'll redesign frontend and backend to bring a better experience
 
 <p align="center">Lapsus Client, the most modern and customizable Pterodactyl Client Area for your hosting.</p>
 
@@ -50,7 +49,7 @@ If you download from the [Releases](https://github.com/ManucrackYT/LapsusClient/
 | Node.js 18 | ✅ |
 | Node.js 17 | ✅ |
 | Node.js 16 | ⚠️ |
-| Node.js ≤15 | ❌ |
+| Node.js ≥15 | ❌ |
 
 ⚠️ Not recommended to continue using this version
 

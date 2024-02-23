@@ -1,5 +1,5 @@
 {
-  "version": "2.6",
+  "version": "2.7",
   "name": "Lapsus Client",
   "logo": {
     "url": "/assets/img/logo_background.png"
@@ -8,19 +8,21 @@
   "timezone": "Europe/London",
   "main_web": "https://yourdomain.com",
   "discord_server": "https://discord.gg/invite/",
+  
+  "profile_json": true,
 
   "news": {
     "new1_type": "Recommendation",
     "new1_title": "Try Lapsus Launcher",
     "new1_message": "Our new project focused on Minecraft gaming, a next generation launcher to play Minecraft at another performance.",
-    "new1_img": "https://cdn.discordapp.com/attachments/1190680696524652654/1190785158555635712/Lapsus_Launcher_Banner.png?ex=65a31019&is=65909b19&hm=ebe8609fe4feacbcff8f1d894223668c2d089779876e7294ac22b2ae5540a70d&",
+    "new1_img": "/assets/img/lapsus_launcher_banner.png",
     "new1_button_text": "Try it now!",
     "new1_button_link": "https://github.com/ManucrackYT/LapsusLauncher",
 
     "new2_type": "Info",
     "new2_title": "Lapsus Client has been officialy released!",
     "new2_message": "Thanks for using Lapsus Client, report any bugs or problems at our Github.",
-    "new2_img": "https://cdn.discordapp.com/attachments/1190680696524652654/1190785157150539816/Lapsus_thanks_for_using_our_software_Banner.png?ex=65a31019&is=65909b19&hm=20e24723e3352d65f83dfdd7f99a0d2a286ffbbb3b838d1befcc16d89198a831&",
+    "new2_img": "/assets/img/lapsus_client_thanks.png",
     "new2_button_text": "GitHub",
     "new2_button_link": "https://github.com/ManucrackYT/LapsusClient"
   },
@@ -37,10 +39,6 @@
     "domain": "https://panel.yourdomain.com",
     "key": "ptla_",
     "account_key": "ptlc_"
-  },
-  "linkvertise": {
-    "userid": "679241",
-    "coins": 0
   },
   "storelimits": {
     "ram": "5120",
@@ -137,6 +135,7 @@
             "ram": 1536,
             "disk": 5120,
             "cpu": 100,
+            "databases": 1,
             "servers": 1
           },
 
@@ -144,6 +143,7 @@
             "ram": 2048,
             "disk": 10240,
             "cpu": 200,
+            "databases": 3,
             "servers": 3
           }
         },
@@ -165,11 +165,13 @@
             "ram": 1024,
             "disk": 1024,
             "cpu": 50
+            
           },
           "maximum": {
             "ram": null,
             "disk": null,
             "cpu": null
+            
           },
           "info": {
             "egg": 4,
@@ -317,9 +319,13 @@
             "cost": 400,
             "per": 50
           },
+          "databases": {
+            "cost": 10,
+            "per": 1
+          },
           "servers": {
             "cost": 100,
-            "per": 2
+            "per": 1
           }
         }
       }
@@ -368,7 +374,8 @@
         "buy servers": true,
         "buy ram": true,
         "buy cpu": true,
-        "buy disk": true
+        "buy disk": true,
+        "buy databases": true
       }, 
       "admin": {
         "set coins": true,

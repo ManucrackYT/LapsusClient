@@ -101,13 +101,70 @@
 						<% if (req.query.err) { %>
             <div style="border-radius: 15px;" class="alert">
 							<% if (req.query.err == "MISSINGCOUPONCODE") { %>
-								You have not provided a coupon code.
+                <div class="rounded-md bg-white shadow-md p-4 mb-8">
+                  <div class="flex">
+                    <div class="flex-shrink-0">
+                      <!-- Heroicon name: solid/information-circle -->
+                      <svg class="h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                      </svg>
+                      </div>
+                    <div class="ml-3 flex-1 md:flex md:justify-between">
+                      <p class="text-sm text-gray-800">
+                        You have not provided a coupon code.
+                      </p>
+                    </div>
+                    </div>
+                  </div>
 							<% } else if (req.query.err == "INVALIDCOUPONCODE") { %>
-								Invalid coupon code. Was it claimed already?
+                <div class="rounded-md bg-white shadow-md p-4 mb-8">
+                  <div class="flex">
+                    <div class="flex-shrink-0">
+                      <!-- Heroicon name: solid/information-circle -->
+                      <svg class="h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                      </svg>
+                      </div>
+                    <div class="ml-3 flex-1 md:flex md:justify-between">
+                      <p class="text-sm text-gray-800">
+                        Invalid coupon code. Was it claimed already?
+                      </p>
+                    </div>
+                    </div>
+                  </div>
+								
 							<% } else if (req.query.err == "SUCCESSCOUPONCODE") { %>
-								Success!
+                <div class="rounded-md bg-white shadow-md p-4 mb-8">
+                  <div class="flex">
+                    <div class="flex-shrink-0">
+                      <!-- Heroicon name: solid/information-circle -->
+                      <svg class="h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                      </svg>
+                      </div>
+                    <div class="ml-3 flex-1 md:flex md:justify-between">
+                      <p class="text-sm text-gray-800">
+                        Success!
+                      </p>
+                    </div>
+                    </div>
+                  </div>
 							<% } else { %>
-								Coupon failure.
+                <div class="rounded-md bg-white shadow-md p-4 mb-8">
+                  <div class="flex">
+                    <div class="flex-shrink-0">
+                      <!-- Heroicon name: solid/information-circle -->
+                      <svg class="h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                      </svg>
+                      </div>
+                    <div class="ml-3 flex-1 md:flex md:justify-between">
+                      <p class="text-sm text-gray-800">
+                        Coupon failure.
+                      </p>
+                    </div>
+                    </div>
+                  </div>
 							<% } %>
 							</div>
 						<% } %>
@@ -116,8 +173,9 @@
                 <div class="card">
                   <div class="card-body">
 									<form action="/coupon_redeem">
-                                           <label for="code">Coupon</label>
-											<input style="border-radius: 15px; padding: 8px;" type="text" class="form-control" placeholder="Enter your coupon code here" name="code">
+                      <label for="code">Coupon</label>
+                      <br></br>
+											<input style=" padding: 8px;" type="text" class="focus:border-gray-400 focus:ring-gray-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" placeholder="Enter your coupon code here" name="code">
 											<br></br>
                       <button class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none">Redeem</button>
 									</form>

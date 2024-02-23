@@ -50,6 +50,13 @@
         transition: 0.5s
     }
 
+    .update-icon {
+  display: block;
+  margin-left: 90%;
+  margin-top: -4%;
+  width: 10%;
+}
+
     .close:hover,
     .close:focus {
         color: #000;
@@ -112,15 +119,15 @@
                                   .then(res => Promise.resolve(res.json()).then(ver => {
                                       let currentver = "<%= settings.version.replace(/"/g, `\\\\"`) %>";
                                       if (ver.version == currentver) {
-                                          document.getElementById("latestversion").innerHTML = `<span>You are running Lapsus Client version <code style="color: #007fcc" >v${currentver}</code>. Lapsus Client is up-to-date!</span>`;
+                                          document.getElementById("latestversion").innerHTML = `<span>You are running Lapsus Client version <code style="color: #007fcc" >v${currentver}</code>. Lapsus Client is up-to-date!</span><img src="/assets/img/no-updates.png" width="100" class="update-icon" />`;
                                       } else if (ver.prerelease == currentver) {
-                                          document.getElementById("latestversion").innerHTML = `<span>You are running Lapsus Client version <code style="color: #007fcc">v${currentver}</code>. Lapsus Client is up-to-date!</span>`;
+                                          document.getElementById("latestversion").innerHTML = `<span>You are running Lapsus Client version <code style="color: #007fcc">v${currentver}</code>. Lapsus Client is up-to-date!</span><img src="/assets/img/no-updates.png" width="100" class="update-icon" />`;
                                       } else {
-                                          document.getElementById("latestversion").innerHTML = `<span>Lapsus Client is <b>not up-to-date!</b> The latest version is <code style="color: #007fcc" >v${ver.version}</code> and you are currently running version <code style="color: #007fcc" >v<%= settings.version %></code>.</span>`;
+                                          document.getElementById("latestversion").innerHTML = `<span>Lapsus Client is <b>not up-to-date!</b> The latest version is <code style="color: #007fcc" >v${ver.version}</code> and you are currently running version <code style="color: #007fcc" >v<%= settings.version %></code>.</span><img src="/assets/img/update-available.png" width="100" class="update-icon" /><center><a href="https://github.com/ManucrackYT/LapsusClient/releases/latest" target="_blank" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none">Update now</a></center>`;
                                       };
                                   }));
                           </script>
-                <center><a href="https://github.com/ManucrackYT/LapsusClient/releases" target="_blank" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none">Update (If needed)</a></center>
+                
 
       </div>
     </div>

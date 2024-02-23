@@ -40,11 +40,13 @@
                 </div>
               </div>       
               <br>       
+              <% if (settings.profile_json == true) { %>
               <div class="card mt-10">
                 <div class="card-body">
                   <pre class="bg-gray-50 p-5 mt-5 rounded-2xl text-xs tracking-tighter"><%= JSON.stringify(userinfo, null, 2) %></pre>
                 </div>
-              </div>              
+              </div>  
+              <% } %>          
 
             <!-- /End replace -->
           </div>

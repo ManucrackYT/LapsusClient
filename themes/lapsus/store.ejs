@@ -167,6 +167,33 @@
                   </dd>     
                 </div>    
                 </div>
+                <div class="px-4 py-5 sm:p-6">
+                  <dt class="text-base font-normal text-pylex-400"><%= settings.api.client.coins.store.servers.per/1 %>  Server per <%= settings.api.client.coins.store.servers.cost %> coin<%= settings.api.client.coins.store.servers.cost == 1 ? "" : "s" %>.</dt>
+                  <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
+                            <div class="mt-1 flex rounded-md">
+                              <form action="/buyservers">
+                                <select name="amount" class="form-control transition ease-in-out delay-100 block w-full flex-1 text-gray-800 rounded-md bg-gray-200
+                                border-gray-200 focus:border-gray-400 focus:ring-gray-400 sm:text-sm" class="select-selected">
+                                  <option value=1><%= settings.api.client.coins.store.servers.per/1 %>  Server - <%= settings.api.client.coins.store.servers.cost %> coin<%= settings.api.client.coins.store.servers.cost == 1 ? "" : "s" %></option>
+                                  <option value=2><%= settings.api.client.coins.store.servers.per/1 * 2 %>  Servers - <%= settings.api.client.coins.store.servers.cost * 2 %> coins</option>
+                                  <option value=3><%= settings.api.client.coins.store.servers.per/1 * 3 %> Servers - <%= settings.api.client.coins.store.servers.cost * 3 %> coins</option>
+                                  <option value=4><%= settings.api.client.coins.store.servers.per/1 * 4 %> Servers - <%= settings.api.client.coins.store.servers.cost * 4 %> coins</option>
+                                  <option value=5><%= settings.api.client.coins.store.servers.per/1 * 5 %> Servers - <%= settings.api.client.coins.store.servers.cost * 5 %> coins</option>
+                                  <option value=6><%= settings.api.client.coins.store.servers.per/1* 6 %> Servers - <%= settings.api.client.coins.store.servers.cost * 6 %> coins</option>
+                                  <option value=7><%= settings.api.client.coins.store.servers.per/1 * 7 %> Servers - <%= settings.api.client.coins.store.servers.cost * 7 %> coins</option>
+                                  <option value=8><%= settings.api.client.coins.store.servers.per/1 * 8 %> Servers - <%= settings.api.client.coins.store.servers.cost * 8 %> coins</option>
+                                  <option value=9><%= settings.api.client.coins.store.servers.per/1 * 9 %> Servers - <%= settings.api.client.coins.store.servers.cost * 9 %> coins</option>
+                                  <option value=10><%= settings.api.client.coins.store.servers.per/1 * 10 %> Servers - <%= settings.api.client.coins.store.servers.cost * 10 %> coins</option>
+                                </select>
+                                <br>
+                    <button onclick="buyServers()"type="submit" class="transition ease-in-out delay-100 group relative flex w-32 justify-center rounded-md border border-gray-200 bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none ">
+                      Purchase
+                    </button>
+                    </form>
+                            </div>
+                  </dd>
+                </div>
+            
               </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
               </dl>
             </div>
@@ -184,6 +211,11 @@
                                                 async function buyCPU() {
                                                     let amount = encodeURIComponent(document.getElementById("cpu").value);
                                                     document.location.href = `/buycpu?amount=${amount}`;
+                                                };
+
+                                                async function buyServers() {
+                                                    let amount = encodeURIComponent(document.getElementById("servers").value);
+                                                    document.location.href = `/buyservers?amount=${amount}`;
                                                 };
                                             </script>
 

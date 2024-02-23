@@ -131,6 +131,7 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
                   <label for="cpu">CPU (Cores):</label>
                   <input type="text" class="focus:border-gray-400 focus:ring-gray-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" id="cpu" placeholder="<%= (packages ? packages.cpu : 0)/100 + extraresources.cpu/100 - cpu/100 %>" value="<%= (packages ? packages.cpu : 0)/100 + extraresources.cpu/100 - cpu/100 %>">
                   <br>
+
                   
                   <button onclick="submitForm()" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none ml-2">Deploy</button>
               <br></div>
