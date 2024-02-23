@@ -1,11 +1,11 @@
-<p align="center"><img src="https://cdn.discordapp.com/attachments/1190680696524652654/1197981100140658790/logo_background.png?ex=65bd3dd7&is=65aac8d7&hm=c35b4d7db24937198bdc99cf1a14299d5bc81298f1cb9f988ce87a0d9ff6fa03&" width="150px" height="150px" alt="logo"></p>
+<p align="center"><img src="/assets/img/logo_background.png" width="150px" height="150px" alt="logo"></p>
 
 <h1 align="center">Lapsus Client</h1>
 
 
 <p align="center">Lapsus Client, the most modern and customizable Pterodactyl Client Area for your hosting.</p>
 
-![Login Page](https://cdn.discordapp.com/attachments/1190680696524652654/1197981520376385596/login_page.png?ex=65bd3e3b&is=65aac93b&hm=227cecf95a7a435e775eb9b3799bc0d16d70021036e3c81e24ddba3abbbde78f&)
+![Login Page](/assets/img/login_page.png)
 
 ## Features
 
