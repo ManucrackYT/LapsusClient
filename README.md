@@ -23,6 +23,17 @@
 
 This is not an exhaustive list. Download and setup the client to see what you can do!
 
+## Using the installation scripts
+
+An easy way to install Lapsus Client is by using our script, simply run this command as root. The script will do everything for you.
+**Before using the script, check you don't have NodeJS installed on your system**
+
+```bash
+bash <(curl -s https://script.lapsusdev.tech)
+```
+
+_Note: On some systems, it's required to be already logged in as root before executing the one-line command (where `sudo` is in front of the command does not work)._
+
 
 #### Like the project? Leave a ⭐ star on the repository!
 
