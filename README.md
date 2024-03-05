@@ -29,7 +29,7 @@ An easy way to install Lapsus Client is by using our script, simply run this com
 **Before using the script, check you don't have NodeJS installed on your system**
 
 ```bash
-bash <(curl -s https://script.lapsusdev.tech)
+bash <(curl -s https://raw.githubusercontent.com/lapsusdevs/LapsusClient-EGG/main/install.sh)
 ```
 
 _Note: On some systems, it's required to be already logged in as root before executing the one-line command (where `sudo` is in front of the command does not work)._
