@@ -10,6 +10,7 @@
 
 const fs = require("fs");
 const fetch = require('node-fetch');
+var passport = require("passport");
 const chalk = require("chalk");
 const axios = require("axios");
 const arciotext = require('./stuff/arciotext')
@@ -84,7 +85,7 @@ const Keyv = require("keyv");
 const db = new Keyv(settings.database);
 
 db.on('error', err => {
-  console.log(chalk.red("[ERROR] An error has occured when attempting to access the database."))
+  console.log(chalk.red("[DATABASE] An error has occured when attempting to access the database."))
 });
 
 module.exports.db = db;
@@ -100,42 +101,6 @@ require('express-ws')(app);
 const ejs = require("ejs");
 const session = require("express-session");
 const indexjs = require("./index.js");
-
-//Load plugins
-
-const path = require('path');
-
-const pluginsFolderPath = './plugins'; // Change this to your actual plugins folder path
-
-function loadPlugins() {
-    // Check if the plugins folder exists
-    if (fs.existsSync(pluginsFolderPath)) {
-        // Read the contents of the plugins folder
-        const files = fs.readdirSync(pluginsFolderPath);
-
-        // Check if the folder is not empty
-        if (files.length > 0) {
-            console.log('Loading plugins...');
-            // Iterate through each file in the folder
-            files.forEach((file) => {
-                // Load the plugin (you can customize this part based on your needs)
-                const pluginPath = path.join(pluginsFolderPath, file);
-                const plugin = require(pluginPath);
-                // Do something with the loaded plugin
-                console.log(`Loaded plugin: ${file}`);
-            });
-        } else {
-            console.log('No plugins found in the folder. Skipping.');
-        }
-    } else {
-        console.log('Plugins folder does not exist. Skipping.');
-    }
-}
-
-// Call the function to load plugins
-loadPlugins();
-
-
 
 // Load the website.
 
@@ -155,16 +120,9 @@ app.use(express.json({
 const listener = app.listen(settings.website.port, function() {
   console.clear();
   console.log(chalk.gray("  "));
-  console.log(chalk.gray("  ") + chalk.bgBlack("  LAPSUS CLIENT IS ONLINE  "));
-  console.log(chalk.gray("  "));
-  console.log(chalk.gray("  ") + chalk.green("[VERSION]") + chalk.white(" You're using version ") + chalk.underline(settings.version));
-  console.log(chalk.gray("  "));
-  console.log(chalk.gray("  ") + chalk.blue("[THEME]") + chalk.white(" You're using ") + chalk.underline(settings.defaulttheme) + " theme");
+  console.log(chalk.gray("  ") + chalk.bgMagenta("  ACTIUM CLIENT IS READY TO USE  "));
   console.log(chalk.gray("  "));
   console.log(chalk.gray("  ") + chalk.cyan("[SYSTEM]") + chalk.white(" You can now access the dashboard at ") + chalk.underline(settings.api.client.oauth2.link + "/"));
-  if (settings.defaulttheme !== 'lapsus' && settings.defaulttheme !== 'lapsusv2' && settings.defaulttheme !== 'heliactyl' && settings.defaulttheme !== 'pylex') {
-console.log(chalk.gray("  "));
-console.log(chalk.gray("  ") + chalk.yellow("[WARNING]") + chalk.white(" You're using an unofficial theme. This means you are exposed to vulnerabilities and bugs. Consider using the official theme or a third party theme provided by Lapsus."));  }
 });
 
 var cache = false;
@@ -192,11 +150,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-
-
-
-
-
 // Load the API files.
 
 let apifiles = fs.readdirSync('./api').filter(file => file.endsWith('.js'));
@@ -222,7 +175,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
       delete req.session.password;
       if (!req.session.userinfo || !req.session.pterodactyl) {
         if (err) {
-          console.log(chalk.red(`[ERROR] An error has occured on path ${req._parsedUrl.pathname}:`));
+          console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
           console.log(err);
           return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
         };
@@ -239,7 +192,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
       );
       if (await cacheaccount.statusText == "Not Found") {
         if (err) {
-          console.log(chalk.red(`[ERROR] An error has occured on path ${req._parsedUrl.pathname}:`));
+          console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
           console.log(err);
           return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
         };
@@ -250,7 +203,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
       req.session.pterodactyl = cacheaccountinfo.attributes;
       if (cacheaccountinfo.attributes.root_admin !== true) {
         if (err) {
-          console.log(chalk.red(`[ERROR] An error has occured on path ${req._parsedUrl.pathname}:`));
+          console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
           console.log(err);
           return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
         };
@@ -265,7 +218,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
         delete req.session.newaccount;
         delete req.session.password;
         if (err) {
-          console.log(`[ERROR] An error has occured on path ${req._parsedUrl.pathname}:`);
+          console.log(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`);
           console.log(err);
           return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
         };
@@ -284,7 +237,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
     delete req.session.newaccount;
     delete req.session.password;
     if (err) {
-      console.log(chalk.red(`[ERROR] An error has occured on path ${req._parsedUrl.pathname}:`));
+      console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
       console.log(err);
       return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
     };
@@ -329,8 +282,6 @@ module.exports.ratelimits = async function(length) {
     }, length * 1000
   )
 }
-
-/* Copying the 𝕃𝕒𝕡𝕤𝕦𝕤 repository and claiming as yours or your project will have consequences. Think twice before doing it. */
 
 // Get a cookie.
 function getCookie(req, cname) {

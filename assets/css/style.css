@@ -10750,8 +10750,6 @@ input[type="button"].btn-block {
   padding-left: 1.5rem;
   color-adjust: exact; }
 
-/* Copying the 𝕃𝕒𝕡𝕤𝕦𝕤 repository and claiming as yours or your project will have consequences. Think twice before doing it. */
-
 .custom-control-inline {
   display: inline-flex;
   margin-right: 1rem; }
@@ -14302,7 +14300,7 @@ button.bg-dark:focus {
 /* The alert message box */
 .alert {
   padding: 20px;
-  background-color: #57b4eb; /* Red */
+  background-color: #f44336; /* Red */
   color: white;
   margin-top: 10px;
   margin-bottom: 20px;
@@ -16123,7 +16121,7 @@ code {
   border: 1px solid #0d0d0d; }
 
 .btn-primary {
-  border-radius: 3px; }
+  border-radius: 12px; }
 
 /* Buttons */
 .btn, .fc button, .ajax-upload-dragdrop .ajax-file-upload, .swal2-modal .swal2-buttonswrapper .swal2-styled, .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-confirm, .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-cancel, .wizard > .actions a {

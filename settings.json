@@ -1,28 +1,31 @@
 {
-  "version": "2.7",
-  "name": "Lapsus Client",
+  "version": "1.0",
+  "name": "Actium",
   "logo": {
-    "url": "/assets/img/logo_background.png"
+    "url": "https://media.discordapp.net/attachments/1094320976583462942/1172200518723063858/Actium_v5_Logo_4.png"
   },
-  "defaulttheme": "lapsus",
-  "timezone": "Europe/London",
-  "main_web": "https://yourdomain.com",
-  "discord_server": "https://discord.gg/invite/",
   
-  "profile_json": true,
+  "defaulttheme": "actium",
+  "timezone": "Europe/London",
+
+  "node1": {
+  "node_location": "Germany",
+  "node_name": "Node 1",
+  "node_icon_url": "https://flagcdn.com/h20/de.png"
+  },
 
   "news": {
     "new1_type": "Recommendation",
-    "new1_title": "Try Lapsus Launcher",
-    "new1_message": "Our new project focused on Minecraft gaming, a next generation launcher to play Minecraft at another performance.",
-    "new1_img": "/assets/img/lapsus_launcher_banner.png",
+    "new1_title": "Welcome to Actium V5",
+    "new1_message": "Actium V5 will be the definitive version of Actium, providing the user with affordable prices and good performance.",
+    "new1_img": "https://cdn.discordapp.com/attachments/954138562234822692/1168195737893474476/Lapsus_Launcher_Banner.png?ex=6550e20f&is=653e6d0f&hm=5bf4b57459b8515b75b41beb56eefb7c29b99393b91f5b26f6c2844e8498de6d&",
     "new1_button_text": "Try it now!",
     "new1_button_link": "https://github.com/ManucrackYT/LapsusLauncher",
 
     "new2_type": "Info",
     "new2_title": "Lapsus Client has been officialy released!",
     "new2_message": "Thanks for using Lapsus Client, report any bugs or problems at our Github.",
-    "new2_img": "/assets/img/lapsus_client_thanks.png",
+    "new2_img": "https://cdn.discordapp.com/attachments/954138562234822692/1168202744188895312/Lapsus_thanks_for_using_our_software_Banner.png?ex=6550e896&is=653e7396&hm=1991e923dd93cde917bce5b69dfc65a04626fd8ba727ed9dbc8731a097cad6ed&",
     "new2_button_text": "GitHub",
     "new2_button_link": "https://github.com/ManucrackYT/LapsusClient"
   },
@@ -33,12 +36,15 @@
   },
   "website": {
     "port": 8080,
-    "secret": "changeme"
+    "secret": "actiumsecret"
   },
   "pterodactyl": {
-    "domain": "https://panel.yourdomain.com",
-    "key": "ptla_",
-    "account_key": "ptlc_"
+    "domain": "https://panel.actiumnodes.com",
+    "key": "ptla_nFiOQzAzQ1crj5uW3xrIfl2v9S60x5LerxAQGvzagtB"
+  },
+  "linkvertise": {
+    "userid": "679241",
+    "coins": 0
   },
   "storelimits": {
     "ram": "5120",
@@ -46,19 +52,17 @@
     "cpu": "300",
     "servers": "3"
   },
+  "stripe": {
+    "enabled": false,
+    "note": "The key is the stripe API key and the coins is the amount per 1€. If the stripe API key is invalid and stripe purchases are enabled, Lapsus Client will crash when attempting to do transactions.",
+    "key": "100000000000000",
+    "coins": 100
+  },
   "database": "sqlite://database.sqlite",
   "api": {
     "client": {
-      "misc": {
-        "purger": true,
-        "getip": true
-      },
-
-      "webhook": {
-        "auditlogs": false
-      },
       "api": {
-        "enabled": false,
+        "enabled": true,
         "code": "lapsus"
       },
       "j4r": {
@@ -103,10 +107,25 @@
         },
         "overresourcessuspend": false
       },
+      "google": {
+        "enabled": false,
+        "clientid": "",
+        "clientsecret": "",
+        "link": "",
+        "prompt": true,
+        "ip": {
+          "trust x-forwarded-for": false,
+          "block": [],
+          "duplicate check": false,
+          "x-real-ip": true,
+          "x-client-ip": false,
+          "x-forwarded": false
+        }
+      },
       "oauth2": {
         "_comment": "Go to https://discord.dev/ and create an application to set these up.",
-        "id": "",
-        "secret": "",
+        "id": "903762603657019422",
+        "secret": "jkmseqtZmba-LnV2TVaghC4M06Kn7BWe",
         "link": "http://localhost:8080",
         "callbackpath": "/callback",
         "prompt": true,
@@ -135,16 +154,7 @@
             "ram": 1536,
             "disk": 5120,
             "cpu": 100,
-            "databases": 1,
             "servers": 1
-          },
-
-          "premium": {
-            "ram": 2048,
-            "disk": 10240,
-            "cpu": 200,
-            "databases": 3,
-            "servers": 3
           }
         },
         "rolePackages": {
@@ -156,95 +166,9 @@
         }
       },
       "locations": {
-        "2": { "name": "Germany 🇩🇪", "city": "Node 01", "package": null }
+        "1": { "name": "Germany 01", "package": null }
       },
       "eggs": {
-       "paper": {
-          "display": "Minecraft Java - Paper",
-          "minimum": {
-            "ram": 1024,
-            "disk": 1024,
-            "cpu": 50
-            
-          },
-          "maximum": {
-            "ram": null,
-            "disk": null,
-            "cpu": null
-            
-          },
-          "info": {
-            "egg": 4,
-            "docker_image": "ghcr.io/pterodactyl/yolks:java_17",
-            "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
-            "environment": {
-              "SERVER_JARFILE": "server.jar",
-              "BUILD_NUMBER": "latest"
-            },
-            "feature_limits": {
-              "databases": 4,
-              "backups": 4,
-              "allocations": 2
-            }
-          }
-        },
-        "bungeecord": {
-          "display": "Minecraft Java - BungeeCord",
-          "minimum": {
-            "ram": 512,
-            "disk": 512,
-            "cpu": 75
-          },
-          "maximum": {
-            "ram": null,
-            "disk": null,
-            "cpu": null
-          },
-          "info": {
-            "egg": 1,
-            "docker_image": "ghcr.io/pterodactyl/yolks:java_17",
-            "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}",
-            "environment": {
-              "SERVER_JARFILE": "bungeecord.jar",
-              "BUNGEE_VERSION": "latest"
-            },
-            "feature_limits": {
-              "databases": 4,
-              "backups": 4,
-              "allocations": 2
-            }
-          }
-        },
-        "bedrock": {
-          "display": "Minecraft Bedrock - Vanilla",
-          "minimum": {
-            "ram": 512,
-            "disk": 512,
-            "cpu": 75
-          },
-          "maximum": {
-            "ram": null,
-            "disk": null,
-            "cpu": null
-          },
-          "info": {
-            "egg": 16,
-            "docker_image": "ghcr.io/parkervcp/yolks:debian",
-            "startup": "./bedrock_server",
-            "environment": {
-              "BEDROCK_VERSION": "latest",
-              "LD_LIBRARY_PATH": ".",
-              "SERVERNAME": "A Bedrock Server",
-              "GAMEMODE": "survival",
-              "DIFFICULTY": "easy",
-              "CHEATS": "true"
-            },
-            "feature_limits": {
-              "databases": 4,
-              "backups": 4
-            }
-          }
-        },
         "nodejs": {
           "display": "Code - NodeJS",
           "minimum": {
@@ -264,7 +188,6 @@
             "environment": {
               "USER_UPLOAD": "0",
               "AUTO_UPDATE": "0",
-              "MAIN_FILE": "index.js",
               "BOT_JS_FILE": "index.js"
             },
             "feature_limits": {
@@ -319,13 +242,9 @@
             "cost": 400,
             "per": 50
           },
-          "databases": {
-            "cost": 10,
-            "per": 1
-          },
           "servers": {
             "cost": 100,
-            "per": 1
+            "per": 2
           }
         }
       }
@@ -374,8 +293,7 @@
         "buy servers": true,
         "buy ram": true,
         "buy cpu": true,
-        "buy disk": true,
-        "buy databases": true
+        "buy disk": true
       }, 
       "admin": {
         "set coins": true,
@@ -390,32 +308,9 @@
     }
   },
   "antivpn": {
-    "note": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, Lapsus Client will disable antivpn automatically.",
+    "note": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, Actium Client will disable antivpn automatically.",
     "status": false,
     "APIKey": "Proxycheck APIKey",
     "whitelistedIPs": ["IP address"]
-  },
-
-  "beta":{
-    "notification": "This is a beta feature and can contain some bugs.",
-
-
-    
-    "note": "This isn't working yet",
-    
-    "location1_enabled": false,
-    "location1_name": "Germany",
-    "location1_city": "Falkenstein",
-    "location1_flag": "https://flagcdn.com/h20/de.png",
-
-    "location2_enabled": true,
-    "location2_name": "Netherlands",
-    "location2_city": "Eygelshoven",
-    "location2_flag": "https://flagcdn.com/h20/nl.png",
-
-    "location3_enabled": false,
-    "location3_name": "Finland",
-    "location3_city": "Helsinki",
-    "location3_flag": "https://flagcdn.com/h20/fi.png"
   }
 }
