@@ -1,6 +1,6 @@
 <p align="center"><img src="https://cdn.discordapp.com/attachments/1024881699307388988/1166477231363739749/logo_background.png?ex=6553dc14&is=65416714&hm=81d0cba8f6bfa3bafd1adb447cdd4d5ee78a38343faca9a52aff8c41231f4f41&" width="150px" height="150px" alt="logo"></p>
 
-<h1 align="center">Lapsus Client</h1>
+<h1 align="center">Lapsus Client for Actium</h1>
 
 
 [<p align="center"><img src="https://img.shields.io/github/downloads/ManucrackYT/LapsusClient/total.svg?style=for-the-badge" alt="downloads">](https://github.com/ManucrackYT/LapsusClient/releases) <img src="https://forthebadge.com/images/badges/winter-is-coming.svg"  height="28px" alt="winter-is-coming"></p>
