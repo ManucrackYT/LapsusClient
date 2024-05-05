@@ -11,7 +11,7 @@
 
 * 🖌️ Customizable Client Area.
   * Change easily name and logo
-  * Customize news as you want, modify the new title, picture, description and link
+  * Customize news as you want, modify the news title, picture, description and link
 * 📂 See your servers, all in one place.
   * See which servers you have created on the Dashboard and access them by clicking just a button
 * 🔑 **Discord Authentication.**
@@ -26,7 +26,8 @@ This is not an exhaustive list. Download and setup the client to see what you ca
 ## Using the installation scripts
 
 An easy way to install Lapsus Client is by using our script, simply run this command as root. The script will do everything for you.
-**Before using the script, check you don't have NodeJS installed on your system**
+**Before using the script, check you have 
+a supported NodeJS version installed on your system**
 
 ```bash
 bash <(curl -s https://script.lapsusdev.tech)
@@ -73,7 +74,6 @@ The best way to contact the developers is on Discord.
 
 ---
 
-### See you.
 
 
 [nodejs]: https://nodejs.org/en/ 'Node.js'
