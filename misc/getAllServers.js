@@ -1,3 +1,5 @@
+// Credits to Heliactyl as this helps Lapsus to check renewal status on all servers
+
 const fetch = require('node-fetch')
 const settings = require('../settings.json')
 

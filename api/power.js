@@ -28,13 +28,11 @@ module.exports.load = async function (app, db) {
             });
 
             if (!response.ok) {
-                console.error(`Failed to start server. Status: ${response.status}`);
                 return res.json({ "success": false, "message": "Failed to start server" });
             }
 
             return res.json({ "success": true, "message": "Operation success!" });
         } catch (error) {
-            console.error("Error during server start request:", error);
             return res.json({ "success": false, "message": "Internal server error" });
         }
     });
@@ -68,13 +66,11 @@ module.exports.load = async function (app, db) {
             });
 
             if (!response.ok) {
-                console.error(`Failed to restart server. Status: ${response.status}`);
                 return res.json({ "success": false, "message": "Failed to start server" });
             }
 
             return res.json({ "success": true, "message": "Operation success!" });
         } catch (error) {
-            console.error("Error during server restart request:", error);
             return res.json({ "success": false, "message": "Internal server error" });
         }
     });
@@ -108,14 +104,12 @@ module.exports.load = async function (app, db) {
             });
 
             if (!response.ok) {
-                console.error(`Failed to start server. Status: ${response.status}`);
                 return res.json({ "success": false, "message": "Failed to start server" });
             }
 
-            console.log("Server stopped successfully");
+           
             return res.json({ "success": true, "message": "Operation success!" });
         } catch (error) {
-            console.error("Error during server start request:", error);
             return res.json({ "success": false, "message": "Internal server error" });
         }
     });

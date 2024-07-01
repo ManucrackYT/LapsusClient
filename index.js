@@ -101,41 +101,6 @@ const ejs = require("ejs");
 const session = require("express-session");
 const indexjs = require("./index.js");
 
-//Load plugins
-
-const path = require('path');
-
-const pluginsFolderPath = './plugins'; // Change this to your actual plugins folder path
-
-function loadPlugins() {
-    // Check if the plugins folder exists
-    if (fs.existsSync(pluginsFolderPath)) {
-        // Read the contents of the plugins folder
-        const files = fs.readdirSync(pluginsFolderPath);
-
-        // Check if the folder is not empty
-        if (files.length > 0) {
-            console.log('Loading plugins...');
-            // Iterate through each file in the folder
-            files.forEach((file) => {
-                // Load the plugin (you can customize this part based on your needs)
-                const pluginPath = path.join(pluginsFolderPath, file);
-                const plugin = require(pluginPath);
-                // Do something with the loaded plugin
-                console.log(`Loaded plugin: ${file}`);
-            });
-        } else {
-            console.log('No plugins found in the folder. Skipping.');
-        }
-    } else {
-        console.log('Plugins folder does not exist. Skipping.');
-    }
-}
-
-// Call the function to load plugins
-loadPlugins();
-
-
 
 // Load the website.
 
@@ -191,10 +156,6 @@ app.use(function(req, res, next) {
   };
   next();
 });
-
-
-
-
 
 
 // Load the API files.

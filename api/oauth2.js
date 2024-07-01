@@ -1,4 +1,7 @@
 "use strict";
+const ejs = require('ejs');
+const banlist = require("../misc/banlist.json");
+const bannedUsers = banlist.banned_users;
 
 const settings = require("../settings.json");
 
@@ -118,7 +121,29 @@ module.exports.load = async function (app, db) {
       if (settings.whitelist.status) {
         if (!settings.whitelist.users.includes(userinfo.id)) return res.send('Service is under maintenance.')
       }
-
+      const bannedUser1 = banlist.banned_users.find(user => user.email === userinfo.email);
+      const isBanned = bannedUsers.some(user => user.email === userinfo.email && new Date(user.ban_until) > new Date());
+      if (isBanned) {
+        return ejs.renderFile(
+          `./themes/${newsettings.defaulttheme}/alerts/banned.ejs`,
+          {
+            ban_until: bannedUser1.ban_until,
+            userinfo: userinfo,
+            banlist: bannedUsers,
+            settings: newsettings,
+            db
+          },
+          null,
+          (err, str) => {
+            if (err) {
+              console.error(err);
+              res.status(500).send('Internal Server Error');
+              return;
+            }
+            res.status(200).send(str);
+          }
+        );
+      }
       let guildsjson = await fetch(
         'https://discord.com/api/users/@me/guilds',
         {

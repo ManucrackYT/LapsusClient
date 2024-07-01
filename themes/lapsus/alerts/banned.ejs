@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error L7</title>
+    <link rel="icon" type="image/png" href="<%= settings.logo.url %>">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
+    <style>
+        body {
+            background-image: url('/assets/img/wallpaper_2.jpg');
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: 6rem;
+            margin: 0;
+            color: #ffffff;
+            text-align: center;
+        }
+        
+        p {
+            font-size: 1.5rem;
+            color: #ffffff;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        q {
+            font-size: 1rem;
+            color: #ffffff;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .button {
+            background-color: #5e1359;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 0 1rem;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .button:hover {
+            transform: translateY(-0.2rem);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+        }
+        
+        .button:last-of-type {
+            background-color: #333;
+        }
+        
+        .button:last-of-type:hover {
+            background-color: #666;
+        }
+        
+        @media only screen and (max-width: 768px) {
+            h1 {
+                font-size: 4rem;
+            }
+            
+            p {
+                font-size: 1.2rem;
+            }
+
+            .button {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Error L7</h1>
+        <p>Mmm... Looks like you got the L7 error, interesting</p>
+        <q>The L7 error means you have been banned from this host.</q>
+        <div class="buttons">
+            <a href="../logout" class="button">Logout</a>
+            <a href="<%= settings.discord_server %>" class="button">Contact Support</a>
+        </div>
+        &nbsp;
+    </div>
+</body>
+</html>

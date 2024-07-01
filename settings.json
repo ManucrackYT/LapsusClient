@@ -1,5 +1,5 @@
 {
-  "version": "2.7",
+  "version": "2.8",
   "name": "Lapsus Client",
   "logo": {
     "url": "/assets/img/logo_background.png"
@@ -8,6 +8,22 @@
   "timezone": "Europe/London",
   "main_web": "https://yourdomain.com",
   "discord_server": "https://discord.gg/invite/",
+
+  "website": {
+    "port": 8000,
+    "secret": "change_this"
+  },
+  "pterodactyl": {
+    "domain": "https://panel.yourdomain.com",
+    "key": "ptla_",
+    "account_key": "ptlc_"
+  },
+  "storelimits": {
+    "ram": "5120",
+    "disk": "8240",
+    "cpu": "300",
+    "servers": "3"
+  },
   
   "profile_json": true,
 
@@ -26,33 +42,9 @@
     "new2_button_text": "GitHub",
     "new2_button_link": "https://github.com/ManucrackYT/LapsusClient"
   },
-
-  "resources": {
-    "note": "Options: MB, GB. This is used to show user's resources.",
-    "type": "MB"
-  },
-  "website": {
-    "port": 8080,
-    "secret": "changeme"
-  },
-  "pterodactyl": {
-    "domain": "https://panel.yourdomain.com",
-    "key": "ptla_",
-    "account_key": "ptlc_"
-  },
-  "storelimits": {
-    "ram": "5120",
-    "disk": "8240",
-    "cpu": "300",
-    "servers": "3"
-  },
   "database": "sqlite://database.sqlite",
   "api": {
     "client": {
-      "misc": {
-        "purger": true,
-        "getip": true
-      },
 
       "webhook": {
         "auditlogs": false
@@ -82,7 +74,7 @@
         "token": "BOT_TOKEN_HERE",
         "joinguild": {
           "_comment": "The Discord bot must be in these servers and have invite permissions. Automatic guild joining will not work unless role packages are configured correctly. You can always just set it to a random role & package so that only this works.",
-          "enabled": true,
+          "enabled": false,
           "guildid": [
             "000000000000000000"
           ]
@@ -107,7 +99,7 @@
         "_comment": "Go to https://discord.dev/ and create an application to set these up.",
         "id": "",
         "secret": "",
-        "link": "http://localhost:8080",
+        "link": "http://localhost:8000",
         "callbackpath": "/callback",
         "prompt": true,
         "ip": {
@@ -389,33 +381,16 @@
       }
     }
   },
-  "antivpn": {
-    "note": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, Lapsus Client will disable antivpn automatically.",
-    "status": false,
-    "APIKey": "Proxycheck APIKey",
-    "whitelistedIPs": ["IP address"]
+
+  "linkvertise": {
+    "userid": "000000",
+    "coins": 1
   },
 
-  "beta":{
-    "notification": "This is a beta feature and can contain some bugs.",
-
-
-    
-    "note": "This isn't working yet",
-    
-    "location1_enabled": false,
-    "location1_name": "Germany",
-    "location1_city": "Falkenstein",
-    "location1_flag": "https://flagcdn.com/h20/de.png",
-
-    "location2_enabled": true,
-    "location2_name": "Netherlands",
-    "location2_city": "Eygelshoven",
-    "location2_flag": "https://flagcdn.com/h20/nl.png",
-
-    "location3_enabled": false,
-    "location3_name": "Finland",
-    "location3_city": "Helsinki",
-    "location3_flag": "https://flagcdn.com/h20/fi.png"
+  "antivpn": {
+    "note": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, Lapsus Client will disable antivpn automatically. This won't avoid all VPN, just known ones.",
+    "status": true,
+    "APIKey": "Proxycheck APIKey",
+    "whitelistedIPs": ["IP address"]
   }
 }

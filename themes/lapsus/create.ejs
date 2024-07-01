@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
 
+      <!-- Music Player -->
+  <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+  <div class="elfsight-app-9c8f4667-f5ce-46b9-99e2-f32095e11518" data-elfsight-app-lazy></div>
+
     <!-- Inter font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -53,7 +57,7 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
                                       <% } else if (req.query.err == "ERRORONCREATE") { %>
                                          This location is having issues right now. Please try again later or use a different location.
                                       <% } else if (req.query.err == "TOOLITTLECOINS") { %>
-                                         Server creation denied due to remaining debt. Please ensure that your coins balance is not in the minus. Debt must be repaid within 14 days or your account will be suspended.
+                                         Server creation denied due to remaining debt or insufficient coins. Please ensure that your coins balance is <%= settings.servercreation.cost %> or more. If you have any debt, it must be repaid within 14 days or your account will be suspended.
                                       <% } else if (req.query.err == "MISSINGEGG") { %>
                                           The server type for this server is not registered as a valid server type, therefore your server's RAM, disk and/or CPU could not be changed.
                        <% } else if (req.query.err == "TOOMUCHSERVERS") { %>

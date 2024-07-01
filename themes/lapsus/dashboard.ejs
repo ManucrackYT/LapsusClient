@@ -1,9 +1,16 @@
+<!-- Running Lapsus Client <%= settings.version %> -->
+
 <head>
   <title><%= settings.name %></title>
   <link rel="icon" type="image/png" href="<%= settings.logo.url %>">
   <link rel="stylesheet" href="../assets/tailwind.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+  
+  
+  <!-- Music Player -->
+  <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+<div class="elfsight-app-9c8f4667-f5ce-46b9-99e2-f32095e11518" data-elfsight-app-lazy></div>
 
   <!-- Inter font -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -170,6 +177,51 @@
     </div>
   </dl>
 </div>
+<% if (pterodactyl.root_admin == true) { %>
+<% if (settings.version < 2.8) { %>  <!-- Update this when I release a new version -->
+<div id="notif" class="noti">
+  <div class="noti__icon">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.0964 16.6667C12.0964 18.5077 10.6039 20 8.76297 20C6.922 20 5.42969 18.5077 5.42969 16.6667C5.42969 14.8257 6.922 13.3333 8.76297 13.3333C10.6039 13.3333 12.0964 14.8257 12.0964 16.6667Z" fill="#22215B"/>
+<path d="M14.603 9.93424C11.778 9.5308 9.59641 7.1016 9.59641 4.16673C9.59641 3.33329 9.77463 2.54258 10.0905 1.82496C9.66385 1.72501 9.22058 1.66673 8.76297 1.66673C5.54642 1.66673 2.92969 4.2833 2.92969 7.50001V9.82331C2.92969 11.4725 2.20718 13.0292 0.939636 14.1008C0.61554 14.3774 0.429688 14.7817 0.429688 15.2083C0.429688 16.0126 1.08383 16.6667 1.88797 16.6667H15.638C16.4423 16.6667 17.0964 16.0126 17.0964 15.2083C17.0964 14.7817 16.9106 14.3774 16.5781 14.0933C15.3481 13.0525 14.6347 11.5416 14.603 9.93424Z" fill="#22215B"/>
+<path d="M19.5964 4.16672C19.5964 6.4679 17.7309 8.33328 15.4297 8.33328C13.1285 8.33328 11.263 6.4679 11.263 4.16672C11.263 1.86554 13.1285 0 15.4297 0C17.7309 0 19.5964 1.86554 19.5964 4.16672Z" fill="#4CE364"/>
+</svg>
+  </div>
+  <div class="noti__message">
+    <h2>New update available</h2>
+    <p id="latestversion">Fetching...</p>
+  </div>
+  <div class="flex flex-1 justify-end">
+    <button onclick="closenoti()">
+      <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+      </svg>
+    </button>
+  </div>
+</div>
+<% } %>
+<script>
+  function closenoti() {
+    var x = document.getElementById("notif");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+  </script>
+<script>
+  fetch("https://raw.githubusercontent.com/ManucrackYT/LapsusClient/main/.github/workflows/index.html")
+      .then(res => Promise.resolve(res.json()).then(ver => {
+          let currentver = "<%= settings.version.replace(/"/g, `\\\\"`) %>";
+          if (ver.version == currentver) {}
+          else {
+              document.getElementById("latestversion").innerHTML = `<span>A new Lapsus Client version is available for download. </span>`;
+          };
+      }));
+</script>
+&nbsp;
+<% } %>
 <div class="p-16 lg:flex lg:items-center lg:justify-between rounded-lg shadow-lg bg-deploy">
   <div class="min-w-0 flex-1">
     <h2 class="text-2xl font-bold leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Deploy a new server</h2>
@@ -236,6 +288,37 @@
 </div>
 </div>
 
+<style>
+
+.noti {
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  gap: 14px;
+}
+.noti__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #EEF7FE;
+}
+.noti__message h2 {
+  font-size: 20px;
+  color: #22215B;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.noti__message p {
+  font-size: 18px;
+  color: rgba(34, 33, 91, 0.6);
+}
+
+
+</style>
 
           <!-- /End replace -->
         </div>

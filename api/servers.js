@@ -350,7 +350,10 @@ module.exports.load = async function (app, db) {
     let newsettings = JSON.parse(fs.readFileSync("./settings.json").toString());
     if (newsettings.api.client.allow.server.delete == true) {
       if (req.session.pterodactyl.relationships.servers.data.filter(server => server.attributes.id == req.query.id).length == 0) return res.send("Could not find server with that ID.");
-
+      const server = req.session.pterodactyl.relationships.servers.data.find(server => server.attributes.id == req.query.id);
+      if (server.attributes.suspended) {
+          return res.send("You have tried to delete a suspended server on the panel, which is not possible. This is due to the prevention of users trying to abuse suspended servers. Contact support if you think this is an error.");
+      }
       let deletionresults = await fetch(
         settings.pterodactyl.domain + "/api/application/servers/" + req.query.id,
         {
