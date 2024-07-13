@@ -21,7 +21,7 @@
             togglePasswordLink.addEventListener("click", function(event) {
                 event.preventDefault();
                 if (passwordDisplay.textContent === "*************") {
-                    passwordDisplay.textContent = "<%= req.session.password %>";
+                    passwordDisplay.textContent = "<%= req.session.password %> || "You already got an account before"";
                     togglePasswordLink.textContent = "Hide";
                 } else {
                     passwordDisplay.textContent = "*************";
