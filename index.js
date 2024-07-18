@@ -224,7 +224,6 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
         null,
       function (err, str) {
         delete req.session.newaccount;
-        delete req.session.password;
         if (err) {
           console.log(`[ERROR] An error has occured on path ${req._parsedUrl.pathname}:`);
           console.log(err);
@@ -243,7 +242,6 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
     null,
   function (err, str) {
     delete req.session.newaccount;
-    delete req.session.password;
     if (err) {
       console.log(chalk.red(`[ERROR] An error has occured on path ${req._parsedUrl.pathname}:`));
       console.log(err);

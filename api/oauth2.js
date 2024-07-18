@@ -306,7 +306,7 @@ module.exports.load = async function (app, db) {
               await db.set("users", userids);
               await db.set("users-" + userinfo.id, accountinfo.attributes.id);
               req.session.newaccount = true;
-              req.session.password = genpassword;
+              await db.set(`password-${userinfo.id}`, genpassword);
             } else {
               let accountlistjson = await fetch(
                 settings.pterodactyl.domain + "/api/application/users?include=servers&filter[email]=" + encodeURIComponent(userinfo.email),
@@ -353,6 +353,9 @@ module.exports.load = async function (app, db) {
         req.session.pterodactyl = cacheaccountinfo.attributes;
 
         req.session.userinfo = userinfo;
+
+        const pswd = await db.get(`password-${userinfo.id}`);
+        req.session.password = pswd
         let theme = indexjs.get(req);
         if (customredirect) return res.redirect(customredirect);
         return res.redirect(theme.settings.redirect.callback ? theme.settings.redirect.callback : "/");
