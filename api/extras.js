@@ -38,7 +38,7 @@ module.exports.load = async function(app, db) {
     );
 
     let theme = indexjs.get(req);
-    res.redirect("/settings")
+    res.redirect("/security")
   });
 };
 
