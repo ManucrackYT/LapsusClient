@@ -158,12 +158,12 @@
 
     <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
       <dt class="text-sm font-medium text-gray-500 truncate">Memory (GiB)</dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.ram/1024 + extraresources.ram/1024 - ram/1024 %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= (packages.ram/1024 + extraresources.ram/1024 - ram/1024).toFixed(3) %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
     </div>
 
     <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
       <dt class="text-sm font-medium text-gray-500 truncate">Storage (GiB)</dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.disk/1024 + extraresources.disk/1024 - disk/1024 %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= (packages.disk/1024 + extraresources.disk/1024 - disk/1024).toFixed(3) %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
     </div>
 
     <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
