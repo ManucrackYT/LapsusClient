@@ -6,7 +6,7 @@
   "author": "ManucrackYT",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
-    "@keyv/mongo": "^1.2.1",
+    "@keyv/mongo": "^3.0.1",
     "@keyv/mysql": "^1.1.5",
     "@keyv/postgres": "^1.0.17",
     "@keyv/redis": "^2.2.1",
