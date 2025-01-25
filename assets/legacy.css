@@ -7,7 +7,6 @@
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
 */
 
-
 *,
 ::before,
 ::after {
@@ -20,7 +19,6 @@
   border-color: #e5e7eb;
   /* 2 */
 }
-
 
 ::before,
 ::after {
@@ -2181,55 +2179,4 @@ select {
     padding-left: 6rem;
     padding-right: 6rem;
   }
-}
-
-
-/* Dark Mode Styles */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-body.light-mode {
-    background-color: #e5e7eb;
-    color: #000000;
-}
-
-body.dark-mode {
-    background-color: #121212;
-    color: #ffffff;
-}
-
-/* Fix for specific elements */
-body.dark-mode h1,
-body.dark-mode h2,
-body.dark-mode h3,
-body.dark-mode p,
-body.dark-mode a,
-body.dark-mode button {
-    color: #ffffff; /* Ensure all text elements turn white in dark mode */
-}
-
-body.light-mode h1,
-body.light-mode h2,
-body.light-mode h3,
-body.light-mode p,
-body.light-mode a,
-body.light-mode button {
-    color: #111827; /* Ensure consistent styling for light mode */
-}
-
-/* Other Styles */
-.top-right {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
-#darkModeToggle {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 24px;
 }

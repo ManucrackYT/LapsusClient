@@ -5,7 +5,7 @@
 
 <p align="center">Lapsus Client, the most modern and customizable Pterodactyl Client Area for your hosting.</p>
 
-![Login Page](https://cdn.discordapp.com/attachments/1190680696524652654/1197981520376385596/login_page.png?ex=65bd3e3b&is=65aac93b&hm=227cecf95a7a435e775eb9b3799bc0d16d70021036e3c81e24ddba3abbbde78f&)
+![Login Page](/assets/github/login.png)
 
 ## Features
 
@@ -44,6 +44,8 @@ If you download from the [Releases](https://github.com/ManucrackYT/LapsusClient/
 
 | Working Node.js Versions | Supported? |
 | -------- | ---- |
+| Node.js 22 | ✅ |
+| Node.js 21 | ✅ |
 | Node.js 20 | ✅ |
 | Node.js 19 | ✅ |
 | Node.js 18 | ✅ |
@@ -53,7 +55,15 @@ If you download from the [Releases](https://github.com/ManucrackYT/LapsusClient/
 
 ⚠️ Not recommended to continue using this version
 
+## Previews
 
+![Login Page](/assets/github/login.png)
+
+![Home Page](/assets/github/homepage.png)
+
+
+
+## Info
 
 
 The best way to contact the developers is on Discord.
@@ -62,7 +72,7 @@ The best way to contact the developers is on Discord.
 
 ---
 
-### See you.
+### Thanks for using this project
 
 
 [nodejs]: https://nodejs.org/en/ 'Node.js'

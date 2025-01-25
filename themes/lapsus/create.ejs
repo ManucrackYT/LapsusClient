@@ -113,7 +113,7 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
                         <select class="form-control transition ease-in-out delay-100 block w-full flex-1 text-darker rounded-md bg-white
                         border-gray-300 focus:border-gray-400 focus:ring-gray-400 sm:text-sm" id="InputLoc">
                           <% for (let [name, value] of Object.entries(settings.api.client.locations)) { %>
-                            <option value="<%= name %>"><%= value.name %></option>
+                            <option value="<%= name %>"><%= value.name %> | <%= value.city %></option>
                           <% } %>
                         </select>
                       </div>

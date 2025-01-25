@@ -1,5 +1,5 @@
 {
-  "version": "2.8",
+  "version": "2.8.1",
   "name": "Lapsus Client",
   "logo": {
     "url": "/assets/img/logo_background.png"
@@ -14,7 +14,7 @@
     "secret": "change_this"
   },
   "pterodactyl": {
-    "domain": "https://panel.yourdomain.com",
+    "domain": "https://panel.mydomain.com",
     "key": "ptla_",
     "account_key": "ptlc_"
   },
@@ -148,11 +148,12 @@
         }
       },
       "locations": {
-        "2": { "name": "Germany 🇩🇪", "city": "Node 01", "package": null }
+        "2": { "name": "Germany", "city": "Falkenstein", "ISO": "de", "package": null }
       },
       "eggs": {
        "paper": {
           "display": "Minecraft Java - Paper",
+          "icon": "https://cdn.icon-icons.com/icons2/2699/PNG/512/minecraft_logo_icon_168974.png",
           "minimum": {
             "ram": 1024,
             "disk": 1024,
@@ -166,8 +167,8 @@
             
           },
           "info": {
-            "egg": 4,
-            "docker_image": "ghcr.io/pterodactyl/yolks:java_17",
+            "egg": 2,
+            "docker_image": "ghcr.io/pterodactyl/yolks:java_21",
             "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
             "environment": {
               "SERVER_JARFILE": "server.jar",
@@ -181,7 +182,8 @@
           }
         },
         "bungeecord": {
-          "display": "Minecraft Java - BungeeCord",
+          "display": "Minecraft Java - Bungeecord",
+          "icon": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/4563ffb7-1f11-4cf5-a889-88d54bfd62f6/d68vd8x-e6aebf2f-cc50-4dd3-b72f-fabd0b705fd4.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzQ1NjNmZmI3LTFmMTEtNGNmNS1hODg5LTg4ZDU0YmZkNjJmNlwvZDY4dmQ4eC1lNmFlYmYyZi1jYzUwLTRkZDMtYjcyZi1mYWJkMGI3MDVmZDQucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.FBWKVjYXkX-RoKXsr4jh5zw8XvHQtAVqgPkZNQKwFoU",
           "minimum": {
             "ram": 512,
             "disk": 512,
@@ -193,8 +195,8 @@
             "cpu": null
           },
           "info": {
-            "egg": 1,
-            "docker_image": "ghcr.io/pterodactyl/yolks:java_17",
+            "egg": 3,
+            "docker_image": "ghcr.io/pterodactyl/yolks:java_21",
             "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}",
             "environment": {
               "SERVER_JARFILE": "bungeecord.jar",
@@ -209,6 +211,7 @@
         },
         "bedrock": {
           "display": "Minecraft Bedrock - Vanilla",
+          "icon": "https://i.redd.it/2wibjal6iox71.png",
           "minimum": {
             "ram": 512,
             "disk": 512,
@@ -220,16 +223,12 @@
             "cpu": null
           },
           "info": {
-            "egg": 16,
-            "docker_image": "ghcr.io/parkervcp/yolks:debian",
+            "egg": 4,
+            "docker_image": "ghcr.io/pterodactyl/yolks:java_21",
             "startup": "./bedrock_server",
             "environment": {
-              "BEDROCK_VERSION": "latest",
-              "LD_LIBRARY_PATH": ".",
-              "SERVERNAME": "A Bedrock Server",
-              "GAMEMODE": "survival",
-              "DIFFICULTY": "easy",
-              "CHEATS": "true"
+              "VANILLA_VERSION": "latest",
+              "SERVER_JARFILE": "server.jar"
             },
             "feature_limits": {
               "databases": 4,
@@ -239,6 +238,7 @@
         },
         "nodejs": {
           "display": "Code - NodeJS",
+          "icon": "https://www.step2gen.com/WebsiteAssets/assets/images/nodejs.svg",
           "minimum": {
             "ram": 512,
             "disk": 512,
@@ -251,7 +251,7 @@
           },
           "info": {
             "egg": 15,
-            "docker_image": "ghcr.io/parkervcp/yolks:nodejs_18",
+            "docker_image": "ghcr.io/parkervcp/yolks:nodejs_21",
             "startup": "if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == \"1\" ]]; then git pull; fi; if [[ ! -z ${NODE_PACKAGES} ]]; then /usr/local/bin/npm install ${NODE_PACKAGES}; fi; if [[ ! -z ${UNNODE_PACKAGES} ]]; then /usr/local/bin/npm uninstall ${UNNODE_PACKAGES}; fi; if [ -f /home/container/package.json ]; then /usr/local/bin/npm install; fi; /usr/local/bin/node /home/container/{{BOT_JS_FILE}}",
             "environment": {
               "USER_UPLOAD": "0",
@@ -267,6 +267,7 @@
         },
         "python": {
           "display": "Code - Python",
+          "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/640px-Python.svg.png",
           "minimum": {
             "ram": 512,
             "disk": 512,
@@ -278,13 +279,13 @@
             "cpu": null
           },
           "info": {
-            "egg": 19,
-            "docker_image": "ghcr.io/parkervcp/yolks:python_3.10",
+            "egg": 16,
+            "docker_image": "ghcr.io/parkervcp/yolks:python_3.12",
             "startup": "if [[ -d .git ]] && [[ {{AUTO_UPDATE}} == \"1\" ]]; then git pull; fi; if [[ ! -z {{PY_PACKAGES}} ]]; then pip install -U --prefix .local {{PY_PACKAGES}}; fi; if [[ -f /home/container/${REQUIREMENTS_FILE} ]]; then pip install -U --prefix .local -r ${REQUIREMENTS_FILE}; fi; /usr/local/bin/python /home/container/{{BOT_PY_FILE}}",
             "environment": {
               "USER_UPLOAD": "0",
               "AUTO_UPDATE": "0",
-              "BOT_PY_FILE": "bot.py",
+              "PY_FILE": "app.py",
               "REQUIREMENTS_FILE": "requirements.txt"
             },
             "feature_limits": {

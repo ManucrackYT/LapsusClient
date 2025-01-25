@@ -24,13 +24,13 @@
             <!-- This example requires Tailwind CSS v2.0+ -->
 
             <div>
-                <div>
-                  <% if (userinfo.banner == null) { %>
-                    <img class="h-32 w-full object-cover lg:h-48 rounded-xl" src="/assets/img/wallpaper_night.jpg" alt="">
-                    <% } else { %>
-                    <img class="h-32 w-full object-cover lg:h-48 rounded-xl" src="https://cdn.discordapp.com/banners/<%= userinfo.id %>/<%= userinfo.banner %>?size=512" alt="">
-                  <% } %>  
-                </div>
+              <div>
+                <% if (userinfo.banner == null) { %>
+                  <img class="w-full aspect-ratio-16/9 object-contain rounded-xl" src="/assets/img/wallpaper_night.jpg" alt="">
+                  <% } else { %>
+                  <img class="w-full aspect-ratio-16/9 object-contain rounded-xl" src="https://cdn.discordapp.com/banners/<%= userinfo.id %>/<%= userinfo.banner %>?size=512" alt="">
+                <% } %>  
+              </div>
                 <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
                   <div class="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
                     <div class="flex">
@@ -62,8 +62,19 @@
               </div>  
               <% } %>    
               <br>&nbsp;
-              <center><a href="../security" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none ml-2">Security</a></center>
-
+              <div class="p-16 lg:flex lg:items-center lg:justify-between rounded-lg shadow-lg bg-deploy">
+                <div class="min-w-0 flex-1">
+                  <h2 class="text-2xl font-bold leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Looking for Security?</h2>
+                  <p class="text-md font-medium text-gray-200">You can access now from here</p>
+                </div>
+                <div class="mt-5 flex lg:ml-4 lg:mt-0">
+                  <span class="sm:ml-3">
+                    <a href="../settings" type="button" class="transition inline-flex items-center rounded-md bg-black-600/50 px-6 py-6 text-sm font-semibold text-white hover:shadow-inner hover:shadow-gray-700 hover:bg-gradient-to-bl hover:from-gray-600 hover:to-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                      </svg>                              
+                      </a>
+                  </span>
             <!-- /End replace -->
           </div>
         </div>
@@ -72,49 +83,3 @@
   </div>
 </body>
 
-<style>
-
-.role {
-  margin: 5px;
-  color: hsla(0, 0%, 0%, 0.8);
-  width: 70px;
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 500;
-  border: 1px solid;
-  border-radius: 11px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  height: 23px;
-  margin: 0 4px 4px 0;
-  padding: 4px;
-  border-color: #ff9966;
-  text-align: right;
-}
-
-.circle {
-  text-align: center;
-  color: black;
-  border-radius: 50%;
-  width: 12px;
-  height: 12px;
-  padding: 0;
-  margin-right: 4px;
-  background-color: #ff9966;
-}
-
-.rolename {
-  margin-top: -13px;
-  max-width: 200px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  margin-right: 4px;
-}
-.aligncenter{
-  -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-}
-
-</style>

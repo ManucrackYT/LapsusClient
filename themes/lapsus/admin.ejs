@@ -118,19 +118,31 @@
     </div>
   </div>
   </div>
-                          <script>
-                              fetch("https://raw.githubusercontent.com/ManucrackYT/LapsusClient/main/.github/workflows/index.html")
-                                  .then(res => Promise.resolve(res.json()).then(ver => {
-                                      let currentver = "<%= settings.version.replace(/"/g, `\\\\"`) %>";
-                                      if (ver.version == currentver) {
-                                          document.getElementById("latestversion").innerHTML = `<span>You are running Lapsus Client version <code style="color: #007fcc" >v${currentver}</code>. Lapsus Client is up-to-date!</span><img src="/assets/img/no-updates.png" width="100" class="update-icon" />`;
-                                      } else if (ver.prerelease == currentver) {
-                                          document.getElementById("latestversion").innerHTML = `<span>You are running Lapsus Client version <code style="color: #007fcc">v${currentver}</code>. Lapsus Client is up-to-date!</span><img src="/assets/img/no-updates.png" width="100" class="update-icon" />`;
-                                      } else {
-                                          document.getElementById("latestversion").innerHTML = `<span>Lapsus Client is <b>not up-to-date!</b> The latest version is <code style="color: #007fcc" >v${ver.version}</code> and you are currently running version <code style="color: #007fcc" >v<%= settings.version %></code>.</span><img src="/assets/img/update-available.png" width="100" class="update-icon" /><center><a href="https://github.com/ManucrackYT/LapsusClient/releases/latest" target="_blank" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none">Update now</a></center>`;
-                                      };
-                                  }));
-                          </script>
+  <script>
+    fetch("https://raw.githubusercontent.com/ManucrackYT/LapsusClient/main/.github/workflows/index.html")
+      .then(res => Promise.resolve(res.json()).then(ver => {
+          let currentver = "<%= settings.version.replace(/"/g, `\\\\"`) %>";
+          const currentVersionParts = currentver.split('.').map(Number);
+          const latestVersionParts = ver.version.split('.').map(Number);
+  
+          function isExperimental(current, latest) {
+            for (let i = 0; i < latest.length; i++) {
+              if (current[i] > (latest[i] || 0)) return true; // If current version has a higher segment
+              if (current[i] < (latest[i] || 0)) return false;
+            }
+            return current.length > latest.length; // Handles 2.8 vs 2.8.1 case
+          }
+  
+          if (currentver === ver.version) {
+            document.getElementById("latestversion").innerHTML = `<span>You are running Lapsus Client version <code style="color: #007fcc" >v${currentver}</code>. Lapsus Client is up-to-date!</span><img src="/assets/img/no-updates.png" width="100" class="update-icon" />`;
+          } else if (isExperimental(currentVersionParts, latestVersionParts)) {
+            document.getElementById("latestversion").innerHTML = `<span>You are using the experimental version <code style="color: #007fcc" >v${currentver}</code> which hasn't been published yet.<br> This version may have bugs or missing features.<br> It is not recommended to use this version for your public host.</span><img src="/assets/img/dev-version.png" width="100" class="update-icon" />`;
+          } else {
+            document.getElementById("latestversion").innerHTML = `<span>Lapsus Client is <b>not up-to-date!</b> The latest version is <code style="color: #007fcc" >v${ver.version}</code> and you are currently running version <code style="color: #007fcc" >v<%= settings.version %></code>.</span><img src="/assets/img/update-available.png" width="100" class="update-icon" /><center><a href="https://github.com/ManucrackYT/LapsusClient/releases/latest" target="_blank" class="transition delay-100 group relative justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none">Update now</a></center>`;
+          }
+      }));
+  </script>
+  
                 
 
       </div>
