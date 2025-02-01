@@ -9,11 +9,20 @@ module.exports.load = async function(app, db) {
   app.all("/", async (req, res) => {
     if (req.session.pterodactyl) if (req.session.pterodactyl.id !== await db.get("users-" + req.session.userinfo.id)) return res.redirect("/login?prompt=none")
     let theme = indexjs.get(req);
+
+    // Add referral data to the render data
+    const renderData = await eval(indexjs.renderdataeval);
+    
+    // If we're on the referral page, fetch the user's referral
+    if (req._parsedUrl.pathname === "/referral" && req.session.userinfo) {
+        renderData.referral = await db.get(`referral-${req.session.userinfo.id}`);
+    }
+
     if (theme.settings.mustbeloggedin.includes(req._parsedUrl.pathname)) if (!req.session.userinfo || !req.session.pterodactyl) return res.redirect("/login");
     if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
       ejs.renderFile(
         `./themes/${theme.name}/${theme.settings.notfound}`, 
-        await eval(indexjs.renderdataeval),
+        renderData,
         null,
       async function (err, str) {
         delete req.session.newaccount;
@@ -55,7 +64,7 @@ module.exports.load = async function(app, db) {
   
         ejs.renderFile(
           `./themes/${theme.name}/${theme.settings.index}`, 
-          await eval(indexjs.renderdataeval),
+          renderData,
           null,
         function (err, str) {
           if (err) {
@@ -71,7 +80,7 @@ module.exports.load = async function(app, db) {
     };
     ejs.renderFile(
       `./themes/${theme.name}/${theme.settings.index}`, 
-      await eval(indexjs.renderdataeval),
+      renderData,
       null,
     function (err, str) {
       if (err) {

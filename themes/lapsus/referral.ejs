@@ -1,0 +1,494 @@
+<head>
+    <title>Referrals - <%= settings.name %></title>
+    <link rel="icon" type="image/png" href="<%= settings.logo.url %>">
+    <link rel="stylesheet" href="../../assets/tailwind.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+
+    <!-- Music Player -->
+    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+    <div class="elfsight-app-9c8f4667-f5ce-46b9-99e2-f32095e11518" data-elfsight-app-lazy></div>
+
+    <!-- Inter font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .bg-winter-500 {
+            background-color: #3b82f6;
+        }
+        .bg-winter-600 {
+            background-color: #2563eb;
+        }
+        .text-winter-500 {
+            color: #3b82f6;
+        }
+        .hover\:bg-winter-600:hover {
+            background-color: #2563eb;
+        }
+        .focus\:ring-winter-500:focus {
+            --tw-ring-color: #3b82f6;
+        }
+        .focus\:border-winter-500:focus {
+            border-color: #3b82f6;
+        }
+        .bg-navbar {
+            background-color: #111827;
+        }
+        .bg-deploy {
+            background: linear-gradient(90deg,#6441a5,#2a0845);
+        }
+        .custom-glass {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100" style="font-family: 'Inter', sans-serif;">
+    <%- include('components/navigation') %>
+    <div class="md:pl-48 flex flex-col flex-1">
+        <main class="flex-1">
+            <div class="py-6">
+                <div class="max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8">
+                    <div class="lg:flex lg:items-center lg:justify-between mb-8">
+                        <div class="min-w-0 flex-1">
+                            <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Referral System</h2>
+                            <p class="text-md font-medium text-gray-600">Generate and manage your referral codes</p>
+                        </div>
+                    </div>
+
+                    <!-- Referral Status -->
+                    <div class="card mt-6">
+                        <div class="card-body">
+                            <% if (referral) { %>
+                                <div class="text-center">
+                                    <h3 class="text-lg font-medium text-gray-900">Your Active Referral Code</h3>
+                                    <div class="mt-4 text-3xl font-bold text-gray-900"><%= referral.code %></div>
+                                    <p class="mt-2 text-sm text-gray-500">Type: <%= referral.type %></p>
+
+                                    <div class="mt-4 flex justify-center space-x-4">
+                                        <% if (referral.type === 'custom') { %>
+                                            <button onclick="editReferral()"
+                                                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800">
+                                                Edit (10 coins)
+                                            </button>
+                                        <% } %>
+                                        <button onclick="deleteReferral()"
+                                                class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            <% } else { %>
+                                <div class="text-center text-gray-500">
+                                    <p>You don't have any active referral codes</p>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <!-- Referral Actions -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <!-- Free Referral -->
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Free Referral</h3>
+                                <p class="text-gray-500 mb-4">Generate a random referral code for free</p>
+                                <button onclick="generateFreeReferral()"
+                                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black-400 hover:bg-gray-700"
+                                        <%= referral ? 'disabled' : '' %>>
+                                    Generate Free Referral
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Custom Referral -->
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Custom Referral</h3>
+                                <p class="text-gray-500 mb-4">Create your own custom referral code for 200 coins</p>
+                                <button onclick="createCustomReferral()"
+                                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black-400 hover:bg-gray-700"
+                                        <%= referral || userinfo.coins < 200 ? 'disabled' : '' %>>
+                                    Create Custom Referral
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Redeem Referral -->
+                    <div class="card mt-6">
+                        <div class="card-body">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Redeem Referral Code</h3>
+                            <p class="text-gray-500 mb-4">Enter someone's referral code to get 50 coins. The referral owner will also receive 50 coins!</p>
+
+                            <div class="flex space-x-4">
+                                <input type="text" id="redeemCode" placeholder="Enter referral code"
+                                       class="flex-1 border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-400">
+                                <button onclick="redeemReferral()"
+                                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black-400 hover:bg-gray-700">
+                                    Redeem
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Referral Modal -->
+                    <div id="customReferralModal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
+                        <div class="bg-white rounded-lg p-8 max-w-md w-full">
+                            <div class="mb-4 text-center">
+                                <h3 class="text-lg font-medium text-gray-900 mb-2">Create Custom Referral</h3>
+                                <p class="text-gray-500">Cost: <span class="text-3xl font-bold text-winter-500 block mt-2">200 coins</span></p>
+                            </div>
+
+                            <p class="text-sm text-gray-500 mb-4">Are you sure you want to create a custom referral? This will cost you 200 coins.</p>
+
+                            <div class="flex justify-end space-x-4">
+                                <button onclick="closeCustomReferralModal()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black-400 hover:bg-gray-700">
+                                    Cancel
+                                </button>
+                                <button onclick="showCustomCodeInput()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black-400 hover:bg-gray-700">
+                                    Yes, Continue
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Code Input Modal -->
+                    <div id="customCodeInputModal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
+                        <div class="bg-white rounded-lg p-8 max-w-md w-full">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Enter Custom Code</h3>
+
+                            <div class="mb-6">
+                                <label for="customCode" class="block text-sm font-medium text-gray-700 mb-2">Custom Referral Code</label>
+                                <input type="text" id="customCode" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-winter-500 focus:border-winter-500" placeholder="Enter your custom code">
+                                <p class="mt-2 text-sm text-gray-500">Code must be between 3 and 20 characters</p>
+                            </div>
+
+                            <div class="flex justify-end space-x-4">
+                                <button onclick="closeCustomCodeInputModal()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black-400 hover:bg-gray-700">
+                                    Cancel
+                                </button>
+                                <button onclick="confirmCustomReferral()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black-400 hover:bg-gray-700">
+                                    Create Referral
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edit Referral Modal -->
+                    <div id="editReferralModal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
+                        <div class="bg-white rounded-lg p-8 max-w-md w-full">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Edit Custom Referral</h3>
+                            <p class="text-gray-500 mb-6">Cost: <span class="text-2xl font-bold text-winter-500">10 coins</span></p>
+
+                            <div class="mb-6">
+                                <label for="newCustomCode" class="block text-sm font-medium text-gray-700 mb-2">New Referral Code</label>
+                                <input type="text" id="newCustomCode" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-winter-500 focus:border-winter-500" placeholder="Enter new code">
+                            </div>
+
+                            <div class="flex justify-end space-x-4">
+                                <button onclick="closeEditModal()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black-400 hover:bg-gray-700">
+                                    Cancel
+                                </button>
+                                <button onclick="confirmEdit()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black-400 hover:bg-gray-700">
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Success/Error Alert -->
+                    <div id="alert" class="hidden fixed top-4 right-4 max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto z-50">
+                        <div class="p-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0" id="alertIcon"></div>
+                                <div class="ml-3 w-0 flex-1 pt-0.5">
+                                    <p class="text-sm font-medium text-gray-900" id="alertTitle"></p>
+                                    <p class="mt-1 text-sm text-gray-500" id="alertMessage"></p>
+                                </div>
+                                <div class="ml-4 flex-shrink-0 flex">
+                                    <button onclick="closeAlert()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black-400 hover:bg-gray-700">
+                                        <span class="sr-only">Close</span>
+                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function generateFreeReferral() {
+            fetch('/api/referral/generate', {
+                method: 'POST',
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showAlert('success', 'Success!', 'Your free referral code has been generated.');
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    showAlert('error', 'Error!', data.error);
+                }
+            })
+            .catch(err => {
+                showAlert('error', 'Error!', 'An error occurred while generating your referral code.');
+            });
+        }
+
+        function createCustomReferral() {
+            document.getElementById('customReferralModal').classList.remove('hidden');
+        }
+
+        function showCustomCodeInput() {
+            document.getElementById('customReferralModal').classList.add('hidden');
+            document.getElementById('customCodeInputModal').classList.remove('hidden');
+        }
+
+        function closeCustomReferralModal() {
+            document.getElementById('customReferralModal').classList.add('hidden');
+        }
+
+        function closeCustomCodeInputModal() {
+            document.getElementById('customCodeInputModal').classList.add('hidden');
+        }
+
+        function confirmCustomReferral() {
+            const code = document.getElementById('customCode').value;
+            if (!code || code.length < 3 || code.length > 20) {
+                showAlert('error', 'Invalid Code', 'Code must be between 3 and 20 characters.');
+                return;
+            }
+
+            fetch('/api/referral/custom', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({ code })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showAlert('success', 'Success!', 'Your custom referral code has been created.');
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    showAlert('error', 'Error!', data.error);
+                }
+            })
+            .catch(err => {
+                showAlert('error', 'Error!', 'An error occurred while creating your referral code.');
+            });
+        }
+
+        function editReferral() {
+            document.getElementById('editReferralModal').classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editReferralModal').classList.add('hidden');
+        }
+
+        function confirmEdit() {
+            const code = document.getElementById('newCustomCode').value;
+            fetch('/api/referral/edit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({ code })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showAlert('success', 'Success!', 'Your referral code has been updated.');
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    showAlert('error', 'Error!', data.error);
+                }
+            });
+        }
+
+        function deleteReferral() {
+            if (confirm('Are you sure you want to delete your referral code?')) {
+                fetch('/api/referral/delete', {
+                    method: 'POST',
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showAlert('success', 'Success!', 'Your referral code has been deleted.');
+                        setTimeout(() => location.reload(), 1500);
+                    } else {
+                        showAlert('error', 'Error!', data.error);
+                    }
+                });
+            }
+        }
+
+        function redeemReferral() {
+            const code = document.getElementById('redeemCode').value;
+            fetch('/api/referral/redeem', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({ code })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showAlert('success', 'Success!', 'Referral code redeemed! You and the referral owner have received 50 coins.');
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    showAlert('error', 'Error!', data.error);
+                }
+            });
+        }
+
+        function showAlert(type, title, message) {
+            const alert = document.getElementById('alert');
+            const alertTitle = document.getElementById('alertTitle');
+            const alertMessage = document.getElementById('alertMessage');
+            const alertIcon = document.getElementById('alertIcon');
+
+            alertTitle.textContent = title;
+            alertMessage.textContent = message;
+
+            if (type === 'success') {
+                alertIcon.innerHTML = `<svg class="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>`;
+            } else {
+                alertIcon.innerHTML = `<svg class="h-6 w-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>`;
+            }
+
+            alert.classList.remove('hidden');
+            setTimeout(() => closeAlert(), 5000);
+        }
+
+        function closeAlert() {
+            document.getElementById('alert').classList.add('hidden');
+        }
+    </script>
+    <div class="relative bg-transparent">
+        <div class="relative max-w-7xl mx-auto">
+          <div class="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-2 lg:max-w-none">
+      <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+        <div class="flex-shrink-0">
+          <script type="text/javascript">
+            atOptions = {
+              'key' : 'f4c594f428287ddde77189be38b1e492',
+              'format' : 'iframe',
+              'height' : 90,
+              'width' : 728,
+              'params' : {}
+            };
+            document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/f4c594f428287ddde77189be38b1e492/invoke.js"></scr' + 'ipt>');
+          </script>
+        </div>
+        <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+          <div class="flex-1">
+            <p class="text-sm font-medium text-black-600">
+              <a href="#" class="hover:underline"> Ad </a>
+            </p>
+            <a href="#" class="block mt-2">
+              <p class="text-xl font-semibold text-gray-900"> You're seeing an ad, why? </p>
+              <p class="mt-3 text-base text-gray-500 mb-4"> Ads help <%= settings.name %> to earn money while you earn coins, they'll really appreciate it </p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+        <div class="flex-shrink-0">
+          <script type="text/javascript">
+            atOptions = {
+              'key' : 'f4c594f428287ddde77189be38b1e492',
+              'format' : 'iframe',
+              'height' : 90,
+              'width' : 728,
+              'params' : {}
+            };
+            document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/f4c594f428287ddde77189be38b1e492/invoke.js"></scr' + 'ipt>');
+          </script>
+        </div>
+        <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+          <div class="flex-1">
+            <p class="text-sm font-medium text-black-600">
+              <a href="#" class="hover:underline"> Ad </a>
+            </p>
+            <a href="#" class="block mt-2">
+              <p class="text-xl font-semibold text-gray-900"> You're seeing an ad, why? </p>
+              <p class="mt-3 text-base text-gray-500 mb-4"> Ads help <%= settings.name %> to earn money while you earn coins, they'll really appreciate it </p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+        <div class="flex-shrink-0">
+          <script type="text/javascript">
+            atOptions = {
+              'key' : 'f4c594f428287ddde77189be38b1e492',
+              'format' : 'iframe',
+              'height' : 90,
+              'width' : 728,
+              'params' : {}
+            };
+            document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/f4c594f428287ddde77189be38b1e492/invoke.js"></scr' + 'ipt>');
+          </script>
+        </div>
+        <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+          <div class="flex-1">
+            <p class="text-sm font-medium text-black-600">
+              <a href="#" class="hover:underline"> Ad </a>
+            </p>
+            <a href="#" class="block mt-2">
+              <p class="text-xl font-semibold text-gray-900"> You're seeing an ad, why? </p>
+              <p class="mt-3 text-base text-gray-500 mb-4"> Ads help <%= settings.name %> to earn money while you earn coins, they'll really appreciate it </p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+        <div class="flex-shrink-0">
+          <script type="text/javascript">
+            atOptions = {
+              'key' : 'f4c594f428287ddde77189be38b1e492',
+              'format' : 'iframe',
+              'height' : 90,
+              'width' : 728,
+              'params' : {}
+            };
+            document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/f4c594f428287ddde77189be38b1e492/invoke.js"></scr' + 'ipt>');
+          </script>
+        </div>
+        <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+          <div class="flex-1">
+            <p class="text-sm font-medium text-black-600">
+              <a href="#" class="hover:underline"> Ad </a>
+            </p>
+            <a href="#" class="block mt-2">
+              <p class="text-xl font-semibold text-gray-900"> You're seeing an ad, why? </p>
+              <p class="mt-3 text-base text-gray-500 mb-4"> Ads help <%= settings.name %> to earn money while you earn coins, they'll really appreciate it </p>
+            </a>
+          </div>
+        </div>
+      </div>
+</body>
+</html>
