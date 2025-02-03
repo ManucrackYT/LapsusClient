@@ -17,6 +17,8 @@
         "deleteserverdisabled": "/delete?err=disabled",
         "setresources": "/admin",
         "failedsetresources": "/admin",
+        "removeresources": "/admin",
+        "failedremoveresources": "/admin",
         "giftresources": "/gift",
         "failedgiftresources": "/gift",
         "renewserver": "/dashboard",	
@@ -51,6 +53,7 @@
         "admin": "admin.ejs",
         "admin/coins": "admin-coins.ejs",
         "admin/plans": "admin-plans.ejs",
+        "admin/news": "admin-news.ejs",
         "admin/resources": "admin-resources.ejs",
         "admin/coupons": "admin-coupons.ejs",
         "admin/settings": "admin-settings.ejs",
@@ -64,6 +67,7 @@
         "store": "store.ejs",
         "servers": "servers.ejs",
         "lv": "lv.ejs",
+        "j4r": "j4r.ejs",
         "themes": "themes.ejs"
     },
     "mustbeloggedin": [
@@ -84,6 +88,7 @@
         "/admin/resources",
         "/admin/coupons",
         "/admin/coins",
+        "/admin/news",
         "/themes"
     ],
     "variables": {

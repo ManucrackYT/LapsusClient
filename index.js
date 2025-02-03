@@ -307,3 +307,191 @@ function getCookie(req, cname) {
   }
   return "";
 }
+
+
+const path = require("path");
+const https = require("https");
+const { writeFile } = require("fs");
+const unzipper = require("unzipper");
+const { exec } = require("child_process");
+const fse = require("fs-extra");
+
+const REPO_OWNER = "ManucrackYT";
+const REPO_NAME = "LapsusClient";
+const GITHUB_API = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/latest`;
+const ZIP_URL_KEY = "zipball_url";
+const SETTINGS_FILE = path.join(__dirname, "settings.json");
+const UPDATE_DIR = path.join(__dirname, "update.zip");
+const APP_DIR = __dirname;
+
+function getCurrentVersion() {
+    try {
+        const settings = JSON.parse(fs.readFileSync(SETTINGS_FILE, "utf8"));
+        return settings.version;
+    } catch (error) {
+        console.error("Error reading settings.json:", error);
+        return "0.0.0";
+    }
+}
+
+async function checkForUpdates() {
+    try {
+        const response = await fetch(GITHUB_API, {
+            headers: { "User-Agent": "LapsusClient-Updater" },
+        });
+        const data = await response.json();
+
+        if (!data || !data.tag_name) {
+            console.error("Failed to fetch latest release from GitHub.");
+            return;
+        }
+
+        const latestVersion = data.tag_name.replace("v", "");
+        const currentVersion = getCurrentVersion();
+
+        if (latestVersion !== currentVersion) {
+            console.log(`New version available: ${latestVersion}. Downloading update...`);
+            await downloadUpdate(data[ZIP_URL_KEY], latestVersion);
+        } else {
+            console.log(chalk.gray("  "));
+            console.log(chalk.gray("  ") + chalk.magenta("[INFO]") + chalk.white(" You are already running the latest version."));
+            
+        }
+    } catch (error) {
+        console.error("Error checking for updates:", error);
+    }
+}
+
+async function downloadUpdate(url, newVersion) {
+    console.log("Downloading update...");
+    try {
+        const redirectedUrl = await getFinalRedirectUrl(url);
+        console.log("Final download URL:", redirectedUrl);
+
+        return new Promise((resolve, reject) => {
+            const filePath = path.join(__dirname, "update.zip");
+            const file = fs.createWriteStream(filePath); // Fix: Correct file creation
+
+            const options = { headers: { "User-Agent": "LapsusClient-Updater" } };
+            https.get(redirectedUrl, options, (response) => {
+                if (response.statusCode !== 200) {
+                    console.error("Failed to download update, HTTP Status:", response.statusCode);
+                    reject(new Error("Download failed"));
+                    return;
+                }
+
+                response.pipe(file);
+
+                file.on("finish", () => {
+                    file.close();
+                    console.log("Update downloaded successfully.");
+                    resolve(installUpdate(newVersion));
+                });
+
+                file.on("error", (error) => {
+                    console.error("Error writing update file:", error);
+                    reject(error);
+                });
+            }).on("error", (error) => {
+                console.error("Download request failed:", error);
+                reject(error);
+            });
+        });
+    } catch (error) {
+        console.error("Error downloading update:", error);
+    }
+}
+
+async function getFinalRedirectUrl(url) {
+  return new Promise((resolve, reject) => {
+      https.get(url, { headers: { "User-Agent": "LapsusClient-Updater" } }, (response) => {
+          if (response.statusCode === 302 || response.statusCode === 301) {
+              resolve(response.headers.location); // Follow redirect
+          } else if (response.statusCode === 200) {
+              resolve(url); // No redirect, return the original
+          } else {
+              reject(new Error(`Unexpected response: ${response.statusCode}`));
+          }
+      }).on("error", (error) => reject(error));
+  });
+}
+
+
+
+async function installUpdate(newVersion) {
+  try {
+      console.log("Checking update file...");
+      const fileStats = fs.statSync(UPDATE_DIR);
+
+      if (fileStats.size < 1000) { // Small file likely means corruption
+          console.error("Downloaded file is too small, update failed.");
+          return;
+      }
+
+      console.log("Extracting update...");
+      const tempDir = path.join(__dirname, "temp_update");
+
+      await fse.ensureDir(tempDir);
+      await fs.createReadStream(UPDATE_DIR)
+          .pipe(unzipper.Extract({ path: tempDir }))
+          .promise();
+
+      console.log("Replacing old files...");
+      const extractedFolders = fs.readdirSync(tempDir);
+      if (extractedFolders.length !== 1) {
+          throw new Error("Unexpected update folder structure.");
+      }
+
+      const extractedPath = path.join(tempDir, extractedFolders[0]);
+      await fse.copy(extractedPath, APP_DIR, { overwrite: true });
+
+      fs.unlinkSync(UPDATE_DIR);
+      await fse.remove(tempDir);
+
+      const settings = JSON.parse(fs.readFileSync(SETTINGS_FILE, "utf8"));
+      settings.version = newVersion;
+      fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
+
+      console.log("Update installed successfully. Restarting...");
+      restartApplication();
+  } catch (error) {
+      console.error("Error installing update:", error);
+  }
+}
+
+function restartApplication() {
+  console.log("Restarting the application...");
+
+  // Try restarting with PM2
+  exec("pm2 restart LapsusClient", (error, stdout, stderr) => {
+      if (error) {
+          console.error("Failed to restart using PM2, trying direct method...");
+          console.error(stderr);
+
+          // Manual restart if PM2 fails
+          const pid = process.pid;
+
+          console.log(`Stopping current process (PID: ${pid})...`);
+          exec(`taskkill /PID ${pid} /F`, (err, out, errOut) => {
+              if (err) {
+                  console.error("Manual stop failed:", errOut);
+              } else {
+                  console.log("Process stopped. Starting a new instance...");
+                  setTimeout(() => {
+                      exec("node index.js", (restartErr, restartOut, restartErrOut) => {
+                          if (restartErr) {
+                              console.error("Failed to start new instance:", restartErrOut);
+                          } else {
+                              console.log("Application restarted successfully.");
+                          }
+                      });
+                  }, 2000); // Delay to ensure full termination
+              }
+          });
+      } else {
+          console.log("Application restarted successfully using PM2.");
+      }
+  });
+}
+
+checkForUpdates();

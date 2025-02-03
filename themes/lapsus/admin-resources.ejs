@@ -129,6 +129,41 @@
                     <br>
                     <a role="button" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none" href="javascript: submitSet()">Apply Changes</a>
                   </div>
+                  <br><br>
+                  <div class="card-body">
+                    <h4 class="text-md font-medium text-gray-600">Remove user's resources</h4>
+                    &nbsp;
+                    <form class="forms-sample">
+                        <div class="form-group">
+                            <label for="IDRemove">Discord User ID</label>
+                            <input style="padding: 8px;" type="number" class="focus:border-gray-400 focus:ring-gray-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" placeholder="Enter user ID" id="IDRemove">
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="RemoveCPU">CPU</label><BR>
+                            <input style="padding: 8px;" type="number" class="focus:border-gray-400 focus:ring-gray-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" placeholder="80" id="RemoveCPU">
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="RemoveRAM">RAM</label><BR>
+                            <input style="padding: 8px;" type="number" class="focus:border-gray-400 focus:ring-gray-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" placeholder="4096" id="RemoveRAM">
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="RemoveDisk">Disk</label><BR>
+                            <input style="padding: 8px;" type="number" class="focus:border-gray-400 focus:ring-gray-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" placeholder="81920" id="RemoveDisk">
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="RemoveServers">Servers</label><BR>
+                            <input style="padding: 8px;" type="number" class="focus:border-gray-400 focus:ring-gray-400 transition ease-in-out delay-100 group relative border border-gray-300 flex w-1/4 justify-center form-control rounded-md" placeholder="3" id="RemoveServers">
+                        </div>
+                    </form>
+                    <br>
+                    <a role="button" class="transition delay-100 group relative justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none" href="javascript: submitRemove()">Apply Changes</a>
+                </div>
+                </div>
+              </div>
                 </div>
               </div>
           </div></div>
@@ -170,7 +205,7 @@
             let ram = encodeURIComponent(document.getElementById("RemoveRAM").value);
             let disk = encodeURIComponent(document.getElementById("RemoveDisk").value);
             let servers = encodeURIComponent(document.getElementById("RemoveServers").value);
-            window.location.href = "/removeresources?id=" + id + "&cpu=" + cpu + "&ram=" + ram + "&disk=" + disk + "&servers=" + servers
+            window.location.href = "/removeresources?id=" + id + "&cpu=" + cpu + "&ram=" + ram + "&disk=" + disk + "&servers=" + servers;
         }
     </script>
     <!-- Custom js for this page -->
