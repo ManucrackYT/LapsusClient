@@ -13,9 +13,9 @@
     "secret": "change_this"
   },
   "pterodactyl": {
-    "domain": "https://panel.pluox.xyz",
-    "key": "ptla_L9autDfSl77cc03Y5ryR5CkwOwAFfbz4kmt37OSLtUe",
-    "account_key": "ptlc_NUdxJpR6nSKl8oHJ2qKZ8DegrkpoGDRk9v5AB7znFu7"
+    "domain": "https://panel.yourdomain.com",
+    "key": "ptla_",
+    "account_key": "ptlc_"
   },
   "storelimits": {
     "ram": "5120",
@@ -94,8 +94,8 @@
       },
       "oauth2": {
         "_comment": "Go to https://discord.dev/ and create an application to set these up.",
-        "id": "896452507927212053",
-        "secret": "ajhklUEAfp3YySryTqaulEGyiLFZihRC",
+        "id": "",
+        "secret": "",
         "link": "http://localhost:8000",
         "callbackpath": "/callback",
         "prompt": true,
