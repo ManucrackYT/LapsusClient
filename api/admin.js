@@ -10,6 +10,7 @@ const indexjs = require("../index.js");
 const arciotext = (require("./arcio.js")).text;
 const adminjs = require("./admin.js");
 const ejs = require("ejs");
+const path = require('path');
 const chalk = require('chalk');
 
 module.exports.load = async function(app, db) {
@@ -125,6 +126,52 @@ module.exports.load = async function(app, db) {
         let successredirect = theme.settings.redirect.setcoins || "/";
         res.redirect(successredirect + "?err=none");
     });
+
+    app.get("/removecoins", async (req, res) => {
+        let theme = indexjs.get(req);
+    
+        if (!req.session.pterodactyl) return four0four(req, res, theme);
+    
+        let cacheaccount = await fetch(
+            settings.pterodactyl.domain + "/api/application/users/" + (await db.get("users-" + req.session.userinfo.id)) + "?include=servers",
+            {
+                method: "get",
+                headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+            }
+        );
+        if (await cacheaccount.statusText == "Not Found") return four0four(req, res, theme);
+        let cacheaccountinfo = JSON.parse(await cacheaccount.text());
+    
+        req.session.pterodactyl = cacheaccountinfo.attributes;
+        if (cacheaccountinfo.attributes.root_admin !== true) return four0four(req, res, theme);
+    
+        let failredirect = theme.settings.redirect.failedsetcoins || "/";
+    
+        let id = req.query.id;
+        let coins = req.query.coins;
+    
+        if (!id) return res.redirect(failredirect + "?err=MISSINGID");
+        if (!(await db.get("users-" + req.query.id))) return res.redirect(`${failredirect}?err=INVALIDID`);
+        
+        if (!coins) return res.redirect(failredirect + "?err=MISSINGCOINS");
+    
+        let currentcoins = await db.get("coins-" + id) || 0;
+    
+        coins = currentcoins - parseFloat(coins); // Subtract coins instead of adding
+    
+        if (isNaN(coins)) return res.redirect(failredirect + "?err=INVALIDCOINNUMBER");
+    
+        if (coins < 0 || coins > 999999999999999) return res.redirect(`${failredirect}?err=COINSIZE`);
+    
+        if (coins <= 0) {
+            await db.delete("coins-" + id); // Remove coins if balance is 0 or less
+        } else {
+            await db.set("coins-" + id, coins);
+        }
+    
+        let successredirect = theme.settings.redirect.setcoins || "/";
+        res.redirect(successredirect + "?err=none");
+    });    
 
     app.get("/setresources", async (req, res) => {
         let theme = indexjs.get(req);
@@ -831,6 +878,7 @@ app.get("/addresources", async (req, res) => {
         res.send({
           status: "success",
           package: package,
+          coins: newsettings.api.client.coins.enabled == true ? (await db.get("coins-" + req.query.id) ? await db.get("coins-" + req.query.id) : 0) : null,
           extra: await db.get("extra-" + req.query.id) ? await db.get("extra-" + req.query.id) : {
             ram: 0,
             disk: 0,
@@ -838,7 +886,7 @@ app.get("/addresources", async (req, res) => {
             servers: 0
           },
           userinfo: userinfo,
-          coins: newsettings.api.client.coins.enabled == true ? (await db.get("coins-" + req.query.id) ? await db.get("coins-" + req.query.id) : 0) : null
+          
         });
     });
 

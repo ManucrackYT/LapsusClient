@@ -21,7 +21,7 @@ module.exports.load = async function (app, db) {
     if (!cacheaccount) return
     req.session.pterodactyl = cacheaccount.attributes;
     if (req.query.redirect) if (typeof req.query.redirect == "string") return res.redirect("/" + req.query.redirect);
-    res.redirect("/servers");
+    res.redirect("/profile");
   });
 
   const queue = new Queue()

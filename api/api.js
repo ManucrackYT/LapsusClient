@@ -3,7 +3,7 @@ const adminjs = require("./admin.js");
 const fs = require("fs");
 const ejs = require("ejs");
 const fetch = require('node-fetch');
-const NodeCache = require( "node-cache" );
+const NodeCache = require("node-cache");
 const Queue = require("../managers/Queue.js");
 const myCache = new NodeCache({ deleteOnExpire: true, stdTTL: 59 });
 const log = require('../misc/log')
@@ -139,7 +139,12 @@ module.exports.load = async function (app, db) {
       await db.set(`coins-${req.session.userinfo.id}`, 0)
     } else {
       let e = await db.get(`coins-${req.session.userinfo.id}`)
-      e = e + newsettings.api.arcio["afk page"].coins
+      // Check if arcio is defined before accessing it
+      if (newsettings.api.arcio && newsettings.api.arcio["afk page"]) {
+        e = e + newsettings.api.arcio["afk page"].coins
+      } else {
+        e = e + 0; // Default value if arcio is not defined
+      }
       await db.set(`coins-${req.session.userinfo.id}`, e)
     }
     let a = await db.get(`coins-${req.session.userinfo.id}`)
@@ -456,4 +461,20 @@ app.post("/api/createcoupon", async (req, res) => {
       });
     return null;
   }
+
+ async function check(req, res) {
+    let settings = JSON.parse(fs.readFileSync("./settings.json").toString());
+    if (settings.api.client.api.enabled == true) {
+      let auth = req.headers['authorization'];
+      if (auth) {
+        if (auth == "Bearer " + settings.api.client.api.code) {
+          return settings;
+        };
+      };
+    }
+    // Block browser access to /api
+    res.status(403).send("Access denied. This endpoint is for API use only.");
+    return null;
+  }
+
 };

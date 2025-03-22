@@ -178,50 +178,70 @@
   </dl>
 </div>
 <% if (pterodactyl.root_admin == true) { %>
-<% if (settings.version < 2.8) { %>  <!-- Update this when I release a new version -->
-<div id="notif" class="noti">
-  <div class="noti__icon">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M12.0964 16.6667C12.0964 18.5077 10.6039 20 8.76297 20C6.922 20 5.42969 18.5077 5.42969 16.6667C5.42969 14.8257 6.922 13.3333 8.76297 13.3333C10.6039 13.3333 12.0964 14.8257 12.0964 16.6667Z" fill="#22215B"/>
-<path d="M14.603 9.93424C11.778 9.5308 9.59641 7.1016 9.59641 4.16673C9.59641 3.33329 9.77463 2.54258 10.0905 1.82496C9.66385 1.72501 9.22058 1.66673 8.76297 1.66673C5.54642 1.66673 2.92969 4.2833 2.92969 7.50001V9.82331C2.92969 11.4725 2.20718 13.0292 0.939636 14.1008C0.61554 14.3774 0.429688 14.7817 0.429688 15.2083C0.429688 16.0126 1.08383 16.6667 1.88797 16.6667H15.638C16.4423 16.6667 17.0964 16.0126 17.0964 15.2083C17.0964 14.7817 16.9106 14.3774 16.5781 14.0933C15.3481 13.0525 14.6347 11.5416 14.603 9.93424Z" fill="#22215B"/>
-<path d="M19.5964 4.16672C19.5964 6.4679 17.7309 8.33328 15.4297 8.33328C13.1285 8.33328 11.263 6.4679 11.263 4.16672C11.263 1.86554 13.1285 0 15.4297 0C17.7309 0 19.5964 1.86554 19.5964 4.16672Z" fill="#4CE364"/>
-</svg>
-  </div>
-  <div class="noti__message">
-    <h2>New update available</h2>
-    <p id="latestversion">Fetching...</p>
-  </div>
-  <div class="flex flex-1 justify-end">
-    <button onclick="closenoti()">
-      <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+  <div id="notif" class="noti" style="display: none;">
+    <div class="noti__icon">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12.0964 16.6667C12.0964 18.5077 10.6039 20 8.76297 20C6.922 20 5.42969 18.5077 5.42969 16.6667C5.42969 14.8257 6.922 13.3333 8.76297 13.3333C10.6039 13.3333 12.0964 14.8257 12.0964 16.6667Z" fill="#22215B"/>
+        <path d="M14.603 9.93424C11.778 9.5308 9.59641 7.1016 9.59641 4.16673C9.59641 3.33329 9.77463 2.54258 10.0905 1.82496C9.66385 1.72501 9.22058 1.66673 8.76297 1.66673C5.54642 1.66673 2.92969 4.2833 2.92969 7.50001V9.82331C2.92969 11.4725 2.20718 13.0292 0.939636 14.1008C0.61554 14.3774 0.429688 14.7817 0.429688 15.2083C0.429688 16.0126 1.08383 16.6667 1.88797 16.6667H15.638C16.4423 16.6667 17.0964 16.0126 17.0964 15.2083C17.0964 14.7817 16.9106 14.3774 16.5781 14.0933C15.3481 13.0525 14.6347 11.5416 14.603 9.93424Z" fill="#22215B"/>
+        <path d="M19.5964 4.16672C19.5964 6.4679 17.7309 8.33328 15.4297 8.33328C13.1285 8.33328 11.263 6.4679 11.263 4.16672C11.263 1.86554 13.1285 0 15.4297 0C17.7309 0 19.5964 1.86554 19.5964 4.16672Z" fill="#4CE364"/>
       </svg>
-    </button>
+    </div>
+    <div class="noti__message">
+      <h2>New update available</h2>
+      <p id="latestversion">Fetching...</p>
+    </div>
+    <div class="flex flex-1 justify-end">
+      <button onclick="closenoti()">
+        <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/>
+        </svg>
+      </button>
+    </div>
   </div>
-</div>
-<% } %>
-<script>
-  function closenoti() {
-    var x = document.getElementById("notif");
-    if (x.style.display === "none") {
-      x.style.display = "block";
-    } else {
-      x.style.display = "none";
+  
+  <script>
+    function closenoti() {
+      document.getElementById("notif").style.display = "none";
     }
-  }
+  
+    // Fetch latest version from GitHub
+    fetch("https://raw.githubusercontent.com/ManucrackYT/LapsusClient/main/.github/workflows/index.html")
+      .then(res => res.text())  // Get raw text from file
+      .then(data => {
+          console.log("Fetched data:", data); // Debugging output
+  
+          let match = data.match(/Version:\s*([\d.]+)/); // Extract version number
+          let latestVersion = match ? match[1].trim() : null; // Trim to avoid whitespace issues
+          let currentVersion = "<%= settings.version %>".trim(); // Trim for consistency
+  
+          console.log("Latest Version:", latestVersion);
+          console.log("Current Version:", currentVersion);
+  
+          if (latestVersion && currentVersion && compareVersions(currentVersion, latestVersion) < 0) {
+              document.getElementById("latestversion").innerHTML = 
+                  `A new Lapsus Client version (${latestVersion}) is available for download.`;
+              document.getElementById("notif").style.display = "block";
+          }
+      })
+      .catch(err => console.error("Failed to fetch version:", err));
+  
+    // Function to compare version numbers (returns -1 if current < latest, 1 if current > latest, 0 if equal)
+    function compareVersions(v1, v2) {
+      let v1Parts = v1.split('.').map(Number);
+      let v2Parts = v2.split('.').map(Number);
+  
+      for (let i = 0; i < Math.max(v1Parts.length, v2Parts.length); i++) {
+          let num1 = v1Parts[i] || 0; // Default to 0 if missing
+          let num2 = v2Parts[i] || 0;
+  
+          if (num1 < num2) return -1;
+          if (num1 > num2) return 1;
+      }
+      return 0;
+    }
   </script>
-<script>
-  fetch("https://raw.githubusercontent.com/ManucrackYT/LapsusClient/main/.github/workflows/index.html")
-      .then(res => Promise.resolve(res.json()).then(ver => {
-          let currentver = "<%= settings.version.replace(/"/g, `\\\\"`) %>";
-          if (ver.version == currentver) {}
-          else {
-              document.getElementById("latestversion").innerHTML = `<span>A new Lapsus Client version is available for download. </span>`;
-          };
-      }));
-</script>
-&nbsp;
-<% } %>
+  <% } %>
+  
 <div class="p-16 lg:flex lg:items-center lg:justify-between rounded-lg shadow-lg bg-deploy">
   <div class="min-w-0 flex-1">
     <h2 class="text-2xl font-bold leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Deploy a new server</h2>

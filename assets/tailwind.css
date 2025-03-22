@@ -1332,14 +1332,6 @@ select {
   background-image: url('https://img.freepik.com/premium-photo/modern-brick-wall-3d-rendering_118019-218.jpg');
 }
 
-.bg-pylex {
-  background-image: url('https://cdn.discordapp.com/attachments/1190680696524652654/1190785705589362781/Pylex_Background.png?ex=65a3109b&is=65909b9b&hm=d3650dd9cad56bce0821efc433c5394aa8b49dcd5f130f17e648dc7a0d344d92&');
-}
-
-.bg-heliactyl {
-  background-image: url('https://cdn.discordapp.com/attachments/1190680696524652654/1194717725239541781/Heliactyl_Background.png?ex=65b15e96&is=659ee996&hm=94ce1a13fb7d7b8e72d3e905a94062dcae4db73c3758a14838113b162db7e0c5&');
-}
-
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;

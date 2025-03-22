@@ -44,7 +44,7 @@
         "removeaccountfailed": "/admin/misc",
         "removeaccountsuccess": "/admin/misc"
     },
-    "pages": {
+    "pages": { 
         "dashboard": "dashboard.ejs",
         "servers/new": "create.ejs",
         "beta/servers/new": "dev/create.ejs",
@@ -55,6 +55,7 @@
         "admin/plans": "admin-plans.ejs",
         "admin/news": "admin-news.ejs",
         "admin/resources": "admin-resources.ejs",
+        "admin/general": "admin-general.ejs",
         "admin/coupons": "admin-coupons.ejs",
         "admin/settings": "admin-settings.ejs",
         "redeem": "redeem.ejs",

@@ -335,7 +335,7 @@ module.exports.load = async function (app, db) {
                 return res.send("An error has occured when attempting to create your account.");
               };
             };
-            log('signup', `${userinfo.username}#${userinfo.discriminator} logged in to the dashboard for the first time!`)
+            log('signup', `@${userinfo.username} logged in to the dashboard for the first time!`)
           } else {
             return res.send("New users cannot signup in this moment.")
           }

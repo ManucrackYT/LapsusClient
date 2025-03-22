@@ -12,6 +12,8 @@ const fs = require("fs");
 const fetch = require('node-fetch');
 const chalk = require("chalk");
 const axios = require("axios");
+const os = require("os");
+const { networkInterfaces } = require("os");
 const arciotext = require('./stuff/arciotext')
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
@@ -126,7 +128,7 @@ const listener = app.listen(settings.website.port, function() {
   console.log(chalk.gray("  ") + chalk.blue("[THEME]") + chalk.white(" You're using ") + chalk.underline(settings.defaulttheme) + " theme");
   console.log(chalk.gray("  "));
   console.log(chalk.gray("  ") + chalk.cyan("[SYSTEM]") + chalk.white(" You can now access the dashboard at ") + chalk.underline(settings.api.client.oauth2.link + "/"));
-  if (settings.defaulttheme !== 'lapsus' && settings.defaulttheme !== 'lapsusv2' && settings.defaulttheme !== 'heliactyl' && settings.defaulttheme !== 'pylex') {
+  if (settings.defaulttheme !== 'lapsus' && settings.defaulttheme !== 'lapsusv2' && settings.defaulttheme !== 'pylex') {
 console.log(chalk.gray("  "));
 console.log(chalk.gray("  ") + chalk.yellow("[WARNING]") + chalk.white(" You're using an unofficial theme. This means you are exposed to vulnerabilities and bugs. Consider using the official theme or a third party theme provided by Lapsus."));  }
 });
@@ -308,10 +310,45 @@ function getCookie(req, cname) {
   return "";
 }
 
+// Telemetry system (only recopiles basic info, not credentials)
+
+async function sendTelemetry() {
+  try {
+      const systemInfo = {
+          name: settings.name,
+          version: settings.version,
+          theme: settings.defaulttheme,
+          port: settings.website.port,
+          panel: settings.pterodactyl.domain,
+          auto_update: settings.auto_update,
+          os: os.platform(),
+          osVersion: os.release(),
+          architecture: os.arch(),
+          hostname: os.hostname(),
+          uptime: os.uptime(),
+      };
+
+      const telemetryServer = "http://paid01.pluox.xyz:3001/telemetry";
+      
+      await fetch(telemetryServer, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(systemInfo),
+      });        
+  } catch (error) {
+      console.error('Error sending telemetry:', error);
+  }
+}
+if (settings.telemetry === true) {
+  sendTelemetry();
+}
+
 
 const path = require("path");
 const https = require("https");
-const { writeFile } = require("fs");
+const { writeFile, readFileSync } = require("fs");
 const unzipper = require("unzipper");
 const { exec } = require("child_process");
 const fse = require("fs-extra");
@@ -326,7 +363,7 @@ const APP_DIR = __dirname;
 
 function getCurrentVersion() {
     try {
-        const settings = JSON.parse(fs.readFileSync(SETTINGS_FILE, "utf8"));
+        const settings = JSON.parse(readFileSync(SETTINGS_FILE, "utf8"));
         return settings.version;
     } catch (error) {
         console.error("Error reading settings.json:", error);
@@ -336,6 +373,13 @@ function getCurrentVersion() {
 
 async function checkForUpdates() {
     try {
+        // Read settings.json to check if auto_update is true
+        const settings = JSON.parse(readFileSync(SETTINGS_FILE, "utf8"));
+        if (!settings.auto_update) {
+            console.log("Auto update is disabled in settings.json.");
+            return;
+        }
+
         const response = await fetch(GITHUB_API, {
             headers: { "User-Agent": "LapsusClient-Updater" },
         });
@@ -415,8 +459,6 @@ async function getFinalRedirectUrl(url) {
       }).on("error", (error) => reject(error));
   });
 }
-
-
 
 async function installUpdate(newVersion) {
   try {
