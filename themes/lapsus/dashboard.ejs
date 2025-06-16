@@ -6,11 +6,13 @@
   <link rel="stylesheet" href="../assets/tailwind.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
-  
-  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <% if (settings.music == true) { %>
   <!-- Music Player -->
   <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
 <div class="elfsight-app-9c8f4667-f5ce-46b9-99e2-f32095e11518" data-elfsight-app-lazy></div>
+  <% } %>
 
   <!-- Inter font -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -44,6 +46,7 @@
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       transition: 0.5s;
+      animation: fadeIn 0.3s ease-in-out;
   }
 
   /* Modal Content */
@@ -54,7 +57,8 @@
       width: 30%;
       border-radius: 16px;
       margin-top: 12%;
-      transition: 0.5s
+      transition: 0.5s;
+      animation: slideIn 0.4s ease-out;
   }
 
   .close:hover,
@@ -62,20 +66,174 @@
       color: #000;
       text-decoration: none;
       cursor: pointer;
-      transition: 0.5s
+      transition: 0.5s;
+  }
+
+  /* Button animations */
+  .btn-hover {
+    transition: all 0.3s ease;
+    transform: translateY(0);
+  }
+  
+  .btn-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-active:active {
+    transform: translateY(1px);
+  }
+  
+  .btn-pulse {
+    animation: pulse 2s infinite;
+  }
+  
+  .btn-bounce {
+    animation: bounce 2s infinite;
+  }
+  
+  .resource-card {
+    transition: all 0.3s ease;
+  }
+  
+  .resource-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .deploy-card {
+    transition: all 0.4s ease;
+  }
+  
+  .deploy-card:hover {
+    transform: scale(1.01);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  .news-card {
+    transition: all 0.3s ease;
+  }
+  
+  .news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideIn {
+    from { 
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    to { 
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(-5px);
+    }
+  }
+  
+  .noti {
+    background: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    gap: 14px;
+    animation: slideInFromRight 0.5s ease-out;
+  }
+  
+  @keyframes slideInFromRight {
+    from { 
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to { 
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .noti__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #EEF7FE;
+    animation: pulse 1.5s infinite;
+  }
+  
+  .noti__message h2 {
+    font-size: 20px;
+    color: #22215B;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  
+  .noti__message p {
+    font-size: 18px;
+    color: rgba(34, 33, 91, 0.6);
+  }
+  
+  /* Hover effect for close button */
+  .close-btn {
+    transition: all 0.3s ease;
+  }
+  
+  .close-btn:hover {
+    transform: rotate(90deg);
+    color: #ef4444;
+  }
+  
+  /* Floating animation for deploy button */
+  .floating-btn {
+    animation: floating 3s ease-in-out infinite;
+  }
+  
+  @keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
   }
 </style>
 
 <body class="bg-gray-100" style="font-family: 'Inter', sans-serif;">
   <% if (req.query.loggedin) { %>
-  <div class="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
+  <div class="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1 animate__animated animate__fadeInDown">
       <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
         <p class="text-sm ml-24 leading-6 text-gray-900">
           Welcome back 👋! You've logged in as <strong class="font-semibold">@<%= userinfo.username %></strong>
         </p>
       </div>
       <div class="flex flex-1 justify-end">
-        <a href="../dashboard" type="button" class="-m-3 p-3 focus-visible:outline-offset-[-4px]">
+        <a href="../dashboard" type="button" class="-m-3 p-3 focus-visible:outline-offset-[-4px] close-btn">
           <span class="sr-only">Dismiss</span>
           <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
@@ -108,17 +266,16 @@
           <div>
               <% if (req.query.loggedin) { %>
               <a href="../dashboard?loggedin=true"
-                  class="close w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 cursor-default">
+                  class="close w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 btn-hover btn-active">
                   Close
               </a>
               <% } else { %>
               <a href="../dashboard"
-                  class="close w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 cursor-default">
+                  class="close w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 btn-hover btn-active">
                   Dismiss
               </a>
               <% } %>
           </div>
-
       </div>
   </div>
 </div>
@@ -130,7 +287,7 @@
         <div class="max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8">
           <!-- Replace with your content -->
           <!-- This example requires Tailwind CSS v2.0+ -->
-          <div class="lg:flex lg:items-center lg:justify-between mb-8">
+          <div class="lg:flex lg:items-center lg:justify-between mb-8 animate__animated animate__fadeIn">
             <div class="min-w-0 flex-1">
               <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Dashboard</h2>
               <p class="text-md font-medium text-gray-600">Resources, news & recommendations all in one place.</p>
@@ -150,106 +307,43 @@
       databases = databases + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.databases == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.databases : 0);
   }
 %>
-  <dl class="mt-5 grid grid-cols-5 gap-5 sm:grid-cols-5">
-    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-sm font-medium text-gray-500 truncate">CPU Cores</dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.cpu/100 + extraresources.cpu/100 - cpu/100 %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
-    </div>
-
-    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-sm font-medium text-gray-500 truncate">Memory (GiB)</dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.ram/1024 + extraresources.ram/1024 - ram/1024 %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
-    </div>
-
-    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-sm font-medium text-gray-500 truncate">Storage (GiB)</dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.disk/1024 + extraresources.disk/1024 - disk/1024 %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
-    </div>
-
-    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-sm font-medium text-gray-500 truncate">Databases</dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.databases %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
-    </div>
-
-    <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-      <dt class="text-sm font-medium text-gray-500 truncate">Servers</dt>
-      <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.servers + extraresources.servers/1 - servers/1  %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
-    </div>
-  </dl>
-</div>
-<% if (pterodactyl.root_admin == true) { %>
-  <div id="notif" class="noti" style="display: none;">
-    <div class="noti__icon">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12.0964 16.6667C12.0964 18.5077 10.6039 20 8.76297 20C6.922 20 5.42969 18.5077 5.42969 16.6667C5.42969 14.8257 6.922 13.3333 8.76297 13.3333C10.6039 13.3333 12.0964 14.8257 12.0964 16.6667Z" fill="#22215B"/>
-        <path d="M14.603 9.93424C11.778 9.5308 9.59641 7.1016 9.59641 4.16673C9.59641 3.33329 9.77463 2.54258 10.0905 1.82496C9.66385 1.72501 9.22058 1.66673 8.76297 1.66673C5.54642 1.66673 2.92969 4.2833 2.92969 7.50001V9.82331C2.92969 11.4725 2.20718 13.0292 0.939636 14.1008C0.61554 14.3774 0.429688 14.7817 0.429688 15.2083C0.429688 16.0126 1.08383 16.6667 1.88797 16.6667H15.638C16.4423 16.6667 17.0964 16.0126 17.0964 15.2083C17.0964 14.7817 16.9106 14.3774 16.5781 14.0933C15.3481 13.0525 14.6347 11.5416 14.603 9.93424Z" fill="#22215B"/>
-        <path d="M19.5964 4.16672C19.5964 6.4679 17.7309 8.33328 15.4297 8.33328C13.1285 8.33328 11.263 6.4679 11.263 4.16672C11.263 1.86554 13.1285 0 15.4297 0C17.7309 0 19.5964 1.86554 19.5964 4.16672Z" fill="#4CE364"/>
-      </svg>
-    </div>
-    <div class="noti__message">
-      <h2>New update available</h2>
-      <p id="latestversion">Fetching...</p>
-    </div>
-    <div class="flex flex-1 justify-end">
-      <button onclick="closenoti()">
-        <svg class="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-          <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/>
-        </svg>
-      </button>
-    </div>
+<dl class="mt-5 grid grid-cols-5 gap-5 sm:grid-cols-5">
+  <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6 resource-card animate__animated animate__fadeInUp animate__delay-0.5s">
+    <dt class="text-sm font-medium text-gray-500 truncate">CPU Cores</dt>
+    <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.cpu/100 + extraresources.cpu/100 - cpu/100 %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
   </div>
+
+  <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6 resource-card animate__animated animate__fadeInUp animate__delay-0.7s">
+    <dt class="text-sm font-medium text-gray-500 truncate">Memory (GiB)</dt>
+    <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.ram/1024 + extraresources.ram/1024 - ram/1024 %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
+  </div>
+
+  <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6 resource-card animate__animated animate__fadeInUp animate__delay-0.9s">
+    <dt class="text-sm font-medium text-gray-500 truncate">Storage (GiB)</dt>
+    <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.disk/1024 + extraresources.disk/1024 - disk/1024 %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
+  </div>
+
+  <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6 resource-card animate__animated animate__fadeInUp animate__delay-1.1s">
+    <dt class="text-sm font-medium text-gray-500 truncate">Databases</dt>
+    <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.databases %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
+  </div>
+
+  <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6 resource-card animate__animated animate__fadeInUp animate__delay-1.3s">
+    <dt class="text-sm font-medium text-gray-500 truncate">Servers</dt>
+    <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= packages.servers + extraresources.servers/1 - servers/1  %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</dd>
+  </div>
+</dl>
+</div>
+
   
-  <script>
-    function closenoti() {
-      document.getElementById("notif").style.display = "none";
-    }
-  
-    // Fetch latest version from GitHub
-    fetch("https://raw.githubusercontent.com/ManucrackYT/LapsusClient/main/.github/workflows/index.html")
-      .then(res => res.text())  // Get raw text from file
-      .then(data => {
-          console.log("Fetched data:", data); // Debugging output
-  
-          let match = data.match(/Version:\s*([\d.]+)/); // Extract version number
-          let latestVersion = match ? match[1].trim() : null; // Trim to avoid whitespace issues
-          let currentVersion = "<%= settings.version %>".trim(); // Trim for consistency
-  
-          console.log("Latest Version:", latestVersion);
-          console.log("Current Version:", currentVersion);
-  
-          if (latestVersion && currentVersion && compareVersions(currentVersion, latestVersion) < 0) {
-              document.getElementById("latestversion").innerHTML = 
-                  `A new Lapsus Client version (${latestVersion}) is available for download.`;
-              document.getElementById("notif").style.display = "block";
-          }
-      })
-      .catch(err => console.error("Failed to fetch version:", err));
-  
-    // Function to compare version numbers (returns -1 if current < latest, 1 if current > latest, 0 if equal)
-    function compareVersions(v1, v2) {
-      let v1Parts = v1.split('.').map(Number);
-      let v2Parts = v2.split('.').map(Number);
-  
-      for (let i = 0; i < Math.max(v1Parts.length, v2Parts.length); i++) {
-          let num1 = v1Parts[i] || 0; // Default to 0 if missing
-          let num2 = v2Parts[i] || 0;
-  
-          if (num1 < num2) return -1;
-          if (num1 > num2) return 1;
-      }
-      return 0;
-    }
-  </script>
-  <% } %>
-  
-<div class="p-16 lg:flex lg:items-center lg:justify-between rounded-lg shadow-lg bg-deploy">
+<div class="p-16 lg:flex lg:items-center lg:justify-between rounded-lg shadow-lg bg-deploy deploy-card animate__animated animate__fadeIn">
   <div class="min-w-0 flex-1">
     <h2 class="text-2xl font-bold leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Deploy a new server</h2>
     <p class="text-md font-medium text-gray-200">It only takes a few moments.</p>
   </div>
   <div class="mt-5 flex lg:ml-4 lg:mt-0">
       <span class="sm:ml-3">
-        <a href="../servers/new" type="button" class="transition inline-flex items-center rounded-md bg-black-600/50 px-6 py-6 text-sm font-semibold text-white hover:shadow-inner hover:shadow-gray-700 hover:bg-gradient-to-bl hover:from-gray-600 hover:to-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">
+        <a href="../servers/new" type="button" class="transition inline-flex items-center rounded-md bg-black-600/50 px-6 py-6 text-sm font-semibold text-white hover:shadow-inner hover:shadow-gray-700 hover:bg-gradient-to-bl hover:from-gray-600 hover:to-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600 floating-btn btn-hover btn-active">
           <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
             </svg>                                
@@ -261,7 +355,7 @@
 <div class="relative bg-transparent">
 <div class="relative max-w-7xl mx-auto">
   <div class="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-2 lg:max-w-none">
-    <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+    <div class="flex flex-col rounded-lg shadow-lg overflow-hidden news-card animate__animated animate__fadeIn">
       <div class="flex-shrink-0">
         <img class="h-48 w-full object-cover" src=" <%= settings.news.new1_img %> " alt="">
       </div>
@@ -277,13 +371,15 @@
         </div>
         <div class="mt-6 flex items-center">
           <div class="flex-shrink-0">
-            <a href=" <%= settings.news.new1_button_link %> " target="_blank" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none"> <%= settings.news.new1_button_text %> </a>
+            <a href=" <%= settings.news.new1_button_link %> " target="_blank" class="transition delay-100 group relative justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none btn-hover btn-active">
+              <%= settings.news.new1_button_text %>
+            </a>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+    <div class="flex flex-col rounded-lg shadow-lg overflow-hidden news-card animate__animated animate__fadeIn">
       <div class="flex-shrink-0">
         <img class="h-48 w-full object-cover" src=" <%= settings.news.new2_img %> " alt="">
       </div>
@@ -299,7 +395,9 @@
         </div>
         <div class="mt-6 flex items-center">
           <div class="flex-shrink-0">
-            <a href=" <%= settings.news.new2_button_link %> " target="_blank" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none"> <%= settings.news.new2_button_text %> </a>
+            <a href=" <%= settings.news.new2_button_link %> " target="_blank" class="transition delay-100 group relative justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none btn-hover btn-active">
+              <%= settings.news.new2_button_text %>
+            </a>
           </div>
         </div>
       </div>
@@ -307,38 +405,6 @@
   </div>
 </div>
 </div>
-
-<style>
-
-.noti {
-  background: #fff;
-  padding: 20px;
-  border-radius: 20px;
-  display: flex;
-  gap: 14px;
-}
-.noti__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  background: #EEF7FE;
-}
-.noti__message h2 {
-  font-size: 20px;
-  color: #22215B;
-  font-weight: 500;
-  margin-bottom: 5px;
-}
-.noti__message p {
-  font-size: 18px;
-  color: rgba(34, 33, 91, 0.6);
-}
-
-
-</style>
 
           <!-- /End replace -->
         </div>

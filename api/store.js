@@ -10,7 +10,17 @@ module.exports.load = async function(app, db) {
   let maxcpu = null;
   let maxservers = null;
   let maxdisk = null;
-  app.get("/buyram", async (req, res) => {
+
+  // Middleware to check if user is logged in
+  function requireLogin(req, res, next) {
+    if (!req.session.userinfo || !req.session.userinfo.id) {
+      let theme = indexjs.get(req);
+      return res.redirect(theme.settings.redirect.notloggedin || "/login");
+    }
+    next();
+  }
+
+  app.get("/buyram", requireLogin, async (req, res) => {
     let newsettings = await enabledCheck(req, res);
     if (newsettings) {
       let amount = req.query.amount;
@@ -74,7 +84,7 @@ module.exports.load = async function(app, db) {
     }
   });
 
-  app.get("/buydisk", async (req, res) => {
+  app.get("/buydisk", requireLogin, async (req, res) => {
     let newsettings = await enabledCheck(req, res);
     if (newsettings) {
       let amount = req.query.amount;
@@ -138,7 +148,7 @@ module.exports.load = async function(app, db) {
     }
   });
 
-  app.get("/buycpu", async (req, res) => {
+  app.get("/buycpu", requireLogin, async (req, res) => {
     let newsettings = await enabledCheck(req, res);
     if (newsettings) {
       let amount = req.query.amount;
@@ -202,7 +212,7 @@ module.exports.load = async function(app, db) {
     }
   });
 
-  app.get("/buyservers", async (req, res) => {
+  app.get("/buyservers", requireLogin, async (req, res) => {
     let newsettings = await enabledCheck(req, res);
     if (newsettings) {
       let amount = req.query.amount;

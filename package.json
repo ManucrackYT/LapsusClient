@@ -1,6 +1,6 @@
 {
   "name": "lapsusclient",
-  "version": "2.8.3",
+  "version": "2.8.4",
   "description": "A Modern Pterodactyl client area.",
   "main": "index.js",
   "author": "ManucrackYT",
@@ -12,7 +12,7 @@
     "@keyv/redis": "^2.2.1",
     "@keyv/sqlite": "^3.5.2",
     "@tailwindcss/forms": "^0.5.3",
-    "axios": "^1.6.5",
+    "axios": "^1.9.0",
     "body-parser": "^1.20.3",
     "chalk": "^4.1.0",
     "cookie-session": "^2.1.0",
@@ -47,6 +47,8 @@
     "warn": "^1.0.1"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "lapsus:setup": "node exec/setup.js",
+    "lapsus:deploy": "node exec/node.js"
   }
 }

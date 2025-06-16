@@ -4,10 +4,13 @@
     <link rel="stylesheet" href="../assets/tailwind.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
+    <% if (settings.music == true) { %>
       <!-- Music Player -->
-  <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-  <div class="elfsight-app-9c8f4667-f5ce-46b9-99e2-f32095e11518" data-elfsight-app-lazy></div>
+      <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+    <div class="elfsight-app-9c8f4667-f5ce-46b9-99e2-f32095e11518" data-elfsight-app-lazy></div>
+      <% } %>
 
     <!-- Inter font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -33,7 +36,7 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
     <div class="md:pl-48 flex flex-col flex-1">
       <main class="flex-1">
         <div class="py-6">
-          <div class="max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8">
+          <div class="max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8 animate__animated animate__fadeInUp">
             <!-- Replace with your content -->
             <div class="lg:flex lg:items-center lg:justify-between mb-8">
               <div class="min-w-0 flex-1">
@@ -42,7 +45,7 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
               </div>
             </div>
             <% if (req.query.err) { %>
-              <div class="rounded-md bg-white shadow-md p-4 mb-8">
+              <div class="rounded-md bg-white shadow-md p-4 mb-8 animate__animated animate__shakeX">
                 <div class="flex">
                   <div class="flex-shrink-0">
                     <!-- Heroicon name: solid/information-circle -->
@@ -105,18 +108,22 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
             <div class="card">
               <div class="card-body">
                   <label for="location">Name:</label><br>
-                  <input type="text" class="transition focus:border-gray-400 focus:ring-gray-400 justify-center border border-gray-300 form-control rounded-md" id="name" placeholder="Name">
+                  <input type="text" class="transition-transform duration-300 ease-in-out transform hover:scale-105 focus:scale-105 focus:border-gray-400 focus:ring-gray-400 justify-center border border-gray-300 form-control rounded-md" id="name" placeholder="Name">
                   <br><br>
                   <label for="location">Location:</label>
                   <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
                         <!-- Resources -->
                         <select class="form-control transition ease-in-out delay-100 block w-full flex-1 text-darker rounded-md bg-white
                         border-gray-300 focus:border-gray-400 focus:ring-gray-400 sm:text-sm" id="InputLoc">
-                          <% for (let [name, value] of Object.entries(settings.api.client.locations)) { %>
-                            <option value="<%= name %>"><%= value.name %> | <%= value.city %></option>
-                          <% } %>
-                        </select>
-                      </div>
+                      <% if (Object.keys(settings.api.client.locations).length === 0) { %>
+                        <option disabled selected>No nodes available for deployment</option>
+                      <% } else { %>
+                        <% for (let [name, value] of Object.entries(settings.api.client.locations)) { %>
+                          <option value="<%= name %>"><%= value.name %> | <%= value.city %></option>
+                        <% } %>
+                      <% } %>
+                    </select>                    
+                    </div>
                   <br>
                   <label for="location">Software:</label>
                   <select class="form-control transition ease-in-out delay-100 block w-full flex-1 text-darker rounded-md bg-white
@@ -137,7 +144,7 @@ for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i+
                   <br>
 
                   
-                  <button onclick="submitForm()" class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none ml-2">Deploy</button>
+                  <button onclick="submitForm()" class="transition-transform duration-200 ease-in-out transform hover:scale-105 active:scale-95 group relative justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-600 focus:outline-none ml-2 animate__animated animate__pulse animate__delay-1s">Deploy</button>
               <br></div>
               <script>
                   async function submitForm() {

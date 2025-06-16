@@ -345,6 +345,87 @@ if (settings.telemetry === true) {
   sendTelemetry();
 }
 
+// Add this near the top of your file, perhaps after the other require statements
+const readline = require('readline');
+
+// Add this function to generate a random 40-digit code
+function generateRandomCode() {
+  let code = '';
+  for (let i = 0; i < 40; i++) {
+    code += Math.floor(Math.random() * 10);
+  }
+  return code;
+}
+
+// Add this function to handle the setup command
+function setupLapsus() {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+
+  console.log(chalk.green('\nWelcome to Lapsus Client Setup\n'));
+
+  // Load current settings
+  let settings;
+  try {
+    settings = JSON.parse(fs.readFileSync('./settings.json', 'utf8'));
+  } catch (err) {
+    console.error(chalk.red('Error reading settings.json:'), err);
+    process.exit(1);
+  }
+
+  // Generate random 40-digit code
+  const randomCode = generateRandomCode();
+  settings.website.secret = randomCode;
+  settings.api.client.code = `lapsus${randomCode}`;
+
+  // Ask for host name
+  rl.question(chalk.blue('Enter the host name (e.g., "Lapsus Client"): '), (name) => {
+    settings.name = name || 'Lapsus Client';
+
+    // Ask for Pterodactyl domain
+    rl.question(chalk.blue('Enter Pterodactyl domain (e.g., "https://panel.example.com"): '), (domain) => {
+      settings.pterodactyl.domain = domain || 'https://panel.example.com';
+
+      // Ask for Pterodactyl API key
+      rl.question(chalk.blue('Enter Pterodactyl API key: '), (key) => {
+        settings.pterodactyl.key = key || 'ptla_';
+
+        // Ask for Pterodactyl account key
+        rl.question(chalk.blue('Enter Pterodactyl account key: '), (accountKey) => {
+          settings.pterodactyl.account_key = accountKey || 'ptlc_';
+
+          // Ask for telemetry preference
+          rl.question(chalk.blue('Enable telemetry? (y/n): '), (telemetryAnswer) => {
+            settings.telemetry = telemetryAnswer.toLowerCase() === 'y';
+
+            // Ask for auto-update preference
+            rl.question(chalk.blue('Enable auto updates? (y/n): '), (updateAnswer) => {
+              settings.auto_update = updateAnswer.toLowerCase() === 'y';
+
+              // Save all changes to settings.json
+              fs.writeFileSync('./settings.json', JSON.stringify(settings, null, 2), 'utf8');
+
+              console.log(chalk.green('\nSetup completed successfully!'));
+              console.log(chalk.gray('\nThanks for using Lapsus Client'));
+              console.log(chalk.gray('* Leave a like on the repository\n'));
+              
+              rl.close();
+              process.exit(0);
+            });
+          });
+        });
+      });
+    });
+  });
+}
+
+
+if (process.argv.includes('lapsus:setup')) {
+  setupLapsus();
+}
+
 
 const path = require("path");
 const https = require("https");

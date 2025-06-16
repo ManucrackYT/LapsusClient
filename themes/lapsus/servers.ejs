@@ -1,525 +1,525 @@
 <head>
-    <title><%= settings.name %></title>
-    <link rel="icon" type="image/png" href="<%= settings.logo.url %>">
-    <link rel="stylesheet" href="../assets/tailwind.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+  <title><%= settings.name %></title>
+  <link rel="icon" type="image/png" href="<%= settings.logo.url %>">
+  <link rel="stylesheet" href="../assets/tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
 
-      <!-- Music Player -->
-  <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-  <div class="elfsight-app-9c8f4667-f5ce-46b9-99e2-f32095e11518" data-elfsight-app-lazy></div>
+    <!-- Music Player -->
+<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+<div class="elfsight-app-9c8f4667-f5ce-46b9-99e2-f32095e11518" data-elfsight-app-lazy></div>
 
-    <!-- Inter font -->
+  <!-- Inter font -->
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
 
 <body class="bg-gray-100" style="font-family: 'Inter', sans-serif;">
 
-    <%- include('components/navigation') %>
+  <%- include('components/navigation') %>
 
-    <div class="md:pl-48 flex flex-col flex-1">
+  <div class="md:pl-48 flex flex-col flex-1">
 
-      <main class="flex-1">
+    <main class="flex-1">
 
-        <div class="py-6">
+      <div class="py-6">
 
-          <div class="max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8">
+        <div class="max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8">
 
-            <!-- Replace with your content -->
+          <!-- Replace with your content -->
 
-            <!-- This example requires Tailwind CSS v2.0+ -->
+          <!-- This example requires Tailwind CSS v2.0+ -->
 
-            <div class="lg:flex lg:items-center lg:justify-between">
+          <div class="lg:flex lg:items-center lg:justify-between">
 
-                <div class="min-w-0 flex-1">
+              <div class="min-w-0 flex-1">
 
-                  <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Servers</h2>
+                <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Servers</h2>
 
-                  <p class="text-md font-medium text-gray-600">A list of all of your servers on <%= settings.name %>.</p>
-
-                </div>
-
-                <div class="mt-5 flex lg:ml-4 lg:mt-0">
-
-                  <span class="sm:ml-3">
-
-                    <a href="../servers/new" type="button" class="transition inline-flex items-center rounded-md bg-black-600 px-3 py-2 text-sm font-semibold text-white shadow-lg shadow-black-500/50 hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
-
-                      <svg  class="-ml-0.5 mr-1.5 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
-
-                      </svg>                                           
-
-                      Deploy
-
-                    </a>
-
-                  </span>
-
-                </div>
+                <p class="text-md font-medium text-gray-600">A list of all of your servers on <%= settings.name %>.</p>
 
               </div>
 
-            <% if (pterodactyl.relationships.servers.data.length == 0) { %>
+              <div class="mt-5 flex lg:ml-4 lg:mt-0">
 
-                <div class="flex flex-col items-center justify-center h-full mt-8">
+                <span class="sm:ml-3">
 
-                    <img src="/assets/img/tree.png" class="w-24 h-24 bg-white p-2 rounded-lg" />
+                  <a href="../servers/new" type="button" class="transition inline-flex items-center rounded-md bg-black-600 px-3 py-2 text-sm font-semibold text-white shadow-lg shadow-black-500/50 hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
 
-                    <p class="text-center text-2xl font-bold text-gray-900 mt-6">No servers found</p>
+                    <svg  class="-ml-0.5 mr-1.5 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
 
-                    <p class="text-center text-gray-500">You have no servers, like a tree with no fruit.</p>
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
 
-                </div>
+                    </svg>                                           
 
-                <% } else { %>
+                    Deploy
 
-                  <style>
+                  </a>
 
-                    body {
+                </span>
 
-                        font-family: Arial, Helvetica, sans-serif;
+              </div>
 
-                    }
+            </div>
 
-                
+          <% if (pterodactyl.relationships.servers.data.length == 0) { %>
 
-                    /* The Modal (background) */
+              <div class="flex flex-col items-center justify-center h-full mt-8">
 
-                    .modal {
+                  <img src="/assets/img/tree.png" class="w-24 h-24 bg-white p-2 rounded-lg" />
 
-                        display: none;
+                  <p class="text-center text-2xl font-bold text-gray-900 mt-6">No servers found</p>
 
-                        /* Hidden by default */
+                  <p class="text-center text-gray-500">You have no servers, like a tree with no fruit.</p>
 
-                        position: fixed;
+              </div>
 
-                        /* Stay in place */
+              <% } else { %>
 
-                        z-index: 1;
+                <style>
 
-                        /* Sit on top */
+                  body {
 
-                        padding-top: 100px;
+                      font-family: Arial, Helvetica, sans-serif;
 
-                        /* Location of the box */
+                  }
 
-                        left: 0;
+              
 
-                        top: 0;
+                  /* The Modal (background) */
 
-                        width: 100%;
+                  .modal {
 
-                        /* Full width */
+                      display: none;
 
-                        height: 100%;
+                      /* Hidden by default */
 
-                        /* Full height */
+                      position: fixed;
 
-                        overflow: auto;
+                      /* Stay in place */
 
-                        /* Enable scroll if needed */
+                      z-index: 1;
 
-                        background-color: rgb(0, 0, 0);
+                      /* Sit on top */
 
-                        /* Fallback color */
+                      padding-top: 100px;
 
-                        background-color: rgba(0, 0, 0, 0.4);
+                      /* Location of the box */
 
-                        /* Black w/ opacity */
+                      left: 0;
 
-                        backdrop-filter: blur(10px);
+                      top: 0;
 
-                        -webkit-backdrop-filter: blur(10px);
+                      width: 100%;
 
-                    }
+                      /* Full width */
 
-                
+                      height: 100%;
 
-                    /* Modal Content */
+                      /* Full height */
 
-                    .modal-content {
+                      overflow: auto;
 
-                        background-color: #fefefe;
+                      /* Enable scroll if needed */
 
-                        margin: auto;
+                      background-color: rgb(0, 0, 0);
 
-                        padding: 40px;
+                      /* Fallback color */
 
-                        width: 30%;
+                      background-color: rgba(0, 0, 0, 0.4);
 
-                        border-radius: 16px;
+                      /* Black w/ opacity */
 
-                        margin-top: 12%
+                      backdrop-filter: blur(10px);
 
-                    }
+                      -webkit-backdrop-filter: blur(10px);
 
-                
+                  }
 
-                    .close:hover,
+              
 
-                    .close:focus {
+                  /* Modal Content */
 
-                        color: #000;
+                  .modal-content {
 
-                        text-decoration: none;
+                      background-color: #fefefe;
 
-                        cursor: pointer;
+                      margin: auto;
 
-                    }
+                      padding: 40px;
 
-                </style>
+                      width: 30%;
 
-                  <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                      border-radius: 16px;
 
-                  <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>    
-                    
+                      margin-top: 12%
 
-                   <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+                  }
 
-                    <div class="lg:flex lg:items-center lg:justify-between">
+              
 
-                        <div class="min-w-0 flex-1">
+                  .close:hover,
 
-                          <h2 class="text-lg font-bold text-gray-900 sm:truncate sm:text-2xl sm:tracking-tight"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></h2>
+                  .close:focus {
 
-                          <p class="text-md font-medium text-gray-600">Server ID: <%= pterodactyl.relationships.servers.data[i].attributes.identifier %></p>
+                      color: #000;
 
-                        </div>
+                      text-decoration: none;
 
-                        <div class="mt-5 flex lg:ml-4 lg:mt-0">
+                      cursor: pointer;
 
-                          <span class="sm:ml-3">
+                  }
 
-                            <a id="start<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" onclick="start('<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>')" class="transition inline-flex items-center rounded-md bg-black-600 px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">    
+              </style>
 
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
 
-  <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
+                <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>    
+                  
+
+                 <div class="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+
+                  <div class="lg:flex lg:items-center lg:justify-between">
+
+                      <div class="min-w-0 flex-1">
+
+                        <h2 class="text-lg font-bold text-gray-900 sm:truncate sm:text-2xl sm:tracking-tight"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></h2>
+
+                        <p class="text-md font-medium text-gray-600">Server ID: <%= pterodactyl.relationships.servers.data[i].attributes.identifier %></p>
+
+                      </div>
+
+                      <div class="mt-5 flex lg:ml-4 lg:mt-0">
+
+                        <span class="sm:ml-3">
+
+                          <a id="start<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" onclick="start('<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>')" class="transition inline-flex items-center rounded-md bg-black-600 px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">    
+
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+
+<path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
 
 </svg>
 
-  Start
+Start
 
-                            </a>
+                          </a>
 
-                               <a id="restart<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" onclick="restart('<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>')" class="transition inline-flex items-center rounded-md bg-black-600 px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">    
+                             <a id="restart<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" onclick="restart('<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>')" class="transition inline-flex items-center rounded-md bg-black-600 px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">    
 
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
 
-  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+<path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
 
 </svg>
 
-  Restart
+Restart
 
-                            </a> 
+                          </a> 
 
-                            <a id="stop<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" onclick="stop('<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>')" class="transition inline-flex items-center rounded-md bg-black-600 px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">    
+                          <a id="stop<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" onclick="stop('<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>')" class="transition inline-flex items-center rounded-md bg-black-600 px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">    
 
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
 
-  <path stroke-linecap="round" stroke-linejoin="round" d="M11.412 15.655 9.75 21.75l3.745-4.012M9.257 13.5H3.75l2.659-2.849m2.048-2.194L14.25 2.25 12 10.5h8.25l-4.707 5.043M8.457 8.457 3 3m5.457 5.457 7.086 7.086m0 0L21 21" />
+<path stroke-linecap="round" stroke-linejoin="round" d="M11.412 15.655 9.75 21.75l3.745-4.012M9.257 13.5H3.75l2.659-2.849m2.048-2.194L14.25 2.25 12 10.5h8.25l-4.707 5.043M8.457 8.457 3 3m5.457 5.457 7.086 7.086m0 0L21 21" />
 
 </svg>Stop
 
 
 
-                            </a>
+                          </a>
 
-                            <a href="../edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>" class="transition inline-flex items-center rounded-md bg-black-600 px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">    
+                          <a href="../edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>" class="transition inline-flex items-center rounded-md bg-black-600 px-3 py-2 text-sm font-semibold text-white hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">    
 
-                              <svg class="-ml-0.5 mr-1.5 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <svg class="-ml-0.5 mr-1.5 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
 
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
 
-                              </svg>  Edit                                             
+                            </svg>  Edit                                             
 
-                            </a>
+                          </a>
 
-                            <a id="myBtn" class="ml-1 transition inline-flex border border-gray-200 items-center rounded-md bg-gray-100 px-3 py-2 text-sm font-semibold text-red-500 hover:bg-gray-100 hover:border-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">     
+                          <a id="myBtn" class="ml-1 transition inline-flex border border-gray-200 items-center rounded-md bg-gray-100 px-3 py-2 text-sm font-semibold text-red-500 hover:bg-gray-100 hover:border-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">     
 
-                              <svg class="-ml-0.5 mr-1.5 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <svg class="-ml-0.5 mr-1.5 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
 
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
 
-                              </svg> Delete                                                                         
-               
+                            </svg> Delete                                                                         
+             
 
-                              <script>
+                            <script>
 
-                                async function start(id) {
+                              async function start(id) {
 
-                                  try {
+                                try {
 
-                                    let response = await fetch(`/api/servers/start?id=${id}&user=<%= userinfo.id %>`);
+                                  let response = await fetch(`/api/servers/start?id=${id}&user=<%= userinfo.id %>`);
 
-                                    const data = await response.json();
+                                  const data = await response.json();
 
-                                    if (data.success == true) {
+                                  if (data.success == true) {
 
-                                      document.getElementById(`start${id}`);
-                                      alertify.set('notifier','position', 'bottom-center');
-                                      alertify.success('Server started!');
+                                    document.getElementById(`start${id}`);
+                                    alertify.set('notifier','position', 'bottom-center');
+                                    alertify.success('Server started!');
 
-                                    } else {
+                                  } else {
 
-                                      console.error("Failed to start server:", data.message);
-
-                                    }
-
-                                  } catch (error) {
-
-                                    console.error("Error during server start request:", error);
+                                    console.error("Failed to start server:", data.message);
 
                                   }
 
+                                } catch (error) {
+
+                                  console.error("Error during server start request:", error);
+
                                 }
 
-                                async function restart(id) {
+                              }
 
-                                  try {
+                              async function restart(id) {
 
-                                    let response = await fetch(`/api/servers/restart?id=${id}&user=<%= userinfo.id %>`);
+                                try {
 
-                                    const data = await response.json();
+                                  let response = await fetch(`/api/servers/restart?id=${id}&user=<%= userinfo.id %>`);
 
-                                    if (data.success == true) {
+                                  const data = await response.json();
 
-                                      document.getElementById(`restart${id}`);
-                                      alertify.set('notifier','position', 'bottom-center');
-                                      alertify.success('Server restarted!');
+                                  if (data.success == true) {
 
-                                    } else {
+                                    document.getElementById(`restart${id}`);
+                                    alertify.set('notifier','position', 'bottom-center');
+                                    alertify.success('Server restarted!');
 
-                                      console.error("Failed to start server:", data.message);
+                                  } else {
 
-                                    }
-
-                                  } catch (error) {
-
-                                    console.error("Error during server start request:", error);
+                                    console.error("Failed to start server:", data.message);
 
                                   }
 
+                                } catch (error) {
+
+                                  console.error("Error during server start request:", error);
+
                                 }
 
-                                async function stop(id) {
+                              }
 
-                                  try {
+                              async function stop(id) {
 
-                                    let response = await fetch(`/api/servers/stop?id=${id}&user=<%= userinfo.id %>`)
+                                try {
 
-                                    const data = await response.json()
+                                  let response = await fetch(`/api/servers/stop?id=${id}&user=<%= userinfo.id %>`)
 
-                                    if (data.success == true) {
+                                  const data = await response.json()
 
-                                      document.getElementById(`stop${id}`);
-                                      alertify.set('notifier','position', 'bottom-center');
-                                      alertify.success('Server stopped!');
+                                  if (data.success == true) {
 
-                                    } else {
+                                    document.getElementById(`stop${id}`);
+                                    alertify.set('notifier','position', 'bottom-center');
+                                    alertify.success('Server stopped!');
 
-                                      console.error("Failed to stop server:", data.message);
+                                  } else {
 
-                                    }
-
-                                  } catch (error) {
-
-                                    console.error("Error during server start request:", error);
+                                    console.error("Failed to stop server:", data.message);
 
                                   }
 
+                                } catch (error) {
+
+                                  console.error("Error during server start request:", error);
+
                                 }
 
-                              </script>
+                              }
 
-                            </a>
+                            </script>
 
-                          </span>
+                          </a>
+
+                        </span>
+
+                      </div>
+
+                    </div>
+
+                    <div id="myModal" class="modal">
+
+                      <!-- Modal content -->
+
+                      <div class="modal-content">
+
+                          <h2 class="text-gray-900 text-xl font-bold mb-2">
+
+                              Are you sure you want to delete your server?
+
+                          </h2>
+
+                          <p class="text-gray-600 font-medium">Once you continue:</p>
+
+                          <ul class="list-disc ml-5 text-gray-500 mb-8">
+
+                              <li>Server data will be permanently deleted</li>
+
+                              <li>The server will be removed from the client area & panel</li>
+
+                              <li>Resources will be returned to your account</li>
+
+                          </ul>
+
+                          <div class="mt-1 grid grid-cols-2 gap-3">
+
+                            <div>
+
+                                <a href="../delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>"
+
+                                    class="cursor-pointer w-full inline-flex justify-center py-2 px-4 rounded-md shadow-sm bg-black-500 text-sm font-medium text-white hover:bg-gray-700 transition">
+
+                                    Continue
+
+                                </a>
+
+                            </div>
+
+                            <div>
+
+                                <a
+
+                                    class="close w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 cursor-default">
+
+                                    Cancel
+
+                                </a>
+
+                            </div>
 
                         </div>
 
                       </div>
 
-                      <div id="myModal" class="modal">
+                  </div>
 
-                        <!-- Modal content -->
+                  <script>
 
-                        <div class="modal-content">
+                    // Get the modal
 
-                            <h2 class="text-gray-900 text-xl font-bold mb-2">
+                    var modal = document.getElementById("myModal");
 
-                                Are you sure you want to delete your server?
+                    // Get the button that opens the modal
 
-                            </h2>
+                    var btn = document.getElementById("myBtn");
 
-                            <p class="text-gray-600 font-medium">Once you continue:</p>
+                    // Get the <span> element that closes the modal
 
-                            <ul class="list-disc ml-5 text-gray-500 mb-8">
+                    var span = document.getElementsByClassName("close")[0];
 
-                                <li>Server data will be permanently deleted</li>
+                    // When the user clicks the button, open the modal 
 
-                                <li>The server will be removed from the client area & panel</li>
+                    btn.onclick = function () {
 
-                                <li>Resources will be returned to your account</li>
+                        modal.style.display = "block";
 
-                            </ul>
+                    }
 
-                            <div class="mt-1 grid grid-cols-2 gap-3">
+                    // When the user clicks on <span> (x), close the modal
 
-                              <div>
+                    span.onclick = function () {
 
-                                  <a href="../delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>"
+                        modal.style.display = "none";
 
-                                      class="cursor-pointer w-full inline-flex justify-center py-2 px-4 rounded-md shadow-sm bg-black-500 text-sm font-medium text-white hover:bg-gray-700 transition">
+                    }
 
-                                      Continue
+                    // When the user clicks anywhere outside of the modal, close it
 
-                                  </a>
+                    window.onclick = function (event) {
 
-                              </div>
+                        if (event.target == modal) {
 
-                              <div>
+                            modal.style.display = "none";
 
-                                  <a
+                        }
 
-                                      class="close w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 cursor-default">
+                    }
 
-                                      Cancel
+                </script>
 
-                                  </a>
+                  <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
 
-                              </div>
+                      <!-- Resources -->
 
-                          </div>
+                      <div class="px-4 py-5 bg-gray-50 rounded-lg overflow-hidden sm:p-6">
 
-                        </div>
+                          <dt class="text-sm font-medium text-gray-500 truncate">CPU Cores</dt>
 
-                    </div>
+                          <dd class="mt-1 text-1xl font-semibold text-gray-900">
 
-                    <script>
+                              <%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu/100 %>
 
-                      // Get the modal
+                          </dd>
 
-                      var modal = document.getElementById("myModal");
+                      </div>
 
-                      // Get the button that opens the modal
+                      <div class="px-4 py-5 bg-gray-50 rounded-lg overflow-hidden sm:p-6">
 
-                      var btn = document.getElementById("myBtn");
+                          <dt class="text-sm font-medium text-gray-500 truncate">Memory</dt>
 
-                      // Get the <span> element that closes the modal
+                          <dd class="mt-1 text-1xl font-semibold text-gray-900">
 
-                      var span = document.getElementsByClassName("close")[0];
+                              <%= pterodactyl.relationships.servers.data[i].attributes.limits.memory/1024 %> GiB
 
-                      // When the user clicks the button, open the modal 
+                          </dd>
 
-                      btn.onclick = function () {
+                      </div>
 
-                          modal.style.display = "block";
+                      <div class="px-4 py-5 bg-gray-50 rounded-lg overflow-hidden sm:p-6">
 
-                      }
+                          <dt class="text-sm font-medium text-gray-500 truncate">Storage</dt>
 
-                      // When the user clicks on <span> (x), close the modal
+                          <dd class="mt-1 text-1xl font-semibold text-gray-900">
 
-                      span.onclick = function () {
+                              <%= pterodactyl.relationships.servers.data[i].attributes.limits.disk/1024 %> GiB
 
-                          modal.style.display = "none";
+                          </dd>
 
-                      }
+                      </div>
 
-                      // When the user clicks anywhere outside of the modal, close it
+                  </dl>
 
-                      window.onclick = function (event) {
+                 </div>
 
-                          if (event.target == modal) {
+                  <% } %>
 
-                              modal.style.display = "none";
+              <% } %>
 
-                          }
+              <% if (pterodactyl.relationships.servers.data.length == 1) { %>
 
-                      }
+                  <div class="px-4 py-5 bg-gray-200 rounded-lg overflow-hidden sm:p-6 justify-center">
 
-                  </script>
+                      <div class="flex flex-col items-center justify-center h-full">
 
-                    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+                          <p class="text-center text-1xl font-medium text-gray-600">Nothing here yet...</p>                            
 
-                        <!-- Resources -->
+                      </div>
 
-                        <div class="px-4 py-5 bg-gray-50 rounded-lg overflow-hidden sm:p-6">
+                     </div>
 
-                            <dt class="text-sm font-medium text-gray-500 truncate">CPU Cores</dt>
+              <% } %>
 
-                            <dd class="mt-1 text-1xl font-semibold text-gray-900">
+            </dl>
 
-                                <%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu/100 %>
-
-                            </dd>
-
-                        </div>
-
-                        <div class="px-4 py-5 bg-gray-50 rounded-lg overflow-hidden sm:p-6">
-
-                            <dt class="text-sm font-medium text-gray-500 truncate">Memory</dt>
-
-                            <dd class="mt-1 text-1xl font-semibold text-gray-900">
-
-                                <%= pterodactyl.relationships.servers.data[i].attributes.limits.memory/1024 %> GiB
-
-                            </dd>
-
-                        </div>
-
-                        <div class="px-4 py-5 bg-gray-50 rounded-lg overflow-hidden sm:p-6">
-
-                            <dt class="text-sm font-medium text-gray-500 truncate">Storage</dt>
-
-                            <dd class="mt-1 text-1xl font-semibold text-gray-900">
-
-                                <%= pterodactyl.relationships.servers.data[i].attributes.limits.disk/1024 %> GiB
-
-                            </dd>
-
-                        </div>
-
-                    </dl>
-
-                   </div>
-
-                    <% } %>
-
-                <% } %>
-
-                <% if (pterodactyl.relationships.servers.data.length == 1) { %>
-
-                    <div class="px-4 py-5 bg-gray-200 rounded-lg overflow-hidden sm:p-6 justify-center">
-
-                        <div class="flex flex-col items-center justify-center h-full">
-
-                            <p class="text-center text-1xl font-medium text-gray-600">Nothing here yet...</p>                            
-
-                        </div>
-
-                       </div>
-
-                <% } %>
-
-              </dl>
-
-            <!-- /End replace -->
-
-          </div>
+          <!-- /End replace -->
 
         </div>
 
-      </main>
+      </div>
 
-    </div>
+    </main>
 
   </div>
+
+</div>
 
 </body>

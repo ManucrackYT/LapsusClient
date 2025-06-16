@@ -1,42 +1,62 @@
 const settings = require('../settings.json')
+const axios = require('axios');
+
 
 module.exports.load = async function (app, db) {
 
     const lvcodes = {}
     const cooldowns = {}
 
-    app.get(`/lv/gen`, async (req, res) => {
+    app.get('/lv/gen', async (req, res) => {
+        const captcha = req.query['g-recaptcha-response'];
+        if (!captcha) return res.send("Please complete the CAPTCHA first.");
+    
+        const verifyURL = `https://www.google.com/recaptcha/api/siteverify?secret=${settings.recaptcha.secret}&response=${captcha}`;
+        const { data } = await axios.post(verifyURL);
+    
+        if (!data.success) {
+            return res.send("CAPTCHA verification failed. Try again.");
+        }
         if (!req.session.pterodactyl) return res.redirect("/login");
-
-        if (cooldowns[req.session.userinfo.id] && cooldowns[req.session.userinfo.id] > Date.now()) {
-            return res.redirect(`/lv`)
-        } else if (cooldowns[req.session.userinfo.id]) {
-            delete cooldowns[req.session.userinfo.id]
+    
+        const userId = req.session.userinfo.id;
+        const now = Date.now();
+    
+        // Check if cooldown is still active
+        if (cooldowns[userId] && cooldowns[userId] > now) {
+            return res.redirect(`/lv`);
+        } else {
+            delete cooldowns[userId];
         }
-
-        const dailyTotal = await db.get(`dailylinkvertise-${req.session.userinfo.id}`)
+    
+        // Check if daily limit has been reached
+        const dailyTotal = await db.get(`dailylinkvertise-${userId}`);
         if (dailyTotal && dailyTotal >= settings.linkvertise.dailyLimit) {
-            return res.redirect(`/lv?err=REACHEDDAILYLIMIT`)
+            return res.redirect(`/lv?err=REACHEDDAILYLIMIT`);
         }
-
-        let referer = req.headers.referer
-        if (!referer) return res.send('An error occured with your browser!')
-        referer = referer.toLowerCase()
-        if (referer.includes('?')) referer = referer.split('?')[0]
-        if (!referer.endsWith(`/lv`) && !referer.endsWith(`/lv/`)) return res.send('An error occured with your browser!')
-        if (!referer.endsWith(`/`)) referer += `/`
-
-        const code = makeid(12)
-        const lvurl = linkvertise(settings.linkvertise.userid, referer + `redeem/${code}`)
-
-        lvcodes[req.session.userinfo.id] = {
-            code: code,
-            user: req.session.userinfo.id,
-            generated: Date.now()
+    
+        // Validate referer
+        let referer = req.headers.referer;
+        if (!referer) return res.send('An error occurred with your browser!');
+        referer = referer.toLowerCase().split('?')[0];
+        if (!referer.endsWith('/lv') && !referer.endsWith('/lv/')) {
+            return res.send('An error occurred with your browser!');
         }
-
-        res.redirect(lvurl)
-    })
+        if (!referer.endsWith('/')) referer += '/';
+    
+        // Generate link and store session code
+        const code = makeid(12);
+        const lvurl = linkvertise(settings.linkvertise.userid, referer + `redeem/${code}`);
+    
+        lvcodes[userId] = {
+            code,
+            user: userId,
+            generated: now
+        };
+    
+        return res.redirect(lvurl);
+    });
+    
 
     app.get(`/lv/redeem/:code`, async (req, res) => {
         if (!req.session.pterodactyl) return res.redirect("/");

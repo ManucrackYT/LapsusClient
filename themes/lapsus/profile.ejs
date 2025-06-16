@@ -1,85 +1,155 @@
 <head>
-    <title><%= settings.name %></title>
-    <link rel="icon" type="image/png" href="<%= settings.logo.url %>">
-    <link rel="stylesheet" href="../assets/tailwind.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+  <title><%= settings.name %></title>
+  <link rel="icon" type="image/png" href="<%= settings.logo.url %>">
+  <link rel="stylesheet" href="../assets/tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+  
+  <!-- Animate.css for animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  
+  <!-- AOS (Animate On Scroll) library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-      <!-- Music Player -->
-  <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+  <% if (settings.music == true) { %>
+    <!-- Music Player -->
+    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
   <div class="elfsight-app-9c8f4667-f5ce-46b9-99e2-f32095e11518" data-elfsight-app-lazy></div>
+    <% } %>
 
-    <!-- Inter font -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+      /* Custom animations */
+      @keyframes fadeInUp {
+          from {
+              opacity: 0;
+              transform: translateY(20px);
+          }
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+      
+      .animate-fadeInUp {
+          animation: fadeInUp 0.6s ease-out forwards;
+      }
+      
+      .hover-grow {
+          transition: all 0.3s ease;
+      }
+      
+      .hover-grow:hover {
+          transform: scale(1.03);
+      }
+      
+      .delay-100 {
+          animation-delay: 0.1s;
+      }
+      .delay-200 {
+          animation-delay: 0.2s;
+      }
+      .delay-300 {
+          animation-delay: 0.3s;
+      }
+  </style>
 </head>
 
-<body class="bg-gray-100" style="font-family: 'Inter', sans-serif;">
-    <%- include('components/navigation') %>
-    <div class="md:pl-48 flex flex-col flex-1">
-      <main class="flex-1">
-        <div class="py-6">
-          <div class="max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8">
-            <!-- Replace with your content -->
-            <!-- This example requires Tailwind CSS v2.0+ -->
-
+<body class="bg-gray-100" style="font-family: 'Inter', sans-serif;" onload="initAnimations()">
+  <script>
+      function initAnimations() {
+          // Initialize AOS
+          if (typeof AOS !== 'undefined') {
+              AOS.init({
+                  duration: 600,
+                  easing: 'ease-out-quad',
+                  once: true
+              });
+          }
+      }
+  </script>
+  
+  <%- include('components/navigation') %>
+  <div class="md:pl-48 flex flex-col flex-1">
+    <main class="flex-1">
+      <div class="py-6">
+        <div class="max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8">
+          <!-- Banner section with animation -->
+          <div data-aos="fade">
             <div>
-              <div>
-                <% if (userinfo.banner == null) { %>
-                  <img class="h-32 w-full object-cover lg:h-48 rounded-xl" src="/assets/img/wallpaper_night.jpg" alt="">
-                  <% } else { %>
-                  <img class="h-32 w-full object-cover lg:h-48 rounded-xl" src="https://cdn.discordapp.com/banners/<%= userinfo.id %>/<%= userinfo.banner %>?size=512" alt="">
-                <% } %>  
+              <% if (userinfo.banner == null) { %>
+                <img class="h-32 w-full object-cover lg:h-48 rounded-xl animate-fadeInUp" src="/assets/img/wallpaper_night.jpg" alt="">
+                <% } else { %>
+                <img class="h-32 w-full object-cover lg:h-48 rounded-xl animate-fadeInUp" src="https://cdn.discordapp.com/banners/<%= userinfo.id %>/<%= userinfo.banner %>?size=512" alt="">
+              <% } %>  
+            </div>
+            
+            <!-- Profile section with staggered animations -->
+            <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+              <div class="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
+                <div class="flex" data-aos="fade-right" data-aos-delay="100">
+                  <img class="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32 hover-grow transition-all duration-300"
+                  src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>?size=256" alt="">
+                </div>
+                <div class="mt-6 sm:flex sm:min-w-0 sm:flex-1 sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
+                  <div class="mt-6 min-w-0 flex-1 sm:hidden md:block" data-aos="fade-up" data-aos-delay="200">
+                    <h1 class="truncate text-2xl font-bold text-gray-900 hover:text-gray-700 transition-colors duration-300">@<%= userinfo.username %> </h1>
+                  </div>
+                  <div class="justify-stretch mt-6 flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4" data-aos="fade-left" data-aos-delay="300">
+                    <p class="text-gray-600 hover:text-gray-800 transition-colors duration-300"><%= userinfo.email %> • <%= userinfo.id %></p>
+                  </div>
+                </div>
               </div>
-              <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-                <div class="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
-                  <div class="flex">
-                    <img class="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32"
-                    src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>?size=256" alt="">
-                  </div>
-                  <div class="mt-6 sm:flex sm:min-w-0 sm:flex-1 sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
-                    <div class="mt-6 min-w-0 flex-1 sm:hidden md:block">
-                      <h1 class="truncate text-2xl font-bold text-gray-900">@<%= userinfo.username %> </h1>
-                    </div>
-                    <div class="justify-stretch mt-6 flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
-                      <p><%= userinfo.email %> • <%= userinfo.id %></p>
-                    </div>
-                      <!--<div class="role align-center"> 
-                        <div class="circle">
-                        </div>
-                        <p class="rolename"></p> 
-                      </div> -->
-                    </div>
-                  </div>
-                </div>
-              </div>       
-              <br>       
-              <% if (settings.profile_json == true) { %>
-              <div class="card mt-10">
-                <div class="card-body">
-                  <pre class="bg-gray-50 p-5 mt-5 rounded-2xl text-xs tracking-tighter"><%= JSON.stringify(userinfo, null, 2) %></pre>
-                </div>
-              </div>  
-              <% } %>    
-              <br>&nbsp;
-              <div class="p-16 lg:flex lg:items-center lg:justify-between rounded-lg shadow-lg bg-deploy">
-                <div class="min-w-0 flex-1">
-                  <h2 class="text-2xl font-bold leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Looking for Security?</h2>
-                  <p class="text-md font-medium text-gray-200">You can access now from here</p>
-                </div>
-                <div class="mt-5 flex lg:ml-4 lg:mt-0">
-                  <span class="sm:ml-3">
-                    <a href="../settings" type="button" class="transition inline-flex items-center rounded-md bg-black-600/50 px-6 py-6 text-sm font-semibold text-white hover:shadow-inner hover:shadow-gray-700 hover:bg-gradient-to-bl hover:from-gray-600 hover:to-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-                      </svg>                              
-                      </a>
-                  </span>
-            <!-- /End replace -->
+            </div>       
+          </div>
+          
+          <!-- JSON section with animation -->
+          <% if (settings.profile_json == true) { %>
+          <div class="card mt-10" data-aos="zoom-in" data-aos-delay="400">
+            <div class="card-body">
+              <pre class="bg-gray-50 p-5 mt-5 rounded-2xl text-xs tracking-tighter hover:shadow-md transition-shadow duration-300"><%= JSON.stringify(userinfo, null, 2) %></pre>
+            </div>
+          </div>  
+          <% } %>    
+          
+          <br>&nbsp;
+          
+          <!-- Security card section - NO ANIMATIONS (as requested) -->
+          <div class="p-16 lg:flex lg:items-center lg:justify-between rounded-lg shadow-lg bg-deploy">
+              <div class="min-w-0 flex-1">
+                <h2 class="text-2xl font-bold leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Looking for Security?</h2>
+                <p class="text-md font-medium text-gray-200">You can access now from here</p>
+              </div>
+              <div class="mt-5 flex lg:ml-4 lg:mt-0">
+                <span class="sm:ml-3">
+                  <a href="../settings" type="button" class="transition inline-flex items-center rounded-md bg-black-600/50 px-6 py-6 text-sm font-semibold text-white hover:shadow-inner hover:shadow-gray-700 hover:bg-gradient-to-bl hover:from-gray-600 hover:to-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                    </svg>                              
+                    </a>
+                </span>
+              </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   </div>
-</body>
+</div>
 
+<script>
+  // Initialize animations when page loads
+  document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+          AOS.init({
+              duration: 600,
+              easing: 'ease-out-quad',
+              once: true
+          });
+      }
+  });
+</script>
+</body>

@@ -3,11 +3,19 @@
     <link rel="icon" type="image/png" href="<%= settings.logo.url %>">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
 
     <!-- Inter font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <% if (settings.music == true) { %>
+      <!-- Music Player -->
+      <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+    <div class="elfsight-app-9c8f4667-f5ce-46b9-99e2-f32095e11518" data-elfsight-app-lazy></div>
+      <% } %>
+
 </head>
 <style>
     body {
@@ -76,18 +84,24 @@
               <div class="row">
                 <div class="col-md-6 grid-margin stretch-card">
                   <div class="card">
+                    <form id="genForm" action="/lv/gen" method="GET" onsubmit="return verifyCaptcha();">
                     <div class="card-body" style="display: none;" id="generate-panel">
                     
                         <p >Every time you complete a Linkvertise link, you will earn <%= settings.linkvertise.coins%> Coins!
                         <br></br>
+                        <div class="g-recaptcha" data-sitekey="<%= settings.recaptcha.site %>" data-callback="onCaptchaSuccess" data-expired-callback="onCaptchaExpired"></div>
+                        <br>
                         <button class="transition delay-100 group relative  justify-center rounded-md border border-transparent bg-black-400 py-2 px-4 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none" onclick="generate()">Generate Link</button></p>
                     </div>
                   </div>
 
                     <div class="card-body" style="display: none;" id="generate-panel">
                       <p class="text-darker">Every time you complete a Linkvertise link, you will earn <%= settings.linkvertise.coins%> Coins!<br><br>
+                        <div class="g-recaptcha" data-sitekey="<%= settings.recaptcha.site %>" data-callback="onCaptchaSuccess" data-expired-callback="onCaptchaExpired"></div>
+                        <br>
                         <button class="transition ease-in-out delay-100 group relative flex w-auto justify-center rounded-md border border-transparent bg-rose-400 py-2 px-4 text-sm font-medium text-white hover:bg-rose-500 focus:outline-none" onclick="generate()">Generate Link</button></p>
 									  </div>
+                  </form>
                     <div class="card-body" id="loading-panel">
                       <h3 class="text-white">Loading...</h3>
                     </div>
@@ -143,6 +157,26 @@
                       window.location.replace(`/lv/gen`)
                     }
                   </script>
+
+<script>
+  function enableButton() {
+      document.getElementById('generateBtn').disabled = false;
+  }
+
+  function verifyCaptcha() {
+      const response = grecaptcha.getResponse();
+      if (!response) {
+          alert("Please complete the CAPTCHA first.");
+          return false;
+      }
+      return true;
+  }
+
+  // Enable the button once captcha is completed
+  function recaptchaCallback() {
+      document.getElementById('generateBtn').disabled = false;
+  }
+</script>
 </div>
   
             <!-- /End replace -->
