@@ -158,6 +158,29 @@ myElement.addEventListener('click', function() {
     window.location.href = '../coins';
   }
 });
+
+// Function to copy text to clipboard
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      // Show success message using alertify
+      alertify.success('Copied ID: ' + text);
+    }).catch(err => {
+      // Show error message if copying fails
+      alertify.error('Failed to copy ID: ' + err);
+    });
+  }
+
+  // Add click event listener to the username element
+  document.addEventListener('DOMContentLoaded', function() {
+    const usernameElement = document.querySelector('.flex-shrink-0.w-full.group.block .text-sm.font-medium.text-white');
+    if (usernameElement) {
+      usernameElement.addEventListener('click', function() {
+        // Get the user ID from the EJS variable
+        const userId = '<%= userinfo.id %>';
+        copyToClipboard(userId);
+      });
+    }
+  });
         </script>
       </div>
     </div>

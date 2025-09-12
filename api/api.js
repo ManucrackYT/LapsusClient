@@ -305,22 +305,24 @@ app.post("/api/createcoupon", async (req, res) => {
   const queue = new Queue()
   app.get("/giftcoins", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect(`/`);
-
+  
     const coins = parseInt(req.query.coins)
     if (!coins || !req.query.id) return res.redirect(`/transfer?err=MISSINGFIELDS`);
     if (req.query.id.includes(`${req.session.userinfo.id}`)) return res.redirect(`/transfer?err=CANNOTGIFTYOURSELF`)
-
-
+  
     if (coins < 1) return res.redirect(`/transfer?err=TOOLOWCOINS`)
-
+  
     queue.addJob(async (cb) => {
-
-      const usercoins = await db.get(`coins-${req.session.userinfo.id}`)
-      const othercoins = await db.get(`coins-${req.query.id}`)
-      if (!othercoins) {
+      // First check if the user exists
+      const userExists = await db.get(`users-${req.query.id}`)
+      if (!userExists) {
         cb()
         return res.redirect(`/transfer?err=USERDOESNTEXIST`)
       }
+  
+      const usercoins = await db.get(`coins-${req.session.userinfo.id}`)
+      const othercoins = await db.get(`coins-${req.query.id}`) || 0 // Default to 0 if null
+      
       if (usercoins < coins) {
         cb()
         return res.redirect(`/transfer?err=CANTAFFORD`)
@@ -328,11 +330,10 @@ app.post("/api/createcoupon", async (req, res) => {
   
       await db.set(`coins-${req.query.id}`, othercoins + coins)
       await db.set(`coins-${req.session.userinfo.id}`, usercoins - coins)
-
-      log('Gifted Coins', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} sent ${coins}\ coins to the user with the ID \`${req.query.id}\`.`)
+  
+      log('Gifted Coins', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} sent ${coins} coins to the user with the ID \`${req.query.id}\`.`)
       cb()
       return res.redirect(`/transfer?success=true`);
-
     })
   });
 

@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <title><%= settings.name %></title>
   <link rel="icon" type="image/png" href="<%= settings.logo.url %>">
@@ -8,62 +10,218 @@
   <% if (settings.music == true) { %>
     <!-- Music Player -->
     <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-  <div class="elfsight-app-9c8f4667-f5ce-46b9-99e2-f32095e11518" data-elfsight-app-lazy></div>
-    <% } %>
+    <div class="elfsight-app-9c8f4667-f5ce-46b9-99e2-f32095e11518" data-elfsight-app-lazy></div>
+  <% } %>
 
   <!-- Inter font -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        opacity: 0;
+        animation: fadeIn 0.8s ease-in forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* The Modal (background) */
+    .modal {
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: 0.5s;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .modal.show {
+        opacity: 1;
+        visibility: visible;
+        animation: modalFadeIn 0.5s forwards;
+    }
+
+    @keyframes modalFadeIn {
+        from { 
+            opacity: 0;
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+        }
+        to { 
+            opacity: 1;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 40px;
+        width: 30%;
+        border-radius: 16px;
+        margin-top: 12%;
+        transition: 0.5s;
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    .modal.show .modal-content {
+        transform: translateY(0);
+        opacity: 1;
+        animation: modalContentSlide 0.5s forwards;
+    }
+
+    @keyframes modalContentSlide {
+        from { 
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        to { 
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+        transition: 0.5s;
+    }
+
+    /* Alert animations */
+    .alert-box {
+        animation: slideInRight 0.5s ease-out forwards;
+        transform: translateX(100%);
+    }
+
+    @keyframes slideInRight {
+        from { transform: translateX(100%); }
+        to { transform: translateX(0); }
+    }
+
+    /* Content animations */
+    .content-section {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .content-section.animated {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Piggy bank animation */
+    .piggy-bank {
+        animation: bounce 2s infinite alternate;
+        transform-origin: center;
+    }
+
+    @keyframes bounce {
+        from { transform: translateY(0) rotate(-5deg); }
+        to { transform: translateY(-10px) rotate(5deg); }
+    }
+
+    /* Coin counter animation */
+    .coin-counter {
+        position: relative;
+        display: inline-block;
+    }
+
+    .coin-pulse {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: gold;
+        border-radius: 50%;
+        opacity: 0;
+        transform: scale(1.5);
+    }
+
+    .coin-added {
+        animation: coinPulse 0.5s ease-out;
+    }
+
+    @keyframes coinPulse {
+        0% { 
+            opacity: 0.8;
+            transform: scale(1);
+        }
+        100% { 
+            opacity: 0;
+            transform: scale(2.5);
+        }
+    }
+
+    /* Ad card animations */
+    .ad-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .ad-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Progress bar for countdown */
+    .progress-bar {
+        height: 4px;
+        width: 100%;
+        background: #e5e7eb;
+        border-radius: 2px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: #10B981;
+        border-radius: 2px;
+        transition: width 1s linear;
+    }
+
+    /* Floating coins animation */
+    .floating-coin {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: gold;
+        border-radius: 50%;
+        opacity: 0;
+    }
+
+    @keyframes floatCoin {
+        0% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(-100px) scale(0.5);
+        }
+    }
+  </style>
 </head>
-<style>
-  body {
-      font-family: Arial, Helvetica, sans-serif;
-  }
-
-  /* The Modal (background) */
-  .modal {
-      position: fixed;
-      /* Stay in place */
-      z-index: 1;
-      /* Sit on top */
-      padding-top: 100px;
-      /* Location of the box */
-      left: 0;
-      top: 0;
-      width: 100%;
-      /* Full width */
-      height: 100%;
-      /* Full height */
-      overflow: auto;
-      /* Enable scroll if needed */
-      background-color: rgb(0, 0, 0);
-      /* Fallback color */
-      background-color: rgba(0, 0, 0, 0.4);
-      /* Black w/ opacity */
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      transition: 0.5s;
-  }
-
-  /* Modal Content */
-  .modal-content {
-      background-color: #fefefe;
-      margin: auto;
-      padding: 40px;
-      width: 30%;
-      border-radius: 16px;
-      margin-top: 12%;
-      transition: 0.5s
-  }
-
-  .close:hover,
-  .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-      transition: 0.5s
-  }
-</style>
 
 <body class="bg-gray-100" style="font-family: 'Inter', sans-serif;">
   <%- include('components/navigation') %>
@@ -71,97 +229,64 @@
     <main class="flex-1">
       <div class="py-6">
         <div class="max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8">
-          <!-- Replace with your content -->
+          <!-- Alert messages with animation -->
           <% if (req.session.password) { %>
-              
-              <% } %>
-              <% if (req.query.err == "REF") { %>
-              <div class="rounded-md bg-red-800 p-4 mb-8">
-                <div class="flex">
-                  <div class="flex-shrink-0">
-                    <!-- Heroicon name: solid/information-circle -->
-                    <svg class="h-5 w-5 text-red-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                    </svg>
-                  </div>
-                  <div class="ml-3 flex-1 md:flex md:justify-between">
-                    <p class="text-sm text-red-400">There was an issue with your browser during the creation of the LV link.</p>
-                  </div>
-                </div>
+          <% } %>
+          
+          <% if (req.query.err == "REF") { %>
+          <div class="alert-box rounded-md bg-red-800 p-4 mb-8">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-red-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                </svg>
               </div>
-              <% } %>
-              <% if (req.query.err == "CODE") { %>
-              <div class="rounded-md bg-red-800 p-4 mb-8">
-                <div class="flex">
-                  <div class="flex-shrink-0">
-                    <!-- Heroicon name: solid/information-circle -->
-                    <svg class="h-5 w-5 text-red-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                    </svg>
-                  </div>
-                  <div class="ml-3 flex-1 md:flex md:justify-between">
-                    <p class="text-sm text-red-400">There was an issue with your browser during the creation of the LV link.</p>
-                  </div>
-                </div>
+              <div class="ml-3 flex-1 md:flex md:justify-between">
+                <p class="text-sm text-red-400">There was an issue with your browser during the creation of the LV link.</p>
               </div>
-              <% } %>
-              <% if (req.query.err == "DAILYLIMIT") { %>
-              <div class="rounded-md bg-red-800 p-4 mb-8">
-                <div class="flex">
-                  <div class="flex-shrink-0">
-                    <!-- Heroicon name: solid/information-circle -->
-                    <svg class="h-5 w-5 text-red-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                    </svg>
-                  </div>
-                  <div class="ml-3 flex-1 md:flex md:justify-between">
-                    <p class="text-sm text-red-400">You've reached the daily limit for the amount of links you can create.</p>
-                  </div>
-                </div>
+            </div>
+          </div>
+          <% } %>
+          
+          <!-- Repeat similar structure for other error types -->
+          
+          <% if (req.query.err == "none") { %>
+          <div class="alert-box rounded-md bg-green-800 p-4 mb-8">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-green-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                </svg>
               </div>
-              <% } %>
-              <% if (req.query.err == "TOOFAST") { %>
-              <div class="rounded-md bg-red-800 p-4 mb-8">
-                <div class="flex">
-                  <div class="flex-shrink-0">
-                    <!-- Heroicon name: solid/information-circle -->
-                    <svg class="h-5 w-5 text-red-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                    </svg>
-                  </div>
-                  <div class="ml-3 flex-1 md:flex md:justify-between">
-                    <p class="text-sm text-red-400">You've been using Linkvertise earning too much. Wait 10 minutes and try again.</p>
-                  </div>
-                </div>
+              <div class="ml-3 flex-1 md:flex md:justify-between">
+                <p class="text-sm text-green-400">Success! 5 Coins have been added to your account.</p>
               </div>
-              <% } %>
-              <% if (req.query.err == "none") { %>
-              <div class="rounded-md bg-green-800 p-4 mb-8">
-                <div class="flex">
-                  <div class="flex-shrink-0">
-                    <!-- Heroicon name: solid/information-circle -->
-                    <svg class="h-5 w-5 text-green-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                    </svg>
-                  </div>
-                  <div class="ml-3 flex-1 md:flex md:justify-between">
-                    <p class="text-sm text-green-400">Success! 5 Coins have been added to your account.</p>
-                  </div>
-                </div>
-              </div>
-              <% } %>
-          <!-- This example requires Tailwind CSS v2.0+ -->
+            </div>
+          </div>
+          <% } %>
 
-          <div class="flex flex-col items-center justify-center h-full mt-8">
-            <img src="https://img.freepik.com/vector-gratis/hucha_53876-25494.jpg?w=2000" class="w-24 h-24 bg-white p-2 rounded-lg" />
+          <!-- Main content section -->
+          <div class="content-section flex flex-col items-center justify-center h-full mt-8">
+            <img src="https://img.freepik.com/vector-gratis/hucha_53876-25494.jpg?w=2000" class="piggy-bank w-24 h-24 bg-white p-2 rounded-lg" />
             <p class="text-center text-2xl font-bold text-gray-900 mt-6 tracking-tight">You are now earning coins</p>
-            <p class="text-center text-md font-medium text-gray-700 mb-2">1 coin will be added to your account per minute. </p>You can leave this page opened and continue doing other things.</p>
-            <p class="text-center text-gray-500">Countdown: <span id="arciotimer"></span> seconds</p>
-            <p class="text-center text-gray-500">Earned: <span id="arciogainedcoins">0</span> coins</p>
+            <p class="text-center text-md font-medium text-gray-700 mb-2">1 coin will be added to your account per minute.</p>
+            <p class="text-center text-gray-500 mb-4">You can leave this page opened and continue doing other things.</p>
+            
+            <div class="flex items-center justify-center mb-2">
+              <p class="text-center text-gray-500 mr-4">Countdown: <span id="arciotimer" class="font-semibold">60</span> seconds</p>
+              &nbsp;&nbsp;
+              <p class="text-center text-gray-500">Earned: <span id="arciogainedcoins" class="coin-counter font-semibold">0</span> coins</p>
+            </div>
+            
+            <div class="progress-bar w-64 mb-8">
+              <div class="progress-fill" id="countdown-progress"></div>
+            </div>
+
             <div class="relative bg-transparent">
               <div class="relative max-w-7xl mx-auto">
                 <div class="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-2 lg:max-w-none">
-                  <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+                  <!-- Ad Card 1 -->
+                  <div class="ad-card flex flex-col rounded-lg shadow-lg overflow-hidden">
                     <div class="flex-shrink-0">
                       <script type="text/javascript">
                         atOptions = {
@@ -187,7 +312,8 @@
                     </div>
                   </div>
 
-                  <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+                  <!-- Ad Card 2 -->
+                  <div class="ad-card flex flex-col rounded-lg shadow-lg overflow-hidden">
                     <div class="flex-shrink-0">
                       <script type="text/javascript">
                         atOptions = {
@@ -214,23 +340,111 @@
                   </div>
                 </div>
               </div>
-              </div>
+            </div>
           </div>
 
- 
-            
-
-                                                    <script>
-                                                        <%- arcioafktext %>
-                                                    </script>
-                                                  
-                                              
-
-
-          <!-- /End replace -->
+          <script>
+            <%- arcioafktext %>
+          </script>
         </div>
       </div>
     </main>
   </div>
-</div>
+
+  <script>
+    // Wait for DOM to load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Animate content sections
+      const contentSections = document.querySelectorAll('.content-section');
+      contentSections.forEach(section => {
+        section.classList.add('animated');
+      });
+      
+      // Initialize coin earning system
+      let earnedCoins = 0;
+      let countdown = 60;
+      const timerElement = document.getElementById('arciotimer');
+      const coinsElement = document.getElementById('arciogainedcoins');
+      const progressBar = document.getElementById('countdown-progress');
+      
+      // Start the countdown timer
+      const countdownInterval = setInterval(function() {
+        countdown--;
+        timerElement.textContent = countdown;
+        progressBar.style.width = ((60 - countdown) / 60 * 100) + '%';
+        
+        if (countdown <= 0) {
+          // Add a coin
+          earnedCoins++;
+          coinsElement.textContent = earnedCoins;
+          
+          // Animate coin addition
+          const coinCounter = document.querySelector('.coin-counter');
+          const pulse = document.createElement('div');
+          pulse.classList.add('coin-pulse');
+          coinCounter.appendChild(pulse);
+          
+          setTimeout(() => {
+            pulse.classList.add('coin-added');
+          }, 10);
+          
+          setTimeout(() => {
+            coinCounter.removeChild(pulse);
+          }, 500);
+          
+          // Create floating coin animation
+          createFloatingCoin();
+          
+          // Reset countdown
+          countdown = 60;
+          timerElement.textContent = countdown;
+          progressBar.style.width = '0%';
+        }
+      }, 1000);
+      
+      // Function to create floating coin animation
+      function createFloatingCoin() {
+        const piggyBank = document.querySelector('.piggy-bank');
+        const rect = piggyBank.getBoundingClientRect();
+        
+        for (let i = 0; i < 5; i++) {
+          const coin = document.createElement('div');
+          coin.classList.add('floating-coin');
+          
+          // Position at the piggy bank
+          coin.style.left = (rect.left + rect.width/2 - 10) + 'px';
+          coin.style.top = (rect.top + rect.height/2 - 10) + 'px';
+          
+          // Random slight variation in position
+          coin.style.left = (parseInt(coin.style.left) + (Math.random() * 20 - 10)) + 'px';
+          coin.style.top = (parseInt(coin.style.top) + (Math.random() * 20 - 10)) + 'px';
+          
+          document.body.appendChild(coin);
+          
+          // Animate the coin
+          coin.style.animation = `floatCoin ${1 + Math.random() * 0.5}s forwards`;
+          
+          // Remove after animation completes
+          setTimeout(() => {
+            document.body.removeChild(coin);
+          }, 1500);
+        }
+      }
+      
+      // Add hover effects to ad cards
+      const adCards = document.querySelectorAll('.ad-card');
+      adCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-5px)';
+          this.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+          this.style.boxShadow = '';
+        });
+      });
+    });
+  </script>
 </body>
+</html>

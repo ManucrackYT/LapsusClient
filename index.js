@@ -421,11 +421,9 @@ function setupLapsus() {
   });
 }
 
-
 if (process.argv.includes('lapsus:setup')) {
   setupLapsus();
 }
-
 
 const path = require("path");
 const https = require("https");

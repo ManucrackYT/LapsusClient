@@ -56,6 +56,40 @@
       .delay-300 {
           animation-delay: 0.3s;
       }
+      
+      /* Copy ID button styles */
+      .copy-id {
+          cursor: pointer;
+          position: relative;
+          display: inline-block;
+      }
+      
+      .copy-tooltip {
+          position: absolute;
+          bottom: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          background-color: #333;
+          color: white;
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 12px;
+          white-space: nowrap;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.2s, visibility 0.2s;
+          margin-bottom: 5px;
+      }
+      
+      .copy-id:hover .copy-tooltip {
+          opacity: 1;
+          visibility: visible;
+      }
+      
+      .copy-success {
+          color: #10B981; /* Green color for success feedback */
+          transition: color 0.3s;
+      }
   </style>
 </head>
 
@@ -70,6 +104,29 @@
                   once: true
               });
           }
+      }
+      
+      // Function to copy user ID to clipboard
+      function copyUserId() {
+          const userId = '<%= userinfo.id %>';
+          navigator.clipboard.writeText(userId).then(() => {
+              // Show success feedback
+              const idElement = document.getElementById('user-id');
+              idElement.classList.add('copy-success');
+              
+              // Change text temporarily
+              const originalText = idElement.textContent;
+              idElement.textContent = 'Copied!';
+              
+              // Revert after 2 seconds
+              setTimeout(() => {
+                  idElement.textContent = originalText;
+                  idElement.classList.remove('copy-success');
+              }, 2000);
+          }).catch(err => {
+              console.error('Failed to copy: ', err);
+              alert('Failed to copy ID to clipboard');
+          });
       }
   </script>
   
@@ -100,12 +157,20 @@
                     <h1 class="truncate text-2xl font-bold text-gray-900 hover:text-gray-700 transition-colors duration-300">@<%= userinfo.username %> </h1>
                   </div>
                   <div class="justify-stretch mt-6 flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4" data-aos="fade-left" data-aos-delay="300">
-                    <p class="text-gray-600 hover:text-gray-800 transition-colors duration-300"><%= userinfo.email %> • <%= userinfo.id %></p>
+                    <p class="text-gray-600 hover:text-gray-800 transition-colors duration-300">
+                      <%= userinfo.email %> • 
+                      <span id="user-id" class="copy-id" onclick="copyUserId()">
+                        <%= userinfo.id %>
+                        <span class="copy-tooltip">Click to copy ID</span>
+                      </span>
+                    </p>
                   </div>
                 </div>
               </div>
             </div>       
           </div>
+
+          <br>
           
           <!-- JSON section with animation -->
           <% if (settings.profile_json == true) { %>

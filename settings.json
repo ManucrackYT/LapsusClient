@@ -1,5 +1,5 @@
 {
-    "version": "2.8.4",
+    "version": "2.9",
     "name": "Lapsus Client",
     "logo": {
         "url": "/assets/img/logo_background.png"
@@ -13,7 +13,7 @@
         "secret": "change_this"
     },
     "pterodactyl": {
-        "domain": "https://panel.yourdomain.com",
+        "domain": "https://panel.domain.com",
         "key": "ptla_",
         "account_key": "ptlc_"
     },
@@ -25,7 +25,7 @@
     },
     "profile_json": true,
     "music": false,
-    "auto_update": false,
+    "auto_update": true,
     "telemetry": true,
     "news": {
         "new1_type": "Recommendation",
@@ -52,19 +52,19 @@
                 "code": "lapsus"
             },
             "j4r": {
-                "enabled": false,
+                "enabled": true,
                 "ads": [
                     {
-                        "name": "Example server 1",
-                        "invite": "https://discord.gg/example",
-                        "id": "000000000000000000",
+                        "name": "Lapsus Development",
+                        "invite": "https://discord.gg/xJvN9NYJmd",
+                        "id": "778310063839903786",
                         "coins": 25
                     },
                     {
                         "name": "Example server 2",
                         "invite": "https://discord.gg/example",
                         "id": "000000000000000000",
-                        "coins": 200
+                        "coins": 25
                     }
                 ]
             },

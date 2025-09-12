@@ -1,6 +1,6 @@
 {
   "name": "lapsusclient",
-  "version": "2.8.4",
+  "version": "2.9",
   "description": "A Modern Pterodactyl client area.",
   "main": "index.js",
   "author": "ManucrackYT",
@@ -25,19 +25,17 @@
     "express": "^4.21.2",
     "express-session": "^1.17.3",
     "express-ws": "^4.0.0",
-    "ip": "^2.0.1",
     "javascript-obfuscator": "^4.0.2",
     "keyv": "^4.0.4",
     "mailparser": "^3.7.1",
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.6",
     "nodemailer": "^6.9.15",
-    "nodemon": "^2.0.15",
+    "nodemon": "^3.1.10",
     "os": "^0.1.2",
-    "passport": "^0.7.0",
+    "passport": "^0.6.0",
     "passport-google-oauth": "^2.0.0",
     "passport-google-oauth20": "^2.0.0",
-    "passport-twitter": "^0.1.5",
     "path": "^0.12.7",
     "smtp-server": "^3.13.5",
     "stripe": "^9.4.0",
@@ -49,6 +47,7 @@
   "scripts": {
     "start": "nodemon index.js",
     "lapsus:setup": "node exec/setup.js",
-    "lapsus:deploy": "node exec/node.js"
+    "lapsus:deploy": "node exec/node.js",
+    "lapsus:update": "node exec/update.js"
   }
 }
