@@ -1,3 +1,5 @@
+<h1>IMPORTANT: This branch is outdated, it's just available as archive</h1>
+
 <p align="center"><img src="https://cdn.discordapp.com/attachments/1024881699307388988/1166477231363739749/logo_background.png?ex=6553dc14&is=65416714&hm=81d0cba8f6bfa3bafd1adb447cdd4d5ee78a38343faca9a52aff8c41231f4f41&" width="150px" height="150px" alt="logo"></p>
 
 <h1 align="center">Lapsus Client for Actium</h1>
