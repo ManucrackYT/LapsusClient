@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Server Dashboard - <%= settings.name %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .server-card {
+            transition: all 0.3s ease;
+        }
+        .server-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .status-dot {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .chart-container {
+            position: relative;
+            height: 200px;
+        }
+        .console-output {
+            font-family: 'Courier New', monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            height: 300px;
+            overflow-y: auto;
+        }
+        .console-line {
+            padding: 2px 8px;
+            border-bottom: 1px solid #2d2d2d;
+        }
+    </style>
+</head>
+<body class="p-6">
+    <!-- Header -->
+    <div class="glass rounded-2xl p-6 mb-6">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <i class="fas fa-broadcast-tower text-4xl text-white"></i>
+                <div>
+                    <h1 class="text-3xl font-bold text-white">Real-Time Server Dashboard</h1>
+                    <p class="text-white/70">Live monitoring of all your servers</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="glass rounded-lg px-4 py-2">
+                    <span class="text-white/70 text-sm">Connection Status:</span>
+                    <span id="connection-status" class="text-green-400 font-bold ml-2">
+                        <i class="fas fa-circle status-dot"></i> Connected
+                    </span>
+                </div>
+                <a href="/dashboard" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="glass rounded-xl p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-white/70 text-sm">Total Servers</p>
+                    <p id="total-servers" class="text-3xl font-bold">0</p>
+                </div>
+                <i class="fas fa-server text-4xl text-white/30"></i>
+            </div>
+        </div>
+        <div class="glass rounded-xl p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-white/70 text-sm">Online</p>
+                    <p id="online-servers" class="text-3xl font-bold text-green-400">0</p>
+                </div>
+                <i class="fas fa-check-circle text-4xl text-green-400/30"></i>
+            </div>
+        </div>
+        <div class="glass rounded-xl p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-white/70 text-sm">Offline</p>
+                    <p id="offline-servers" class="text-3xl font-bold text-red-400">0</p>
+                </div>
+                <i class="fas fa-times-circle text-4xl text-red-400/30"></i>
+            </div>
+        </div>
+        <div class="glass rounded-xl p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-white/70 text-sm">Avg. CPU Usage</p>
+                    <p id="avg-cpu" class="text-3xl font-bold">0%</p>
+                </div>
+                <i class="fas fa-microchip text-4xl text-white/30"></i>
+            </div>
+        </div>
+    </div>
+    <div id="servers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    </div>
+    <div id="server-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50" onclick="closeModal(event)">
+        <div class="glass rounded-2xl p-8 max-w-6xl w-full mx-4 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between mb-6">
+                <h2 id="modal-server-name" class="text-2xl font-bold text-white"></h2>
+                <button onclick="closeModal()" class="text-white/70 hover:text-white">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="glass rounded-xl p-4">
+                    <p class="text-white/70 text-sm mb-2">CPU Usage</p>
+                    <div class="chart-container">
+                        <canvas id="cpu-chart"></canvas>
+                    </div>
+                </div>
+                <div class="glass rounded-xl p-4">
+                    <p class="text-white/70 text-sm mb-2">Memory Usage</p>
+                    <div class="chart-container">
+                        <canvas id="memory-chart"></canvas>
+                    </div>
+                </div>
+                <div class="glass rounded-xl p-4">
+                    <p class="text-white/70 text-sm mb-2">Network I/O</p>
+                    <div class="chart-container">
+                        <canvas id="network-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Console Output -->
+            <div class="glass rounded-xl p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <p class="text-white font-semibold">Live Console</p>
+                    <button onclick="clearConsole()" class="text-white/70 hover:text-white text-sm">
+                        <i class="fas fa-trash mr-1"></i> Clear
+                    </button>
+                </div>
+                <div id="console-output" class="console-output rounded-lg">
+                    <div class="p-4 text-white/50">Connecting to server console...</div>
+                </div>
+            </div>
+            <div class="mt-6 glass rounded-xl p-4">
+                <p class="text-white/70 text-sm mb-2">
+                    <i class="fas fa-users mr-2"></i>
+                    <span id="viewer-count">0</span> viewers watching this server
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const socket = io({
+            auth: {
+                userId: '<%= userinfo.id %>',
+                sessionId: '<%= Math.random().toString(36) %>'
+            }
+        });
+
+        let currentServer = null;
+        let cpuChart, memoryChart, networkChart;
+        const servers = new Map();
+        socket.on('connect', () => {
+            console.log('Connected to real-time server');
+            document.getElementById('connection-status').innerHTML = '<i class="fas fa-circle status-dot"></i> Connected';
+            document.getElementById('connection-status').classList.remove('text-red-400');
+            document.getElementById('connection-status').classList.add('text-green-400');
+            socket.emit('subscribe-dashboard');
+        });
+
+        socket.on('disconnect', () => {
+            console.log('Disconnected from server');
+            document.getElementById('connection-status').innerHTML = '<i class="fas fa-circle"></i> Disconnected';
+            document.getElementById('connection-status').classList.remove('text-green-400');
+            document.getElementById('connection-status').classList.add('text-red-400');
+        });
+
+        socket.on('dashboard-init', (serversList) => {
+            console.log('Received initial server data:', serversList);
+            serversList.forEach(server => updateServerCard(server));
+            updateStats();
+        });
+
+        socket.on('server-update', (server) => {
+            updateServerCard(server);
+            updateStats();
+        });
+
+        function updateServerCard(server) {
+            servers.set(server.identifier, server);
+            
+            const grid = document.getElementById('servers-grid');
+            let card = document.getElementById(`server-${server.identifier}`);
+            
+            if (!card) {
+                card = createServerCard(server);
+                grid.appendChild(card);
+            } else {
+                updateExistingCard(card, server);
+            }
+        }
+
+        function createServerCard(server) {
+            const card = document.createElement('div');
+            card.id = `server-${server.identifier}`;
+            card.className = 'server-card glass rounded-xl p-6 cursor-pointer';
+            card.onclick = () => openServerModal(server.identifier);
+            
+            card.innerHTML = `
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-white font-semibold text-lg truncate">${server.name}</h3>
+                    <span class="status-badge ${getStatusColor(server.status)} px-3 py-1 rounded-full text-xs font-semibold">
+                        ${server.status}
+                    </span>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between text-white/70 text-sm">
+                        <span><i class="fas fa-microchip mr-2"></i>CPU</span>
+                        <span class="cpu-value font-semibold">${Math.round(server.resources?.cpu_absolute || 0)}%</span>
+                    </div>
+                    <div class="flex items-center justify-between text-white/70 text-sm">
+                        <span><i class="fas fa-memory mr-2"></i>RAM</span>
+                        <span class="ram-value font-semibold">${formatBytes(server.resources?.memory_bytes || 0)}</span>
+                    </div>
+                    <div class="flex items-center justify-between text-white/70 text-sm">
+                        <span><i class="fas fa-hdd mr-2"></i>Disk</span>
+                        <span class="disk-value font-semibold">${formatBytes(server.resources?.disk_bytes || 0)}</span>
+                    </div>
+                    <div class="flex items-center justify-between text-white/70 text-sm">
+                        <span><i class="fas fa-network-wired mr-2"></i>Network</span>
+                        <span class="network-value font-semibold">${formatBytes(server.resources?.network_tx_bytes || 0)}/s</span>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function updateExistingCard(card, server) {
+            card.querySelector('.status-badge').className = `status-badge ${getStatusColor(server.status)} px-3 py-1 rounded-full text-xs font-semibold`;
+            card.querySelector('.status-badge').textContent = server.status;
+            card.querySelector('.cpu-value').textContent = `${Math.round(server.resources?.cpu_absolute || 0)}%`;
+            card.querySelector('.ram-value').textContent = formatBytes(server.resources?.memory_bytes || 0);
+            card.querySelector('.disk-value').textContent = formatBytes(server.resources?.disk_bytes || 0);
+            card.querySelector('.network-value').textContent = `${formatBytes(server.resources?.network_tx_bytes || 0)}/s`;
+        }
+
+        function updateStats() {
+            const serversList = Array.from(servers.values());
+            const online = serversList.filter(s => s.status === 'running').length;
+            const offline = serversList.length - online;
+            const avgCpu = serversList.reduce((sum, s) => sum + (s.resources?.cpu_absolute || 0), 0) / serversList.length || 0;
+            
+            document.getElementById('total-servers').textContent = serversList.length;
+            document.getElementById('online-servers').textContent = online;
+            document.getElementById('offline-servers').textContent = offline;
+            document.getElementById('avg-cpu').textContent = `${Math.round(avgCpu)}%`;
+        }
+
+        function openServerModal(identifier) {
+            currentServer = servers.get(identifier);
+            if (!currentServer) return;
+            document.getElementById('modal-server-name').textContent = currentServer.name;
+            document.getElementById('server-modal').classList.remove('hidden');
+            document.getElementById('server-modal').classList.add('flex');
+            socket.emit('subscribe-server', { identifier });
+            socket.emit('subscribe-console', { identifier });
+            initializeCharts();
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            
+            document.getElementById('server-modal').classList.add('hidden');
+            document.getElementById('server-modal').classList.remove('flex');
+            
+            if (currentServer) {
+                socket.emit('unsubscribe-server', { identifier: currentServer.identifier });
+            }
+            
+            destroyCharts();
+        }
+
+        function initializeCharts() {
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'rgba(255,255,255,0.7)' } },
+                    x: { grid: { display: false }, ticks: { color: 'rgba(255,255,255,0.7)' } }
+                }
+            };
+
+            cpuChart = new Chart(document.getElementById('cpu-chart'), {
+                type: 'line',
+                data: {
+                    labels: ['Now'],
+                    datasets: [{ data: [0], borderColor: 'rgb(59, 130, 246)', backgroundColor: 'rgba(59, 130, 246, 0.1)', tension: 0.4 }]
+                },
+                options: chartOptions
+            });
+
+            memoryChart = new Chart(document.getElementById('memory-chart'), {
+                type: 'line',
+                data: {
+                    labels: ['Now'],
+                    datasets: [{ data: [0], borderColor: 'rgb(168, 85, 247)', backgroundColor: 'rgba(168, 85, 247, 0.1)', tension: 0.4 }]
+                },
+                options: chartOptions
+            });
+
+            networkChart = new Chart(document.getElementById('network-chart'), {
+                type: 'line',
+                data: {
+                    labels: ['Now'],
+                    datasets: [{ data: [0], borderColor: 'rgb(34, 197, 94)', backgroundColor: 'rgba(34, 197, 94, 0.1)', tension: 0.4 }]
+                },
+                options: chartOptions
+            });
+        }
+        function destroyCharts() {
+            if (cpuChart) cpuChart.destroy();
+            if (memoryChart) memoryChart.destroy();
+            if (networkChart) networkChart.destroy();
+        }
+        socket.on('console-output', (data) => {
+            if (currentServer && data.identifier === currentServer.identifier) {
+                const output = document.getElementById('console-output');
+                const line = document.createElement('div');
+                line.className = 'console-line';
+                line.textContent = data.output;
+                output.appendChild(line);
+                output.scrollTop = output.scrollHeight;
+            }
+        });
+        function clearConsole() {
+            document.getElementById('console-output').innerHTML = '';
+        }
+        function getStatusColor(status) {
+            const colors = {
+                'running': 'bg-green-500 text-white',
+                'offline': 'bg-red-500 text-white',
+                'starting': 'bg-yellow-500 text-black',
+                'stopping': 'bg-orange-500 text-white'
+            };
+            return colors[status] || 'bg-gray-500 text-white';
+        }
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+    </script>
+</body>
+</html>
