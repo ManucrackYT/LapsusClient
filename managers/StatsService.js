@@ -34,33 +34,43 @@ class StatsService {
 
   async pollAllServers() {
     try {
-      const userKeys = await this.getAllUserKeys();
-      for (const userKey of userKeys) {
-        const userId = userKey.replace('users-', '');
-        const pteroUserId = await this.db.get(userKey);
-        if (!pteroUserId) continue;
-        const servers = await this.getUserServers(pteroUserId);
-        
-        if (!servers) continue;
-
-        for (const server of servers) {
-          const stats = await this.getServerStats(server.attributes.identifier);
-          
-          if (stats) {
-            const serverData = {
-              serverId: server.attributes.id,
-              identifier: server.attributes.identifier,
-              name: server.attributes.name,
-              userId: userId,
-              status: stats.current_state || 'offline',
-              resources: stats.resources || {},
-              timestamp: Date.now()
-            };
-
-            this.serverStats.set(server.attributes.identifier, serverData);
-            this.io.to(`server-${server.attributes.identifier}`).emit('server-stats', serverData);
-            this.io.to('dashboard').emit('server-update', serverData);
+      const allServersResponse = await fetch(
+        `${this.settings.pterodactyl.domain}/api/application/servers?per_page=100`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.settings.pterodactyl.key}`,
+            'Accept': 'application/json'
           }
+        }
+      );
+
+      if (!allServersResponse.ok) {
+        console.error(chalk.red('[STATS] Failed to fetch servers from Pterodactyl'));
+        return;
+      }
+
+      const serversData = await allServersResponse.json();
+      const servers = serversData.data || [];
+
+      for (const server of servers) {
+        const stats = await this.getServerStats(server.attributes.identifier);
+        
+        if (stats) {
+          const serverData = {
+            serverId: server.attributes.id,
+            identifier: server.attributes.identifier,
+            name: server.attributes.name,
+            userId: server.attributes.user,
+            status: stats.current_state || 'offline',
+            resources: stats.resources || {},
+            timestamp: Date.now()
+          };
+
+          this.serverStats.set(server.attributes.identifier, serverData);
+          this.io.to(`server-${server.attributes.identifier}`).emit('server-stats', serverData);
+          this.io.to('dashboard').emit('server-update', serverData);
         }
       }
     } catch (error) {
