@@ -69,7 +69,8 @@
         "servers": "servers.ejs",
         "lv": "lv.ejs",
         "j4r": "j4r.ejs",
-        "themes": "themes.ejs"
+        "themes": "themes.ejs",
+        "realtime": "realtime-dashboard.ejs"
     },
     "mustbeloggedin": [
         "/dashboard",
@@ -82,7 +83,8 @@
         "/redeem",
         "/servers",
         "/store",
-        "/earn"
+        "/earn",
+        "/realtime"
     ],
     "mustbeadmin": [
         "/admin",

@@ -118,7 +118,22 @@ app.use(express.json({
   verify: undefined
 }));
 
-const listener = app.listen(settings.website.port, function() {
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require('socket.io');
+const io = new Server(server, {
+  cors: {
+    origin: settings.api.client.oauth2.link,
+    credentials: true
+  }
+});
+
+const StatsService = require('./managers/StatsService');
+const statsService = new StatsService(settings, db);
+module.exports.io = io;
+module.exports.statsService = statsService;
+
+const listener = server.listen(settings.website.port, function() {
   console.clear();
   console.log(chalk.gray("  "));
   console.log(chalk.gray("  ") + chalk.bgBlack("  LAPSUS CLIENT IS ONLINE  "));
@@ -128,6 +143,10 @@ const listener = app.listen(settings.website.port, function() {
   console.log(chalk.gray("  ") + chalk.blue("[THEME]") + chalk.white(" You're using ") + chalk.underline(settings.defaulttheme) + " theme");
   console.log(chalk.gray("  "));
   console.log(chalk.gray("  ") + chalk.cyan("[SYSTEM]") + chalk.white(" You can now access the dashboard at ") + chalk.underline(settings.api.client.oauth2.link + "/"));
+  console.log(chalk.gray("  "));
+  console.log(chalk.gray("  ") + chalk.magenta("[REALTIME]") + chalk.white(" WebSocket server initialized for live stats"));
+  statsService.initialize(io);
+  
   if (settings.defaulttheme !== 'lapsus' && settings.defaulttheme !== 'lapsusv2' && settings.defaulttheme !== 'pylex') {
 console.log(chalk.gray("  "));
 console.log(chalk.gray("  ") + chalk.yellow("[WARNING]") + chalk.white(" You're using an unofficial theme. This means you are exposed to vulnerabilities and bugs. Consider using the official theme or a third party theme provided by Lapsus."));  }
