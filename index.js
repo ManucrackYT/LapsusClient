@@ -14,7 +14,7 @@ const chalk = require("chalk");
 const axios = require("axios");
 const os = require("os");
 const { networkInterfaces } = require("os");
-const arciotext = require('./stuff/arciotext')
+const adsterratext = require('./stuff/adsterratext')
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
 if (typeof btoa === 'undefined') {
@@ -42,43 +42,38 @@ const defaultthemesettings = {
   variables: {}
 };
 
-module.exports.renderdataeval =
-  `(async () => {
-   let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
-	const JavaScriptObfuscator = require('javascript-obfuscator');
+module.exports.renderdataeval = `(async () => {
+  let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
 
- 
-    let renderdata = {
-      req: req,
-      settings: newsettings,
-      userinfo: req.session.userinfo,
-      packagename: req.session.userinfo ? await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : newsettings.api.client.packages.default : null,
-      extraresources: !req.session.userinfo ? null : (await db.get("extra-" + req.session.userinfo.id) ? await db.get("extra-" + req.session.userinfo.id) : {
-        ram: 0,
-        disk: 0,
-        cpu: 0,
-        servers: 0
-      }),
-		packages: req.session.userinfo ? newsettings.api.client.packages.list[await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : newsettings.api.client.packages.default] : null,
-      coins: newsettings.api.client.coins.enabled == true ? (req.session.userinfo ? (await db.get("coins-" + req.session.userinfo.id) ? await db.get("coins-" + req.session.userinfo.id) : 0) : null) : null,
-      pterodactyl: req.session.pterodactyl,
-      theme: theme.name,
-      extra: theme.settings.variables,
-	    db: db
-    };
-    if (newsettings.api.arcio.enabled == true && req.session.arcsessiontoken) {
-      renderdata.arcioafktext = JavaScriptObfuscator.obfuscate(\`
-        let token = "\${req.session.arcsessiontoken}";
-        let everywhat = \${newsettings.api.arcio["afk page"].every};
-        let gaincoins = \${newsettings.api.arcio["afk page"].coins};
-        let arciopath = "\${newsettings.api.arcio["afk page"].path.replace(/\\\\/g, "\\\\\\\\").replace(/"/g, "\\\\\\"")}";
+  let renderdata = {
+    req: req,
+    settings: newsettings,
+    userinfo: req.session.userinfo,
+    packagename: req.session.userinfo ? (await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : newsettings.api.client.packages.default) : null,
+    extraresources: !req.session.userinfo ? null : ((await db.get("extra-" + req.session.userinfo.id)) ? await db.get("extra-" + req.session.userinfo.id) : {
+      ram: 0,
+      disk: 0,
+      cpu: 0,
+      servers: 0
+    }),
+    packages: req.session.userinfo ? newsettings.api.client.packages.list[await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : newsettings.api.client.packages.default] : null,
+    coins: newsettings.api.client.coins.enabled == true ? (req.session.userinfo ? (await db.get("coins-" + req.session.userinfo.id) ? await db.get("coins-" + req.session.userinfo.id) : 0) : null) : null,
+    pterodactyl: req.session.pterodactyl,
+    theme: theme.name,
+    extra: theme.settings.variables,
+    db: db
+  };
+  
+  // Adsterra integration
+  renderdata.adsterra = {
+    enabled: newsettings.api.adsterra.enabled,
+    publisher_id: newsettings.api.adsterra.publisher_id,
+    banner_zone_id: newsettings.api.adsterra.banner_zone_id,
+    popunder_zone_id: newsettings.api.adsterra.popunder_zone_id
+  };
 
-        \${arciotext}
-      \`);
-    };
-
-    return renderdata;
-  })();`;
+  return renderdata;
+})();`;
 
 // Load database
 
@@ -161,7 +156,7 @@ app.use(function(req, res, next) {
 
 // Load the API files.
 
-let apifiles = fs.readdirSync('./api').filter(file => file.endsWith('.js'));
+let apifiles = fs.readdirSync('./api').filter(file => file.endsWith('.js') && file !== 'arcio.js');
 
 apifiles.forEach(file => {
   let apifile = require(`./api/${file}`);
@@ -172,7 +167,7 @@ app.all("*", async (req, res) => {
   if (req.session.pterodactyl) if (req.session.pterodactyl.id !== await db.get("users-" + req.session.userinfo.id)) return res.redirect("/login?prompt=none");
   let theme = indexjs.get(req);
 let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
-if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.random().toString(36).substring(2, 15);
+if (newsettings.api.adsterra && newsettings.api.adsterra.enabled == true) req.session.adsterrasessiontoken = Math.random().toString(36).substring(2, 15);
   if (theme.settings.mustbeloggedin.includes(req._parsedUrl.pathname)) if (!req.session.userinfo || !req.session.pterodactyl) return res.redirect("/login" + (req._parsedUrl.pathname.slice(0, 1) == "/" ? "?redirect=" + req._parsedUrl.pathname.slice(1) : ""));
   if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
     ejs.renderFile(
@@ -310,6 +305,27 @@ function getCookie(req, cname) {
   return "";
 }
 
+app.get('/download-themes', async (req, res) => {
+  try {
+    // Check if market is accessible
+    const response = await axios.head('https://market.lapsusdevs.tech/', {
+      timeout: 5000
+    });
+    
+    // If we get here, market is accessible
+    res.render('download-themes', { 
+      marketAccessible: true,
+      // ... other data
+    });
+  } catch (error) {
+    // Market is not accessible
+    res.render('download-themes', { 
+      marketAccessible: false,
+      // ... other data
+    });
+  }
+});
+
 // Telemetry system (only recopiles basic info, not credentials)
 
 async function sendTelemetry() {
@@ -328,7 +344,7 @@ async function sendTelemetry() {
           uptime: os.uptime(),
       };
 
-      const telemetryServer = "http://paid01.pluox.xyz:3001/telemetry";
+      const telemetryServer = "http://paid01.pluox.host:3001/telemetry";
       
       await fetch(telemetryServer, {
           method: "POST",
@@ -396,23 +412,33 @@ function setupLapsus() {
         rl.question(chalk.blue('Enter Pterodactyl account key: '), (accountKey) => {
           settings.pterodactyl.account_key = accountKey || 'ptlc_';
 
-          // Ask for telemetry preference
-          rl.question(chalk.blue('Enable telemetry? (y/n): '), (telemetryAnswer) => {
-            settings.telemetry = telemetryAnswer.toLowerCase() === 'y';
+          // Ask for Adsterra publisher ID
+          rl.question(chalk.blue('Enter Adsterra Publisher ID (optional): '), (publisherId) => {
+            settings.api.adsterra.publisher_id = publisherId || 'your_publisher_id_here';
 
-            // Ask for auto-update preference
-            rl.question(chalk.blue('Enable auto updates? (y/n): '), (updateAnswer) => {
-              settings.auto_update = updateAnswer.toLowerCase() === 'y';
+            // Ask for Adsterra banner zone ID
+            rl.question(chalk.blue('Enter Adsterra Banner Zone ID (optional): '), (bannerZoneId) => {
+              settings.api.adsterra.banner_zone_id = bannerZoneId || 'your_banner_zone_id';
 
-              // Save all changes to settings.json
-              fs.writeFileSync('./settings.json', JSON.stringify(settings, null, 2), 'utf8');
+              // Ask for telemetry preference
+              rl.question(chalk.blue('Enable telemetry? (y/n): '), (telemetryAnswer) => {
+                settings.telemetry = telemetryAnswer.toLowerCase() === 'y';
 
-              console.log(chalk.green('\nSetup completed successfully!'));
-              console.log(chalk.gray('\nThanks for using Lapsus Client'));
-              console.log(chalk.gray('* Leave a like on the repository\n'));
-              
-              rl.close();
-              process.exit(0);
+                // Ask for auto-update preference
+                rl.question(chalk.blue('Enable auto updates? (y/n): '), (updateAnswer) => {
+                  settings.auto_update = updateAnswer.toLowerCase() === 'y';
+
+                  // Save all changes to settings.json
+                  fs.writeFileSync('./settings.json', JSON.stringify(settings, null, 2), 'utf8');
+
+                  console.log(chalk.green('\nSetup completed successfully!'));
+                  console.log(chalk.gray('\nThanks for using Lapsus Client'));
+                  console.log(chalk.gray('* Leave a like on the repository\n'));
+                  
+                  rl.close();
+                  process.exit(0);
+                });
+              });
             });
           });
         });
@@ -427,7 +453,7 @@ if (process.argv.includes('lapsus:setup')) {
 
 const path = require("path");
 const https = require("https");
-const { writeFile, readFileSync } = require("fs");
+const { writeFile, readFileSync, createWriteStream, createReadStream, statSync, readdirSync, unlinkSync } = fs;
 const unzipper = require("unzipper");
 const { exec } = require("child_process");
 const fse = require("fs-extra");
@@ -439,6 +465,7 @@ const ZIP_URL_KEY = "zipball_url";
 const SETTINGS_FILE = path.join(__dirname, "settings.json");
 const UPDATE_DIR = path.join(__dirname, "update.zip");
 const APP_DIR = __dirname;
+const DATABASE_FILE = path.join(__dirname, "database.sqlite");
 
 function getCurrentVersion() {
     try {
@@ -476,9 +503,7 @@ async function checkForUpdates() {
             console.log(`New version available: ${latestVersion}. Downloading update...`);
             await downloadUpdate(data[ZIP_URL_KEY], latestVersion);
         } else {
-            console.log(chalk.gray("  "));
-            console.log(chalk.gray("  ") + chalk.magenta("[INFO]") + chalk.white(" You are already running the latest version."));
-            
+            console.log("You are already running the latest version.");
         }
     } catch (error) {
         console.error("Error checking for updates:", error);
@@ -492,8 +517,7 @@ async function downloadUpdate(url, newVersion) {
         console.log("Final download URL:", redirectedUrl);
 
         return new Promise((resolve, reject) => {
-            const filePath = path.join(__dirname, "update.zip");
-            const file = fs.createWriteStream(filePath); // Fix: Correct file creation
+            const file = createWriteStream(UPDATE_DIR);
 
             const options = { headers: { "User-Agent": "LapsusClient-Updater" } };
             https.get(redirectedUrl, options, (response) => {
@@ -542,7 +566,7 @@ async function getFinalRedirectUrl(url) {
 async function installUpdate(newVersion) {
   try {
       console.log("Checking update file...");
-      const fileStats = fs.statSync(UPDATE_DIR);
+      const fileStats = statSync(UPDATE_DIR);
 
       if (fileStats.size < 1000) { // Small file likely means corruption
           console.error("Downloaded file is too small, update failed.");
@@ -553,33 +577,115 @@ async function installUpdate(newVersion) {
       const tempDir = path.join(__dirname, "temp_update");
 
       await fse.ensureDir(tempDir);
-      await fs.createReadStream(UPDATE_DIR)
+      await createReadStream(UPDATE_DIR)
           .pipe(unzipper.Extract({ path: tempDir }))
           .promise();
 
-      console.log("Replacing old files...");
-      const extractedFolders = fs.readdirSync(tempDir);
+      console.log("Replacing old files (preserving settings and database)...");
+      const extractedFolders = readdirSync(tempDir);
       if (extractedFolders.length !== 1) {
           throw new Error("Unexpected update folder structure.");
       }
 
       const extractedPath = path.join(tempDir, extractedFolders[0]);
-      await fse.copy(extractedPath, APP_DIR, { overwrite: true });
+      const extractedFiles = await fse.readdir(extractedPath);
+      
+      // Backup current settings and database
+      const currentSettings = JSON.parse(readFileSync(SETTINGS_FILE, 'utf8'));
+      const databaseExists = fse.existsSync(DATABASE_FILE);
+      
+      if (databaseExists) {
+          console.log("Backing up database.sqlite...");
+          await fse.copy(DATABASE_FILE, DATABASE_FILE + '.backup');
+      }
 
-      fs.unlinkSync(UPDATE_DIR);
+      // Copy files except settings.json and database.sqlite
+      for (const file of extractedFiles) {
+          const sourceFile = path.join(extractedPath, file);
+          const targetFile = path.join(APP_DIR, file);
+          
+          // Skip settings.json and database.sqlite
+          if (file === 'settings.json' || file === 'database.sqlite') {
+              console.log(`Skipping ${file} (preserving existing version)`);
+              continue;
+          }
+          
+          // If it's a directory, copy recursively
+          const stat = await fse.stat(sourceFile);
+          if (stat.isDirectory()) {
+              await fse.copy(sourceFile, targetFile, { overwrite: true });
+          } else {
+              await fse.copy(sourceFile, targetFile, { overwrite: true });
+          }
+      }
+
+      // Merge new settings with existing settings - PRESERVE ALL USER VALUES
+      const newSettingsPath = path.join(extractedPath, 'settings.json');
+      if (fse.existsSync(newSettingsPath)) {
+          console.log("Merging new settings with existing settings (preserving user values)...");
+          const newSettings = JSON.parse(await fse.readFile(newSettingsPath, 'utf8'));
+          
+          // Deep merge function that preserves existing values at all levels
+          function deepMergeWithPreservation(existing, updates) {
+              const result = { ...existing };
+              
+              for (const [key, newValue] of Object.entries(updates)) {
+                  if (!(key in existing)) {
+                      // Key doesn't exist in user settings, add it
+                      result[key] = newValue;
+                      console.log(`Added new setting: ${key} = ${JSON.stringify(newValue)}`);
+                  } else if (typeof newValue === 'object' && newValue !== null && 
+                           typeof existing[key] === 'object' && existing[key] !== null &&
+                           !Array.isArray(newValue) && !Array.isArray(existing[key])) {
+                      // Both are objects, recursively merge nested objects
+                      console.log(`Merging nested object: ${key}`);
+                      result[key] = deepMergeWithPreservation(existing[key], newValue);
+                  }
+                  // If key already exists in user settings, preserve user's value
+                  // (do nothing - result already has user's value)
+              }
+              
+              return result;
+          }
+          
+          // Perform the deep merge
+          const mergedSettings = deepMergeWithPreservation(currentSettings, newSettings);
+          
+          // Update version
+          mergedSettings.version = newVersion;
+          
+          // Save the merged settings
+          await fse.writeFile(SETTINGS_FILE, JSON.stringify(mergedSettings, null, 2));
+          console.log("Settings updated - preserved all user values, added new variables");
+          
+      } else {
+          // Just update version in existing settings
+          currentSettings.version = newVersion;
+          await fse.writeFile(SETTINGS_FILE, JSON.stringify(currentSettings, null, 2));
+      }
+
+      // Cleanup
+      unlinkSync(UPDATE_DIR);
       await fse.remove(tempDir);
-
-      const settings = JSON.parse(fs.readFileSync(SETTINGS_FILE, "utf8"));
-      settings.version = newVersion;
-      fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
+      
+      // Remove backup if it exists
+      if (fse.existsSync(DATABASE_FILE + '.backup')) {
+          unlinkSync(DATABASE_FILE + '.backup');
+      }
 
       console.log("Update installed successfully. Restarting...");
       restartApplication();
   } catch (error) {
       console.error("Error installing update:", error);
+      
+      // Try to restore database from backup if something went wrong
+      if (fse.existsSync(DATABASE_FILE + '.backup')) {
+          console.log("Restoring database from backup due to update failure...");
+          await fse.copy(DATABASE_FILE + '.backup', DATABASE_FILE, { overwrite: true });
+          unlinkSync(DATABASE_FILE + '.backup');
+      }
   }
 }
-
 function restartApplication() {
   console.log("Restarting the application...");
 

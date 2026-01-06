@@ -1,5 +1,5 @@
 {
-    "version": "2.9",
+    "version": "2.10",
     "name": "Lapsus Client",
     "logo": {
         "url": "/assets/img/logo_background.png"
@@ -13,7 +13,7 @@
         "secret": "change_this"
     },
     "pterodactyl": {
-        "domain": "https://panel.domain.com",
+        "domain": "https://panel.yourdomain.com",
         "key": "ptla_",
         "account_key": "ptlc_"
     },
@@ -25,7 +25,7 @@
     },
     "profile_json": true,
     "music": false,
-    "auto_update": true,
+    "auto_update": false,
     "telemetry": true,
     "news": {
         "new1_type": "Recommendation",
@@ -316,22 +316,19 @@
                 }
             }
         },
-        "arcio": {
+        "adsterra": {
             "enabled": true,
-            "widgetid": "widgetidhere",
-            "afk page": {
-                "_comment": "This will not effect any current arc.io sessions, and will require a restart to kick everyone out of the websocket sesison.",
-                "_comment2": "Make sure coins are enabled if you choose to enable this option!",
+            "publisher_id": "9074ac306bee068b42551a7d94f54049",
+            "banner_zone_id": "f4c594f428287ddde77189be38b1e492",
+            "popunder_zone_id": "9074ac306bee068b42551a7d94f54049",
+            "afk_page": {
                 "enabled": true,
-                "_comment3": "If you change the path, you need to restart for it to take full effect.",
                 "path": "afkwspath",
-                "_comment4": "This afk page will give the users [coins variable] coins every [every variable] seconds.",
                 "every": 60,
-                "_comment5": "The coins variable is meant to not be under 1. There may be bugs if the coins variable is less than 1.",
                 "coins": 1
+                }
             }
-        }
-    },
+        },
     "whitelist": {
         "note": "This allows only specific people to be able to use the dashboard",
         "status": false,
