@@ -1,6 +1,6 @@
 {
   "name": "lapsusclient",
-  "version": "2.10",
+  "version": "2.10.1",
   "description": "A Modern Pterodactyl client area.",
   "main": "index.js",
   "author": "ManucrackYT",

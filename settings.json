@@ -1,5 +1,5 @@
 {
-    "version": "2.10",
+    "version": "2.10.1",
     "name": "Lapsus Client",
     "logo": {
         "url": "/assets/img/logo_background.png"
@@ -144,7 +144,14 @@
                     }
                 }
             },
-            "locations": {},
+            "locations": {
+            "2": {
+                "name": "Germany",
+                "city": "Berlin",
+                "ISO": "de",
+                "package": null
+            }
+        },
             "eggs": {
                 "paper": {
                     "display": "Minecraft Java - Paper",
