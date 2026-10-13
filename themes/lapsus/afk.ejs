@@ -220,6 +220,19 @@
             transform: translateY(-100px) scale(0.5);
         }
     }
+
+    /* Status indicators */
+    .status-connected {
+        color: #10B981;
+    }
+    
+    .status-disconnected {
+        color: #EF4444;
+    }
+    
+    .status-connecting {
+        color: #F59E0B;
+    }
   </style>
 </head>
 
@@ -248,8 +261,6 @@
           </div>
           <% } %>
           
-          <!-- Repeat similar structure for other error types -->
-          
           <% if (req.query.err == "none") { %>
           <div class="alert-box rounded-md bg-green-800 p-4 mb-8">
             <div class="flex">
@@ -269,13 +280,34 @@
           <div class="content-section flex flex-col items-center justify-center h-full mt-8">
             <img src="https://img.freepik.com/vector-gratis/hucha_53876-25494.jpg?w=2000" class="piggy-bank w-24 h-24 bg-white p-2 rounded-lg" />
             <p class="text-center text-2xl font-bold text-gray-900 mt-6 tracking-tight">You are now earning coins</p>
-            <p class="text-center text-md font-medium text-gray-700 mb-2">1 coin will be added to your account per minute.</p>
+            <p class="text-center text-md font-medium text-gray-700 mb-2">
+              <% if (settings.api.adsterra && settings.api.adsterra.afk_page && settings.api.adsterra.afk_page.enabled) { %>
+                <%= settings.api.adsterra.afk_page.coins || 1 %> coin(s) will be added to your account every <%= settings.api.adsterra.afk_page.every || 60 %> seconds.
+              <% } else { %>
+                Coin earning is currently disabled.
+              <% } %>
+            </p>
             <p class="text-center text-gray-500 mb-4">You can leave this page opened and continue doing other things.</p>
             
             <div class="flex items-center justify-center mb-2">
-              <p class="text-center text-gray-500 mr-4">Countdown: <span id="arciotimer" class="font-semibold">60</span> seconds</p>
+              <p class="text-center text-gray-500 mr-4">Countdown: <span id="adsterra-timer" class="font-semibold">
+                <% if (settings.api.adsterra && settings.api.adsterra.afk_page) { %>
+                  <%= settings.api.adsterra.afk_page.every || 60 %>
+                <% } else { %>
+                  60
+                <% } %>
+              </span> seconds</p>
               &nbsp;&nbsp;
-              <p class="text-center text-gray-500">Earned: <span id="arciogainedcoins" class="coin-counter font-semibold">0</span> coins</p>
+              <p class="text-center text-gray-500">Earned: <span id="adsterra-gained-coins" class="coin-counter font-semibold">0</span> coins</p>
+            </div>
+
+            <div class="flex items-center justify-center mb-4">
+              <span id="connection-status" class="text-sm status-connecting">
+                <svg class="inline w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                </svg>
+                Connecting to Adsterra...
+              </span>
             </div>
             
             <div class="progress-bar w-64 mb-8">
@@ -288,16 +320,22 @@
                   <!-- Ad Card 1 -->
                   <div class="ad-card flex flex-col rounded-lg shadow-lg overflow-hidden">
                     <div class="flex-shrink-0">
-                      <script type="text/javascript">
-                        atOptions = {
-                          'key' : 'f4c594f428287ddde77189be38b1e492',
-                          'format' : 'iframe',
-                          'height' : 90,
-                          'width' : 728,
-                          'params' : {}
-                        };
-                        document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/f4c594f428287ddde77189be38b1e492/invoke.js"></scr' + 'ipt>');
-                      </script>
+                      <% if (settings.api.adsterra && settings.api.adsterra.banner_zone_id) { %>
+                        <script type="text/javascript">
+                          atOptions = {
+                            'key' : '<%= settings.api.adsterra.banner_zone_id %>',
+                            'format' : 'iframe',
+                            'height' : 90,
+                            'width' : 728,
+                            'params' : {}
+                          };
+                          document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/<%= settings.api.adsterra.banner_zone_id %>/invoke.js"></scr' + 'ipt>');
+                        </script>
+                      <% } else { %>
+                        <div class="h-24 bg-gray-200 flex items-center justify-center">
+                          <p class="text-gray-500">Adsterra Banner Ad</p>
+                        </div>
+                      <% } %>
                     </div>
                     <div class="flex-1 bg-white p-6 flex flex-col justify-between">
                       <div class="flex-1">
@@ -315,16 +353,22 @@
                   <!-- Ad Card 2 -->
                   <div class="ad-card flex flex-col rounded-lg shadow-lg overflow-hidden">
                     <div class="flex-shrink-0">
-                      <script type="text/javascript">
-                        atOptions = {
-                          'key' : '9074ac306bee068b42551a7d94f54049',
-                          'format' : 'iframe',
-                          'height' : 250,
-                          'width' : 300,
-                          'params' : {}
-                        };
-                        document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/9074ac306bee068b42551a7d94f54049/invoke.js"></scr' + 'ipt>');
-                      </script>
+                      <% if (settings.api.adsterra && settings.api.adsterra.popunder_zone_id) { %>
+                        <script type="text/javascript">
+                          atOptions = {
+                            'key' : '<%= settings.api.adsterra.popunder_zone_id %>',
+                            'format' : 'iframe',
+                            'height' : 250,
+                            'width' : 300,
+                            'params' : {}
+                          };
+                          document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/<%= settings.api.adsterra.popunder_zone_id %>/invoke.js"></scr' + 'ipt>');
+                        </script>
+                      <% } else { %>
+                        <div class="h-64 bg-gray-200 flex items-center justify-center">
+                          <p class="text-gray-500">Adsterra Popunder Ad</p>
+                        </div>
+                      <% } %>
                     </div>
                     <div class="flex-1 bg-white p-6 flex flex-col justify-between">
                       <div class="flex-1">
@@ -344,107 +388,205 @@
           </div>
 
           <script>
-            <%- arcioafktext %>
+            // Adsterra WebSocket connection for coin earning
+            (function() {
+              let earnedCoins = 0;
+              let countdown = <%= (settings.api.adsterra && settings.api.adsterra.afk_page && settings.api.adsterra.afk_page.every) ? settings.api.adsterra.afk_page.every : 60 %>;
+              const coinsPerInterval = <%= (settings.api.adsterra && settings.api.adsterra.afk_page && settings.api.adsterra.afk_page.coins) ? settings.api.adsterra.afk_page.coins : 1 %>;
+              const timerElement = document.getElementById('adsterra-timer');
+              const coinsElement = document.getElementById('adsterra-gained-coins');
+              const progressBar = document.getElementById('countdown-progress');
+              const statusElement = document.getElementById('connection-status');
+              let ws;
+              let countdownInterval;
+
+              function updateStatus(status, message) {
+                if (!statusElement) return;
+                
+                statusElement.className = 'text-sm status-' + status;
+                switch(status) {
+                  case 'connected':
+                    statusElement.innerHTML = '';
+                    break;
+                  case 'disconnected':
+                    statusElement.innerHTML = '';
+                    break;
+                  case 'connecting':
+                    statusElement.innerHTML = '';
+                    break;
+                }
+              }
+
+              function connectWebSocket() {
+                <% if (settings.api.adsterra && settings.api.adsterra.afk_page && settings.api.adsterra.afk_page.enabled) { %>
+                  const protocol = '<%= req.session.adsterrasessiontoken || "" %>';
+                  const path = '<%= settings.api.adsterra.afk_page.path || "afkwspath" %>';
+                  
+                  if (!protocol) {
+                    updateStatus('disconnected', 'No session token');
+                    return;
+                  }
+
+                  updateStatus('connecting', '');
+                  
+                  try {
+                    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+                    ws = new WebSocket(`${wsProtocol}//${window.location.host}/${path}`, protocol);
+
+                    ws.onopen = function() {
+                      console.log('Connected to Adsterra AFK service');
+                      updateStatus('connected', '');
+                    };
+
+                    ws.onclose = function(event) {
+                      console.log('Disconnected from Adsterra AFK service:', event.code, event.reason);
+                      if (event.code !== 1000) { // Normal closure
+                        updateStatus('disconnected', 'Reconnecting...');
+                        setTimeout(connectWebSocket, 5000);
+                      } else {
+                        updateStatus('disconnected', 'Connection closed');
+                      }
+                    };
+
+                    ws.onerror = function(error) {
+                      console.error('WebSocket error:', error);
+                      updateStatus('disconnected', 'Connection error');
+                    };
+
+                  } catch (error) {
+                    console.error('Failed to create WebSocket:', error);
+                    updateStatus('disconnected', 'WebSocket error');
+                  }
+                <% } else { %>
+                  updateStatus('disconnected', 'Adsterra AFK disabled in settings');
+                  console.log('Adsterra AFK page is disabled in settings');
+                <% } %>
+              }
+
+              function startCountdown() {
+                if (countdownInterval) {
+                  clearInterval(countdownInterval);
+                }
+
+                countdownInterval = setInterval(function() {
+                  countdown--;
+                  if (timerElement) timerElement.textContent = countdown;
+                  if (progressBar) {
+                    const totalTime = <%= (settings.api.adsterra && settings.api.adsterra.afk_page && settings.api.adsterra.afk_page.every) ? settings.api.adsterra.afk_page.every : 60 %>;
+                    progressBar.style.width = ((totalTime - countdown) / totalTime * 100) + '%';
+                  }
+                  
+                  if (countdown <= 0) {
+                    // Add coins visually
+                    earnedCoins += coinsPerInterval;
+                    if (coinsElement) coinsElement.textContent = earnedCoins;
+                    
+                    // Animate coin addition
+                    animateCoinAddition();
+                    
+                    // Reset countdown
+                    countdown = <%= (settings.api.adsterra && settings.api.adsterra.afk_page && settings.api.adsterra.afk_page.every) ? settings.api.adsterra.afk_page.every : 60 %>;
+                    if (timerElement) timerElement.textContent = countdown;
+                    if (progressBar) progressBar.style.width = '0%';
+                  }
+                }, 1000);
+              }
+
+              function animateCoinAddition() {
+                const coinCounter = document.querySelector('.coin-counter');
+                if (coinCounter) {
+                  const pulse = document.createElement('div');
+                  pulse.classList.add('coin-pulse');
+                  coinCounter.appendChild(pulse);
+                  
+                  setTimeout(() => {
+                    pulse.classList.add('coin-added');
+                  }, 10);
+                  
+                  setTimeout(() => {
+                    if (pulse.parentNode === coinCounter) {
+                      coinCounter.removeChild(pulse);
+                    }
+                  }, 500);
+                  
+                  createFloatingCoin();
+                }
+              }
+
+              function createFloatingCoin() {
+                const piggyBank = document.querySelector('.piggy-bank');
+                if (!piggyBank) return;
+                
+                const rect = piggyBank.getBoundingClientRect();
+                
+                for (let i = 0; i < 3; i++) {
+                  const coin = document.createElement('div');
+                  coin.classList.add('floating-coin');
+                  
+                  // Position at the piggy bank
+                  coin.style.left = (rect.left + rect.width/2 - 10) + 'px';
+                  coin.style.top = (rect.top + rect.height/2 - 10) + 'px';
+                  
+                  // Random slight variation in position
+                  coin.style.left = (parseInt(coin.style.left) + (Math.random() * 40 - 20)) + 'px';
+                  coin.style.top = (parseInt(coin.style.top) + (Math.random() * 40 - 20)) + 'px';
+                  
+                  document.body.appendChild(coin);
+                  
+                  // Animate the coin
+                  coin.style.animation = `floatCoin ${1 + Math.random() * 0.5}s forwards`;
+                  
+                  // Remove after animation completes
+                  setTimeout(() => {
+                    if (coin.parentNode) {
+                      document.body.removeChild(coin);
+                    }
+                  }, 1500);
+                }
+              }
+
+              // Initialize
+              document.addEventListener('DOMContentLoaded', function() {
+                // Animate content sections
+                const contentSections = document.querySelectorAll('.content-section');
+                contentSections.forEach(section => {
+                  section.classList.add('animated');
+                });
+                
+                // Start WebSocket connection and countdown
+                connectWebSocket();
+                startCountdown();
+                
+                // Add hover effects to ad cards
+                const adCards = document.querySelectorAll('.ad-card');
+                adCards.forEach(card => {
+                  card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+                  });
+                  
+                  card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '';
+                  });
+                });
+              });
+
+              // Cleanup on page unload
+              window.addEventListener('beforeunload', function() {
+                if (ws) {
+                  ws.close();
+                }
+                if (countdownInterval) {
+                  clearInterval(countdownInterval);
+                }
+              });
+
+            })();
           </script>
         </div>
       </div>
     </main>
   </div>
-
-  <script>
-    // Wait for DOM to load
-    document.addEventListener('DOMContentLoaded', function() {
-      // Animate content sections
-      const contentSections = document.querySelectorAll('.content-section');
-      contentSections.forEach(section => {
-        section.classList.add('animated');
-      });
-      
-      // Initialize coin earning system
-      let earnedCoins = 0;
-      let countdown = 60;
-      const timerElement = document.getElementById('arciotimer');
-      const coinsElement = document.getElementById('arciogainedcoins');
-      const progressBar = document.getElementById('countdown-progress');
-      
-      // Start the countdown timer
-      const countdownInterval = setInterval(function() {
-        countdown--;
-        timerElement.textContent = countdown;
-        progressBar.style.width = ((60 - countdown) / 60 * 100) + '%';
-        
-        if (countdown <= 0) {
-          // Add a coin
-          earnedCoins++;
-          coinsElement.textContent = earnedCoins;
-          
-          // Animate coin addition
-          const coinCounter = document.querySelector('.coin-counter');
-          const pulse = document.createElement('div');
-          pulse.classList.add('coin-pulse');
-          coinCounter.appendChild(pulse);
-          
-          setTimeout(() => {
-            pulse.classList.add('coin-added');
-          }, 10);
-          
-          setTimeout(() => {
-            coinCounter.removeChild(pulse);
-          }, 500);
-          
-          // Create floating coin animation
-          createFloatingCoin();
-          
-          // Reset countdown
-          countdown = 60;
-          timerElement.textContent = countdown;
-          progressBar.style.width = '0%';
-        }
-      }, 1000);
-      
-      // Function to create floating coin animation
-      function createFloatingCoin() {
-        const piggyBank = document.querySelector('.piggy-bank');
-        const rect = piggyBank.getBoundingClientRect();
-        
-        for (let i = 0; i < 5; i++) {
-          const coin = document.createElement('div');
-          coin.classList.add('floating-coin');
-          
-          // Position at the piggy bank
-          coin.style.left = (rect.left + rect.width/2 - 10) + 'px';
-          coin.style.top = (rect.top + rect.height/2 - 10) + 'px';
-          
-          // Random slight variation in position
-          coin.style.left = (parseInt(coin.style.left) + (Math.random() * 20 - 10)) + 'px';
-          coin.style.top = (parseInt(coin.style.top) + (Math.random() * 20 - 10)) + 'px';
-          
-          document.body.appendChild(coin);
-          
-          // Animate the coin
-          coin.style.animation = `floatCoin ${1 + Math.random() * 0.5}s forwards`;
-          
-          // Remove after animation completes
-          setTimeout(() => {
-            document.body.removeChild(coin);
-          }, 1500);
-        }
-      }
-      
-      // Add hover effects to ad cards
-      const adCards = document.querySelectorAll('.ad-card');
-      adCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-          this.style.transform = 'translateY(-5px)';
-          this.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-          this.style.transform = 'translateY(0)';
-          this.style.boxShadow = '';
-        });
-      });
-    });
-  </script>
 </body>
 </html>

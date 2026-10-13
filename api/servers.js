@@ -170,9 +170,11 @@ module.exports.load = async function (app, db) {
             if (!specs["deploy"]) specs.deploy = {
               locations: [],
               dedicated_ip: false,
-              port_range: []
-            }
+              port_range: [],
+              tags: []
+            };
             specs.deploy.locations = [location];
+            specs.deploy.tags = [];
             
             // Make sure user has enough coins
             const createdServer = await db.get(`createdserver-${req.session.userinfo.id}`)

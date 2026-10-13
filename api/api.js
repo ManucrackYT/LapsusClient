@@ -139,11 +139,11 @@ module.exports.load = async function (app, db) {
       await db.set(`coins-${req.session.userinfo.id}`, 0)
     } else {
       let e = await db.get(`coins-${req.session.userinfo.id}`)
-      // Check if arcio is defined before accessing it
-      if (newsettings.api.arcio && newsettings.api.arcio["afk page"]) {
-        e = e + newsettings.api.arcio["afk page"].coins
+      // Check if adsterra is defined before accessing it
+      if (newsettings.api.adsterra && newsettings.api.adsterra.afk_page) {
+        e = e + newsettings.api.adsterra.afk_page.coins
       } else {
-        e = e + 0; // Default value if arcio is not defined
+        e = e + 0; // Default value if adsterra is not defined
       }
       await db.set(`coins-${req.session.userinfo.id}`, e)
     }

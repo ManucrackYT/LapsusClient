@@ -12,6 +12,7 @@ const GITHUB_API = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/rele
 const SETTINGS_FILE = path.join(__dirname, "../settings.json");
 const UPDATE_DIR = path.join(__dirname, "../update.zip");
 const APP_DIR = path.dirname(__dirname);
+const DATABASE_FILE = path.join(__dirname, "../database.sqlite");
 
 function getCurrentVersion() {
     try {
@@ -112,9 +113,39 @@ async function downloadUpdate(url, newVersion) {
     });
 }
 
+// Deep merge function that preserves existing values at all levels
+function deepMergeWithPreservation(existing, updates) {
+    const result = { ...existing };
+    
+    for (const [key, newValue] of Object.entries(updates)) {
+        if (!(key in existing)) {
+            // Key doesn't exist in user settings, add it
+            result[key] = newValue;
+            console.log(chalk.cyan(`[UPDATE] Added new setting: ${key} = ${JSON.stringify(newValue)}`));
+        } else if (typeof newValue === 'object' && newValue !== null && 
+                 typeof existing[key] === 'object' && existing[key] !== null &&
+                 !Array.isArray(newValue) && !Array.isArray(existing[key])) {
+            // Both are objects, recursively merge nested objects
+            console.log(chalk.gray(`[UPDATE] Merging nested object: ${key}`));
+            result[key] = deepMergeWithPreservation(existing[key], newValue);
+        }
+        // If key already exists in user settings, preserve user's value
+        // (do nothing - result already has user's value)
+    }
+    
+    return result;
+}
+
 async function installUpdate(newVersion) {
     try {
         console.log(chalk.blue("[UPDATE] Installing update..."));
+
+        // Backup database if it exists
+        const databaseExists = fse.existsSync(DATABASE_FILE);
+        if (databaseExists) {
+            console.log(chalk.blue("[UPDATE] Backing up database..."));
+            await fse.copy(DATABASE_FILE, DATABASE_FILE + '.backup');
+        }
 
         const tempDir = path.join(__dirname, "../temp_update");
         await fse.ensureDir(tempDir);
@@ -130,31 +161,73 @@ async function installUpdate(newVersion) {
 
         const extractedPath = path.join(tempDir, extractedFolders[0]);
         
-        // Backup settings file first
-        const settingsBackup = JSON.parse(fs.readFileSync(SETTINGS_FILE, "utf8"));
+        // Read current settings
+        const currentSettings = JSON.parse(fs.readFileSync(SETTINGS_FILE, "utf8"));
         
-        // Copy all files except settings.json to preserve configuration
+        // Copy all files except settings.json and database.sqlite
         const filesToCopy = fs.readdirSync(extractedPath);
         for (const file of filesToCopy) {
-            if (file !== "settings.json") {
+            if (file !== "settings.json" && file !== "database.sqlite") {
                 const sourcePath = path.join(extractedPath, file);
                 const destPath = path.join(APP_DIR, file);
-                await fse.copy(sourcePath, destPath, { overwrite: true });
+                
+                // Check if it's a directory or file
+                const stat = fs.statSync(sourcePath);
+                if (stat.isDirectory()) {
+                    await fse.copy(sourcePath, destPath, { overwrite: true });
+                } else {
+                    await fse.copy(sourcePath, destPath, { overwrite: true });
+                }
+                console.log(chalk.gray(`[UPDATE] Updated: ${file}`));
+            } else if (file === "database.sqlite") {
+                console.log(chalk.yellow(`[UPDATE] Skipping database.sqlite (preserving existing database)`));
             }
+        }
+
+        // Merge settings from update with existing settings
+        const newSettingsPath = path.join(extractedPath, "settings.json");
+        if (fs.existsSync(newSettingsPath)) {
+            console.log(chalk.blue("[UPDATE] Merging new settings with existing settings..."));
+            const newSettings = JSON.parse(fs.readFileSync(newSettingsPath, "utf8"));
+            
+            // Deep merge preserving all user values
+            const mergedSettings = deepMergeWithPreservation(currentSettings, newSettings);
+            
+            // Update version
+            mergedSettings.version = newVersion;
+            
+            // Save merged settings
+            fs.writeFileSync(SETTINGS_FILE, JSON.stringify(mergedSettings, null, 2));
+            console.log(chalk.green("[UPDATE] Settings merged successfully - preserved user values"));
+        } else {
+            // Just update version if no settings file in update
+            currentSettings.version = newVersion;
+            fs.writeFileSync(SETTINGS_FILE, JSON.stringify(currentSettings, null, 2));
         }
 
         // Clean up
         fs.unlinkSync(UPDATE_DIR);
         await fse.remove(tempDir);
-
-        // Update version in settings
-        settingsBackup.version = newVersion;
-        fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settingsBackup, null, 2));
+        
+        // Remove database backup if update succeeded
+        if (databaseExists && fse.existsSync(DATABASE_FILE + '.backup')) {
+            fs.unlinkSync(DATABASE_FILE + '.backup');
+            console.log(chalk.gray("[UPDATE] Cleaned up database backup"));
+        }
 
         console.log(chalk.green("[UPDATE] Update installed successfully."));
         return true;
+        
     } catch (error) {
         console.error(chalk.red("[UPDATE] Error installing update:"), error);
+        
+        // Try to restore database from backup if update failed
+        if (fse.existsSync(DATABASE_FILE + '.backup')) {
+            console.log(chalk.yellow("[UPDATE] Restoring database from backup..."));
+            await fse.copy(DATABASE_FILE + '.backup', DATABASE_FILE, { overwrite: true });
+            fs.unlinkSync(DATABASE_FILE + '.backup');
+        }
+        
         return false;
     }
 }
