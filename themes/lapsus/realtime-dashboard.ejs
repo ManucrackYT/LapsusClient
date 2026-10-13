@@ -1,0 +1,431 @@
+<head>
+  <title>Real-Time Dashboard - <%= settings.name %></title>
+  <link rel="icon" type="image/png" href="<%= settings.logo.url %>">
+  <link rel="stylesheet" href="../assets/tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    .status-pulse {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .chart-container {
+      position: relative;
+      height: 150px;
+    }
+    .console-output {
+      font-family: 'Courier New', monospace;
+      background: #1e1e1e;
+      color: #d4d4d4;
+      height: 300px;
+      overflow-y: auto;
+      font-size: 12px;
+    }
+    .console-line {
+      padding: 2px 8px;
+      border-bottom: 1px solid #2d2d2d;
+    }
+    .server-card {
+      transition: all 0.3s ease;
+    }
+    .server-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100" style="font-family: 'Inter', sans-serif;">
+
+  <%- include('components/navigation') %>
+
+  <div class="md:pl-48 flex flex-col flex-1">
+    <main class="flex-1">
+      <div class="py-6">
+        <div class="max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8">
+
+          <!-- Header -->
+          <div class="lg:flex lg:items-center lg:justify-between mb-6">
+            <div class="min-w-0 flex-1">
+              <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+                Real-Time Server Monitor
+              </h2>
+              <p class="text-md font-medium text-gray-600">
+                Live statistics and console streaming for all your servers
+              </p>
+            </div>
+            <div class="mt-5 flex lg:ml-4 lg:mt-0">
+              <span class="inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold">
+                <span class="mr-2 text-gray-600">Connection:</span>
+                <span id="connection-status" class="status-pulse text-green-600 font-bold">● Connected</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Stats Overview -->
+          <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-6">
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+              <div class="p-5">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <svg class="h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3m0 3h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008zm-3 6h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008z" />
+                    </svg>
+                  </div>
+                  <div class="ml-5 w-0 flex-1">
+                    <dl>
+                      <dt class="text-sm font-medium text-gray-500 truncate">Total Servers</dt>
+                      <dd class="text-lg font-semibold text-gray-900" id="total-servers">0</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+              <div class="p-5">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <svg class="h-6 w-6 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div class="ml-5 w-0 flex-1">
+                    <dl>
+                      <dt class="text-sm font-medium text-gray-500 truncate">Online</dt>
+                      <dd class="text-lg font-semibold text-green-600" id="online-servers">0</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+              <div class="p-5">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <svg class="h-6 w-6 text-red-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div class="ml-5 w-0 flex-1">
+                    <dl>
+                      <dt class="text-sm font-medium text-gray-500 truncate">Offline</dt>
+                      <dd class="text-lg font-semibold text-red-600" id="offline-servers">0</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+              <div class="p-5">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <svg class="h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z" />
+                    </svg>
+                  </div>
+                  <div class="ml-5 w-0 flex-1">
+                    <dl>
+                      <dt class="text-sm font-medium text-gray-500 truncate">Avg CPU</dt>
+                      <dd class="text-lg font-semibold text-gray-900" id="avg-cpu">0%</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="servers-grid" class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          </div>
+          <div id="empty-state" class="flex flex-col items-center justify-center h-full mt-8" style="display: none;">
+            <img src="/assets/img/tree.png" class="w-24 h-24 bg-white p-2 rounded-lg" />
+            <p class="text-center text-2xl font-bold text-gray-900 mt-6">No servers found</p>
+            <p class="text-center text-gray-500">Connect to WebSocket to see your servers in real-time.</p>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="server-modal" style="display: none; position: fixed; z-index: 50; padding-top: 100px; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px);" onclick="closeModal(event)">
+    <div class="bg-white mx-auto p-8 rounded-lg max-w-6xl" style="margin-top: 5%;" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between mb-6">
+        <h2 id="modal-server-name" class="text-2xl font-bold text-gray-900"></h2>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-gray-50 rounded-lg p-4">
+          <p class="text-sm font-medium text-gray-600 mb-2">CPU Usage</p>
+          <div class="chart-container">
+            <canvas id="cpu-chart"></canvas>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <p class="text-sm font-medium text-gray-600 mb-2">Memory Usage</p>
+          <div class="chart-container">
+            <canvas id="memory-chart"></canvas>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4">
+          <p class="text-sm font-medium text-gray-600 mb-2">Network I/O</p>
+          <div class="chart-container">
+            <canvas id="network-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Console Output -->
+      <div class="bg-gray-50 rounded-lg p-4">
+        <div class="flex items-center justify-between mb-4">
+          <p class="text-sm font-semibold text-gray-900">Live Console</p>
+          <button onclick="clearConsole()" class="text-sm text-gray-600 hover:text-gray-900">
+            Clear
+          </button>
+        </div>
+        <div id="console-output" class="console-output rounded-lg">
+          <div class="p-4 text-gray-500">Connecting to server console...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const socket = io({
+      auth: {
+        userId: '<%= userinfo.id %>',
+        sessionId: '<%= Math.random().toString(36).substring(2) %>'
+      }
+    });
+
+    let currentServer = null;
+    let cpuChart, memoryChart, networkChart;
+    const servers = new Map();
+    socket.on('connect', () => {
+      console.log('Connected to real-time server');
+      document.getElementById('connection-status').innerHTML = '● Connected';
+      document.getElementById('connection-status').className = 'status-pulse text-green-600 font-bold';
+      socket.emit('subscribe-dashboard');
+    });
+
+    socket.on('disconnect', () => {
+      console.log('Disconnected from server');
+      document.getElementById('connection-status').innerHTML = '● Disconnected';
+      document.getElementById('connection-status').className = 'text-red-600 font-bold';
+    });
+
+    socket.on('dashboard-init', (serversList) => {
+      console.log('Received initial server data:', serversList);
+      if (serversList.length === 0) {
+        document.getElementById('empty-state').style.display = 'flex';
+      } else {
+        document.getElementById('empty-state').style.display = 'none';
+        serversList.forEach(server => updateServerCard(server));
+        updateStats();
+      }
+    });
+
+    socket.on('server-update', (server) => {
+      updateServerCard(server);
+      updateStats();
+    });
+
+    function updateServerCard(server) {
+      servers.set(server.identifier, server);
+            
+      const grid = document.getElementById('servers-grid');
+      let card = document.getElementById(`server-${server.identifier}`);
+      
+      if (!card) {
+        card = createServerCard(server);
+        grid.appendChild(card);
+        document.getElementById('empty-state').style.display = 'none';
+      } else {
+        updateExistingCard(card, server);
+      }
+    }
+
+    function createServerCard(server) {
+      const card = document.createElement('div');
+      card.id = `server-${server.identifier}`;
+      card.className = 'server-card bg-white shadow rounded-lg overflow-hidden cursor-pointer p-5';
+      card.onclick = () => openServerModal(server.identifier);
+      const statusColor = getStatusColor(server.status);
+      
+      card.innerHTML = `
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-900 truncate">${server.name}</h3>
+          <span class="status-badge inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusColor}">
+            ${server.status}
+          </span>
+        </div>
+        <div class="space-y-3">
+          <div>
+            <div class="flex justify-between text-sm text-gray-600 mb-1">
+              <span>CPU</span>
+              <span class="cpu-value font-medium">${Math.round(server.resources?.cpu_absolute || 0)}%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div class="cpu-bar bg-blue-600 h-2 rounded-full transition-all" style="width: ${Math.min(100, Math.round(server.resources?.cpu_absolute || 0))}%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-sm text-gray-600 mb-1">
+              <span>Memory</span>
+              <span class="ram-value font-medium">${formatBytes(server.resources?.memory_bytes || 0)}</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div class="ram-bar bg-purple-600 h-2 rounded-full transition-all" style="width: ${Math.min(100, (server.resources?.memory_bytes || 0) / (server.limits?.memory || 1) * 100)}%"></div>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-gray-200 flex justify-between text-xs text-gray-500">
+            <span class="disk-value">💾 ${formatBytes(server.resources?.disk_bytes || 0)}</span>
+            <span class="network-value">🌐 ${formatBytes(server.resources?.network_tx_bytes || 0)}/s</span>
+          </div>
+        </div>
+      `;
+      
+      return card;
+    }
+
+    function updateExistingCard(card, server) {
+      const statusColor = getStatusColor(server.status);
+      card.querySelector('.status-badge').className = `status-badge inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusColor}`;
+      card.querySelector('.status-badge').textContent = server.status;
+      
+      const cpuPercent = Math.round(server.resources?.cpu_absolute || 0);
+      card.querySelector('.cpu-value').textContent = `${cpuPercent}%`;
+      if (card.querySelector('.cpu-bar')) {
+        card.querySelector('.cpu-bar').style.width = `${Math.min(100, cpuPercent)}%`;
+      }
+      card.querySelector('.ram-value').textContent = formatBytes(server.resources?.memory_bytes || 0);
+      if (card.querySelector('.ram-bar')) {
+        const memPercent = (server.resources?.memory_bytes || 0) / (server.limits?.memory || 1) * 100;
+        card.querySelector('.ram-bar').style.width = `${Math.min(100, memPercent)}%`;
+      } 
+      card.querySelector('.disk-value').textContent = `💾 ${formatBytes(server.resources?.disk_bytes || 0)}`;
+      card.querySelector('.network-value').textContent = `🌐 ${formatBytes(server.resources?.network_tx_bytes || 0)}/s`;
+    }
+
+    function updateStats() {
+      const serversList = Array.from(servers.values());
+      const online = serversList.filter(s => s.status === 'running').length;
+      const offline = serversList.length - online;
+      const avgCpu = serversList.reduce((sum, s) => sum + (s.resources?.cpu_absolute || 0), 0) / serversList.length || 0;
+      
+      document.getElementById('total-servers').textContent = serversList.length;
+      document.getElementById('online-servers').textContent = online;
+      document.getElementById('offline-servers').textContent = offline;
+      document.getElementById('avg-cpu').textContent = `${Math.round(avgCpu)}%`;
+    }
+
+    function openServerModal(identifier) {
+      currentServer = servers.get(identifier);
+      if (!currentServer) return;
+      document.getElementById('modal-server-name').textContent = currentServer.name;
+      document.getElementById('server-modal').style.display = 'block';
+      socket.emit('subscribe-server', { identifier });
+      socket.emit('subscribe-console', { identifier });
+      initializeCharts();
+    }
+
+    function closeModal(event) {
+      if (event && event.target !== event.currentTarget) return;
+      
+      document.getElementById('server-modal').style.display = 'none';
+      
+      if (currentServer) {
+        socket.emit('unsubscribe-server', { identifier: currentServer.identifier });
+      }
+      
+      destroyCharts();
+    }
+
+    function initializeCharts() {
+      const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+          x: { grid: { display: false } }
+        }
+      };
+
+      cpuChart = new Chart(document.getElementById('cpu-chart'), {
+        type: 'line',
+        data: {
+          labels: ['Now'],
+          datasets: [{ data: [0], borderColor: 'rgb(59, 130, 246)', backgroundColor: 'rgba(59, 130, 246, 0.1)', tension: 0.4 }]
+        },
+        options: chartOptions
+      });
+
+      memoryChart = new Chart(document.getElementById('memory-chart'), {
+        type: 'line',
+        data: {
+          labels: ['Now'],
+          datasets: [{ data: [0], borderColor: 'rgb(168, 85, 247)', backgroundColor: 'rgba(168, 85, 247, 0.1)', tension: 0.4 }]
+        },
+        options: chartOptions
+      });
+
+      networkChart = new Chart(document.getElementById('network-chart'), {
+        type: 'line',
+        data: {
+          labels: ['Now'],
+          datasets: [{ data: [0], borderColor: 'rgb(34, 197, 94)', backgroundColor: 'rgba(34, 197, 94, 0.1)', tension: 0.4 }]
+        },
+        options: chartOptions
+      });
+    }
+    function destroyCharts() {
+      if (cpuChart) cpuChart.destroy();
+      if (memoryChart) memoryChart.destroy();
+      if (networkChart) networkChart.destroy();
+    }
+    socket.on('console-output', (data) => {
+      if (currentServer && data.identifier === currentServer.identifier) {
+        const output = document.getElementById('console-output');
+        const line = document.createElement('div');
+        line.className = 'console-line';
+        line.textContent = data.output;
+        output.appendChild(line);
+        output.scrollTop = output.scrollHeight;
+      }
+    });
+    function clearConsole() {
+      document.getElementById('console-output').innerHTML = '';
+    }
+    function getStatusColor(status) {
+      const colors = {
+        'running': 'bg-green-100 text-green-800',
+        'offline': 'bg-red-100 text-red-800',
+        'starting': 'bg-yellow-100 text-yellow-800',
+        'stopping': 'bg-orange-100 text-orange-800'
+      };
+      return colors[status] || 'bg-gray-100 text-gray-800';
+    }
+    function formatBytes(bytes) {
+      if (bytes === 0) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+  </script>
+</body>
